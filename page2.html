@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DETFLIX - Multi-Quality Stream Player</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- GLOBAL STYLES --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #06070a; 
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: linear-gradient(to bottom, rgba(6, 7, 10, 0.95), transparent);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(229, 9, 20, 0.15); 
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: 700;
+            color: #e50914; 
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
+        }
+
+        .hero {
+            height: 35vh;
+            background: linear-gradient(to right, rgba(6, 7, 10, 0.95), rgba(6, 7, 10, 0.4)), 
+                        url('https://i.ibb.co/8LpszDV3/x.jpg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 8%;
+            border-bottom: 1px solid rgba(229, 9, 20, 0.1);
+        }
+
+        .hero-content h1 { font-size: 2.5rem; font-weight: 700; color: #fff; }
+
+        /* --- SEARCH BAR --- */
+        .search-container {
+            max-width: 500px;
+            margin: -30px auto 40px auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #12131a; 
+            border: 1px solid rgba(229, 9, 20, 0.2); 
+            border-radius: 30px;
+            padding: 5px 15px 5px 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            border-color: #ff1e27; 
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.4);
+        }
+
+        .search-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 1rem;
+            padding: 12px 0;
+        }
+
+        .search-box i { color: #555866; margin-right: 12px; }
+
+        /* --- GRID SYSTEM --- */
+        .main-container { padding: 0 8% 80px 8%; }
+        .section-title { font-size: 1.8rem; margin-bottom: 25px; position: relative; display: inline-block; }
+        .section-title::after {
+            content: ''; position: absolute; left: 0; bottom: -5px; width: 60px; height: 3px;
+            background: linear-gradient(90deg, #e50914, #ff1e27); 
+            box-shadow: 0 0 8px rgba(255, 30, 39, 0.5);
+        }
+
+        .movie-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+
+        /* --- MOVIE CARD --- */
+        .movie-card {
+            background: #12131a; border-radius: 10px; overflow: hidden; cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5); border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .movie-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 12px 25px rgba(229, 9, 20, 0.25); 
+            border-color: rgba(229, 9, 20, 0.3); 
+        }
+
+        .card-img-box { position: relative; width: 100%; height: 280px; overflow: hidden; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .card-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(6, 7, 10, 0.75);
+            display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;
+        }
+        .movie-card:hover .card-overlay { opacity: 1; }
+        .card-overlay i { font-size: 2.8rem; color: #ff1e27; text-shadow: 0 0 10px rgba(255, 30, 39, 0.6); }
+
+        .movie-info { padding: 12px; background: #12131a; }
+        .movie-title { font-size: 0.95rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .movie-meta { display: flex; justify-content: space-between; font-size: 0.8rem; color: #94a3b8; margin-top: 5px; }
+        .rating { color: #ff1e27; font-weight: 600; } 
+
+        /* --- POPUP MODAL MAIN LAYOUT --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 4, 6, 0.92);
+            backdrop-filter: blur(12px); display: flex; justify-content: center; align-items: center;
+            z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .movie-detail-card {
+            background: #111217; width: 92%; max-width: 600px; border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(229, 9, 20, 0.3);
+            position: relative; border: 1px solid rgba(229, 9, 20, 0.2);
+            max-height: 90vh; overflow-y: auto; overflow-x: hidden;
+        }
+
+        /* HARD-FORCE VIDEO PLAYER & BANNER WINDOW */
+        .video-player-container {
+            width: 100%; height: 320px; background: #000; position: relative;
+            border-bottom: 2px solid rgba(229, 9, 20, 0.3);
+        }
+        
+        /* Default Poster View Box */
+        .player-placeholder {
+            position: absolute; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;
+            z-index: 5; overflow: hidden;
+        }
+        .player-placeholder img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        .download-note {
+            text-align: center; margin-top: 14px; color: #cbd5e1; font-size: 0.9rem;
+        }
+
+        .close-btn {
+            position: absolute; top: 12px; right: 15px; font-size: 1.5rem; 
+            color: #fff; background: rgba(6, 7, 10, 0.7); width: 35px; height: 35px;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; z-index: 110; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2);
+        }
+        .close-btn:hover { color: #ff1e27; background: #fff; transform: rotate(90deg); }
+
+        .modal-body { padding: 22px 20px 20px 20px; }
+        .modal-body h2 { font-size: 1.6rem; color: #fff; margin-bottom: 8px; }
+        .modal-desc { font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin-bottom: 25px; }
+
+        /* QUALITY BUTTON SYSTEM (NEW) */
+        .quality-section-title {
+            font-size: 0.9rem; margin-bottom: 12px; color: #cbd5e1; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px;
+        }
+        .quality-section-title i { color: #ff1e27; }
+
+        .quality-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+        .quality-btn {
+            background: #1a1b24; border: 1px solid rgba(229, 9, 20, 0.25); color: #fff;
+            padding: 14px 5px; font-size: 0.9rem; font-weight: 700; border-radius: 8px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: all 0.3s ease; text-decoration: none;
+        }
+        .quality-btn i { font-size: 0.8rem; color: #ff1e27; }
+        
+        .quality-btn:hover, .quality-btn.active {
+            background: linear-gradient(135deg, #e50914, #b20610); 
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4); 
+            border-color: transparent;
+        }
+        .quality-btn:hover i, .quality-btn.active i { color: #fff; }
+
+        /* --- RESPONSIVE MOBILE CONFIG --- */
+        @media (max-width: 992px) {
+            .movie-grid { grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        }
+
+        @media (max-width: 600px) {
+            .movie-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+            .card-img-box { height: 130px; } 
+            .movie-title { font-size: 0.75rem; }
+            .movie-meta { font-size: 0.65rem; }
+            
+            .video-player-container { height: 210px; }
+            .play-center-btn { width: 55px; height: 55px; font-size: 2.5rem; }
+            .quality-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+            .quality-btn { font-size: 0.8rem; padding: 12px 2px; }
+            .modal-body { padding: 15px; }
+        }
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 10px;
+            background: rgba(229, 9, 20, 0.14);
+            border: 1px solid rgba(229, 9, 20, 0.4);
+            border-radius: 999px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(229, 9, 20, 0.28);
+            box-shadow: 0 0 18px rgba(229, 9, 20, 0.18);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">DETFLIX</div>
+        <nav>
+            <ul>
+                <li>
+                    <a class="nav-btn" href="moviedownload.html">
+                        <i class="fas fa-film"></i> Home
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Movies</h1>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="movieSearch" class="search-input" placeholder="Search..." onkeyup="filterMovies()">
+        </div>
+    </div>
+
+    <div class="main-container">
+        <h2 class="section-title"></h2>
+        <div class="movie-grid" id="movieGrid">
+            
+            <div class="movie-card" 
+                 data-title="Project Y"
+                 data-img="https://1.vikiplatform.com/c/41458c/cb932f0ff9.jpg?x=b&s=480x270&e=t&q=g"
+                 data-desc="Project Y (2026) WEB-DL [Hindi (DD5.1) & Korean] 1080p 720p & 480p Dual Audio [x264/10Bit-HEVC] | Full Movie"
+                 data-480p="https://gplinks.co/rQ24K" 
+                 data-720p="https://gplinks.co/jEVlOe5"
+                 data-1080p="https://gplinks.co/ZTNSFnvL"
+                 onclick="openMovieModal(this)">
+                <div class="card-img-box">
+                    <img src="https://a.ltrbxd.com/resized/film-poster/1/2/8/5/1/0/8/1285108-project-y-0-230-0-345-crop.jpg?v=54042afcf7" alt="Poster">
+                    <div class="card-overlay"><i class="fas fa-play-circle"></i></div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Project Y</div>
+                    <div class="movie-meta"><span>2025</span>Hindi</div>
+                </div>
+            </div>
+
+            <div class="movie-card" 
+                 data-title="Made in Korea"
+                 data-img="https://images.herzindagi.info/her-zindagi-english/images/2026/03/11/article/image/Main-1773206101293.webp"
+                 data-desc="Made in Korea (2026) WEB-DL [Hindi (DD5.1) Dual Audio | Full Movie"
+                 data-480p="https://gplinks.co/UP06d6T"
+                 data-720p="https://gplinks.co/xG4rbw3"
+                 data-1080p="https://gplinks.co/iLtPn5"
+                 onclick="openMovieModal(this)">
+                <div class="card-img-box">
+                    <img src="https://a.ltrbxd.com/resized/film-poster/1/4/3/5/1/2/3/1435123-made-in-korea-0-230-0-345-crop.jpg?v=e29068a443" alt="Poster">
+                    <div class="card-overlay"><i class="fas fa-play-circle"></i></div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Made in Korea</div>
+                    <div class="movie-meta"><span>2026</span>Hindi</div>
+                </div>
+            </div>
+
+            <div class="movie-card" 
+                 data-title="Murder Report"
+                 data-img="https://cdn.district.in/movies-assets/images/cinema/Murder-Report-(1)--aeaecbd0-baea-11f0-88fc-8904f5df0951.jpg"
+                 data-desc="Murder Report (2025) WEB-DL [Hindi (DD5.1) Dual Audio | Full Movie"
+                 data-480p="https://gplinks.co/SL91cu"
+                 data-720p="https://gplinks.co/qiNCgq"
+                 data-1080p="https://gplinks.co/wbBV2e"
+                 onclick="openMovieModal(this)">
+                <div class="card-img-box">
+                    <img src="https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p31508466_p_v10_ab.jpg" alt="Poster">
+                    <div class="card-overlay"><i class="fas fa-play-circle"></i></div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Murder Report</div>
+                    <div class="movie-meta"><span>2025</span>Hindi</div>
+                </div>
+            </div>
+
+            <div class="movie-card" 
+                 data-title="Now You See Me"
+                 data-img="https://moviemusings.uk/wp-content/uploads/2019/06/25c95-now2byou2bsee2bme2bheader.jpg"
+                 data-desc="Now You See Me (2013) WEB-DL [Hindi (DD5.1) Dual Audio | Full Movie"
+                 data-480p="https://gplinks.co/XULOBLV"
+                 data-720p="https://gplinks.co/lJho77"
+                 data-1080p="https://gplinks.co/pVHUY"
+                 onclick="openMovieModal(this)">
+                <div class="card-img-box">
+                    <img src="https://m.media-amazon.com/images/S/pv-target-images/4360beef51d83dd2fa3f46c8ed43d486f0b101ade253565a300caf1fc6dc3655.jpg" alt="Poster">
+                    <div class="card-overlay"><i class="fas fa-play-circle"></i></div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Now You See Me</div>
+                    <div class="movie-meta"><span>2013</span>Hindi</div>
+                </div>
+            </div>
+
+            <div class="movie-card" 
+                 data-title="Now You See Me 2"
+                 data-img="https://m.media-amazon.com/images/S/pv-target-images/20146cde708ebcd5182502492902e9a4fced34096fdbac7e784d552cf0957b4e._SX1080_FMjpg_.jpg"
+                 data-desc="Now You See Me 2 (2016) WEB-DL [Hindi (DD5.1) Dual Audio | Full Movie"
+                 data-480p="https://gplinks.co/13MokCC"
+                 data-720p="https://gplinks.co/AXwAjS"
+                 data-1080p="https://gplinks.co/pomkkO"
+                 onclick="openMovieModal(this)">
+                <div class="card-img-box">
+                    <img src="https://play-lh.googleusercontent.com/aBzg0mOUs1_-uhGgf7rI4I--aKWpFa--L5lxEGL3DT7FTxktCfn7kX6wpzc-q5zntyJ3aQ" alt="Poster">
+                    <div class="card-overlay"><i class="fas fa-play-circle"></i></div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Now You See Me 2</div>
+                    <div class="movie-meta"><span>2016</span><span class="rating"><i class="fas fa-star"></i> 8.7</span></div>
+                </div>
+            </div>
+
+            <div class="movie-card" 
+                 data-title="Dhurandhar The Revenge"
+                 data-img="https://assets-in.bmscdn.com/iedb/movies/images/mobile/listing/medium/dhurandhar-the-revenge-et00478890-1772893614.jpg"
+                 data-desc="Murder Report (2025) WEB-DL [Hindi (DD5.1) Dual Audio | Full Movie"
+                 data-480p="https://gplinks.co/fbTo0our"
+                 data-720p="https://gplinks.co/oe0g8F"
+                 data-1080p="https://gplinks.co/73FnDgKC"
+                 onclick="openMovieModal(this)">
+                <div class="card-img-box">
+                    <img src="https://m.media-amazon.com/images/M/MV5BNzdkNjAxNWMtNWY3My00NTI1LTg2YWQtOGI3MDA0NzdhMjEyXkEyXkFqcGc@._V1_.jpg" alt="Poster">
+                    <div class="card-overlay"><i class="fas fa-play-circle"></i></div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Dhurandhar The Revenge</div>
+                    <div class="movie-meta"><span>2026</span>Hindi</div>
+                </div>
+            </div>
+
+            <div class="movie-card" 
+                 data-title="The Great Flood"
+                 data-img="https://media2.firstshowing.net/firstshowing/img17/TheGreatfloodposterfullimg598.jpg"
+                 data-desc="The Great Flood (2025) WEB-DL [Hindi (DD5.1) Dual Audio | Full Movie"
+                 data-480p="https://gplinks.co/HDBSJ"
+                 data-720p="https://gplinks.co/gkoNXMx"
+                 data-1080p="https://gplinks.co/kqzfn"
+                 onclick="openMovieModal(this)">
+                <div class="card-img-box">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTPCb2E78NQbB_Pd2eNkxwt4dWaA9iX81I4w&s" alt="Poster">
+                    <div class="card-overlay"><i class="fas fa-play-circle"></i></div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">The Great Flood</div>
+                    <div class="movie-meta"><span>2025</span>Hindi</div>
+                </div>
+            </div>
+
+            <div class="movie-card" 
+                 data-title="Now You See Me: Now You Don't"
+                 data-img="https://static0.srcdn.com/wordpress/wp-content/uploads/2025/11/the-now-you-see-me-3-cast-arranged-with-cards-falling-around-them-on-the-poster.jpg"
+                 data-desc="Now You See Me: Now You Don't (2025) WEB-DL [Hindi (DD5.1) Dual Audio | Full Movie"
+                 data-480p="https://gplinks.co/wulM2"
+                 data-720p="https://gplinks.co/xyDjGmn"
+                 data-1080p="https://gplinks.co/0PDHy"
+                 onclick="openMovieModal(this)">
+                <div class="card-img-box">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwtLXP6W7jmslrAEt_JiA7Kx4KNYEzLKlSow&s" alt="Poster">
+                    <div class="card-overlay"><i class="fas fa-play-circle"></i></div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Now You See Me: Now You Don't</div>
+                    <div class="movie-meta"><span>2025</span>Hindi</div>
+                </div>
+            </div>
+
+            <div class="movie-card" 
+                 data-title="Dhurandhar"
+                 data-img="https://cdn.district.in/movies-assets/images/cinema/_HorizontalDhurandhar-1b8dc980-ce83-11f0-af8c-6926695421f1.jpg?im=Resize,width=720"
+                 data-desc="Dhurandhar (2025) WEB-DL [Hindi (DD5.1) Dual Audio | Full Movie"
+                 data-480p="https://gplinks.co/8tO4L"
+                 data-720p="https://gplinks.co/VMIKyoJx"
+                 data-1080p="https://gplinks.co/1SwrSM5"
+                 onclick="openMovieModal(this)">
+                <div class="card-img-box">
+                    <img src="https://m.media-amazon.com/images/M/MV5BMzFiNTVkZjYtM2I3Yi00MGNjLWEyYTAtMGViNGExZmMzMGMzXkEyXkFqcGc@._V1_QL75_UY281_CR18,0,190,281_.jpg" alt="Poster">
+                    <div class="card-overlay"><i class="fas fa-play-circle"></i></div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Dhurandhar</div>
+                    <div class="movie-meta"><span>2025</span>Hindi</div>
+                </div>
+            </div>
+
+            <div class="movie-card" 
+                 data-title="The Witch: Part 1 - The Subversion"
+                 data-img="https://static1.squarespace.com/static/5e4c8c633c6f9213af9e358f/60d8954e57c4a5715ca2a018/65c8e9f7c5a8bc4523f09894/1707668480644/Image+72.jpeg?format=1500w"
+                 data-desc="The Witch: Part 1 - The Subversion (2018) WEB-DL [Hindi (DD5.1) Dual Audio | Full Movie"
+                 data-480p="https://gplinks.co/VISdQd"
+                 data-720p="https://gplinks.co/QyrQK1"
+                 data-1080p="https://gplinks.co/s7yC"
+                 onclick="openMovieModal(this)">
+                <div class="card-img-box">
+                    <img src="https://m.media-amazon.com/images/S/pv-target-images/c0a59b9c0c8f3629f842a11f229af1b2339c2301e0b83d83cfca9e2441b160ff.jpg" alt="Poster">
+                    <div class="card-overlay"><i class="fas fa-play-circle"></i></div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">The Witch: Part 1 - The Subversion</div>
+                    <div class="movie-meta"><span>2018</span>Hindi</div>
+                </div>
+            </div>
+
+            <div class="movie-card" 
+                 data-title="Do Deewane Seher Mein"
+                 data-img="https://images.herzindagi.info/her-zindagi-english/images/2026/02/20/article/image/mn-1771582469375.webp"
+                 data-desc="Do Deewane Seher Mein (2026) WEB-DL [Hindi (DD5.1) Dual Audio | Full Movie"
+                 data-480p="https://gplinks.co/hqsuyGZ"
+                 data-720p="https://gplinks.co/0z2ij6Ne"
+                 data-1080p="https://gplinks.co/aIkkbcs"
+                 onclick="openMovieModal(this)">
+                <div class="card-img-box">
+                    <img src="https://image.tmdb.org/t/p/w400/p8yPjT9NAH87oD9TedclRaAW7RY.jpg" alt="Poster">
+                    <div class="card-overlay"><i class="fas fa-play-circle"></i></div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Do Deewane Seher Mein</div>
+                    <div class="movie-meta"><span>2026</span>Hindi</div>
+                </div>
+            </div>
+
+            <div class="movie-card" 
+                 data-title="Jana Nayagan"
+                 data-img="https://assets-in.bmscdn.com/discovery-catalog/events/et00430817-nmymveyxbj-landscape.jpg"
+                 data-desc="Jana Nayagan (2026) WEB-DL [Hindi (DD5.1) Dual Audio | Full Movie"
+                 data-480p="https://gplinks.co/G0Qw"
+                 data-720p="https://gplinks.co/8ncW8IGJ"
+                 data-1080p="https://gplinks.co/AMYZK2K"
+                 onclick="openMovieModal(this)">
+                <div class="card-img-box">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnlzkOimq2QTp4A0Nbet25xwcy0nr2wmVYDg&s" alt="Poster">
+                    <div class="card-overlay"><i class="fas fa-play-circle"></i></div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Jana Nayagan</div>
+                    <div class="movie-meta"><span>2026</span>Hindi</div>
+                </div>
+            </div>
+
+            <div class="movie-card" 
+                 data-title="RRR"
+                 data-img="https://www.denofgeek.com/wp-content/uploads/2022/11/rrr.jpg?fit=2000%2C1235"
+                 data-desc="RRR (2022) WEB-DL [Hindi (DD5.1) Dual Audio | Full Movie"
+                 data-480p="https://gplinks.co/qUh0eNr"
+                 data-720p="https://gplinks.co/VJrjS3"
+                 data-1080p="https://gplinks.co/jVP1b"
+                 onclick="openMovieModal(this)">
+                <div class="card-img-box">
+                    <img src="https://myimg.click/images/2022/05/19/RRR-2022-Hindi-HDRip-Full-Movie.jpg" alt="Poster">
+                    <div class="card-overlay"><i class="fas fa-play-circle"></i></div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">RRR</div>
+                    <div class="movie-meta"><span>2022</span><span class="rating"><i class="fas fa-star"></i> 8.7</span></div>
+                </div>
+            </div>
+
+    <div class="modal-overlay" id="movieModal" onclick="closeMovieModal(event)">
+        <div class="movie-detail-card">
+            
+            <div class="video-player-container">
+                <span class="close-btn" onclick="closeMovieModal()">&times;</span>
+
+                <div class="player-placeholder" id="playerPlaceholder">
+                    <img id="modalImg" src="" alt="Banner">
+                </div>
+            </div>
+            
+            <div class="modal-body">
+                <h2 id="modalTitle">Movie Title</h2>
+                <p class="modal-desc" id="modalDesc">Description text goes here.</p>
+                
+                <div class="quality-section-title"><i class="fas fa-download"></i> Download Movie</div>
+                <div class="quality-grid" id="qualityGridBox"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openMovieModal(cardElement) {
+            let title = cardElement.getAttribute('data-title');
+            let description = cardElement.getAttribute('data-desc');
+            let imgUrl = cardElement.getAttribute('data-img');
+            
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = description;
+            document.getElementById('modalImg').src = imgUrl; 
+            
+            let gridBox = document.getElementById('qualityGridBox');
+            gridBox.innerHTML = ""; 
+
+            // Array containing custom targeted qualities
+            let qualities = ['480p', '720p', '1080p'];
+
+            qualities.forEach(function(quality) {
+                let downloadUrl = cardElement.getAttribute(`data-${quality}`);
+                
+                if(downloadUrl && downloadUrl.trim() !== "") {
+                    let btn = document.createElement('a');
+                    btn.className = "quality-btn";
+                    btn.href = downloadUrl;
+                    btn.target = "_blank";
+                    btn.rel = "noopener noreferrer";
+                    btn.innerHTML = `<i class="fas fa-download"></i> Download ${quality}`;
+                    gridBox.appendChild(btn);
+                }
+            });
+
+            document.getElementById('playerPlaceholder').style.display = "flex";
+            document.getElementById('movieModal').classList.add('active');
+        }
+
+        function forceStreamQuality(url, targetButton) {
+            let buttons = document.getElementsByClassName('quality-btn');
+            for(let b of buttons) { b.classList.remove('active'); }
+            targetButton.classList.add('active');
+        }
+
+        function destroyPlayer() {
+            document.getElementById('movieModal').classList.remove('active');
+        }
+
+        function closeMovieModal(event) {
+            if(!event || event.target.classList.contains('modal-overlay')) {
+                destroyPlayer();
+            }
+        }
+
+        function filterMovies() {
+            let input = document.getElementById('movieSearch').value.toLowerCase();
+            let cards = document.getElementsByClassName('movie-card');
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].getAttribute('data-title').toLowerCase();
+                cards[i].style.display = title.includes(input) ? "block" : "none";
+            }
+        }
+    </script>
+</body>
+</html>
