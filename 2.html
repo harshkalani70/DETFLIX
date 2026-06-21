@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DETFLIX - Video Player</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap');
+        
+        /* Pure page ko black aur full screen touch friendly banane ke liye */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: #06070a; color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; }
+
+        /* 📱 Mobile Responsive Player Wrapper */
+        .player-container {
+            width: 100%;
+            max-width: 650px; /* Laptop/Tablet par bhi perfect dikhega */
+            background: #12131a;
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+            border: 1px solid rgba(229, 9, 20, 0.2);
+            text-align: center;
+        }
+
+        /* Top Brand Logo */
+        .logo { 
+            font-size: 22px; 
+            font-weight: 800; 
+            color: #e50914; 
+            margin-bottom: 12px; 
+            letter-spacing: 1px; 
+            text-shadow: 0 0 15px rgba(229, 9, 20, 0.5); 
+            text-transform: uppercase;
+        }
+
+        /* 📺 THEATER VIDEO BOX */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            aspect-ratio: 16/9; /* Standard Cinema Ratio */
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .video-wrapper video { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; /* Video stretch nahi hogi, original ratio me dikhegi */
+            display: block; 
+        }
+
+        /* Chota sa clean subtitle/note browser window ke niche */
+        .footer-text {
+            font-size: 0.75rem;
+            color: #4b5563;
+            margin-top: 12px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="player-container">
+        <div class="logo">DETFLIX</div>
+        <p>Unlock video </p>
+
+        <div class="video-wrapper">
+            <video id="detflixPlayer" controls playsinline>
+                <source src="https://watch.gkbotz.qzz.io/dl/28916?hash=AgADRh&chat=-1001619644038" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="footer-text"></div>
+    </div>
+
+</body>
+</html>
