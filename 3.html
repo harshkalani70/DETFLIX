@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>DETFLIX - Ultimate Movies, Series, Drama & Anime Hub</title>
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: #06070a; color: #fff; overflow-x: hidden; display: flex; }
+
+        /* --- SIDEBAR NAVIGATION --- */
+        .sidebar {
+            width: 240px; height: 100vh; background: #090a0f; position: fixed; left: 0; top: 0;
+            padding: 25px 15px; border-right: 1px solid rgba(229, 9, 20, 0.1); z-index: 90;
+        }
+        .sidebar-logo { font-size: 26px; font-weight: 800; color: #e50914; margin-bottom: 35px; padding-left: 10px; letter-spacing: 1px; }
+        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .nav-item { 
+            display: flex; align-items: center; gap: 15px; padding: 12px 15px; color: #94a3b8; 
+            text-decoration: none; font-weight: 500; border-radius: 10px; cursor: pointer; transition: all 0.25s;
+        }
+        .nav-item:hover, .nav-item.active { background: rgba(229, 9, 20, 0.1); color: #fff; }
+        .nav-item.active i { color: #e50914; }
+
+        /* --- MAIN CONTENT AREA --- */
+        .main-content { margin-left: 240px; width: calc(100% - 240px); min-height: 100vh; padding-bottom: 80px; }
+
+        .top-header {
+            display: flex; justify-content: space-between; align-items: center; padding: 15px 4%;
+            background: rgba(6, 7, 10, 0.95); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .search-wrapper {
+            display: flex; align-items: center; background: #12131a; width: 100%; max-width: 450px;
+            padding: 8px 18px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .search-wrapper input { background: transparent; border: none; outline: none; color: #fff; width: 100%; margin-left: 10px; font-size: 0.9rem; }
+        .search-wrapper i { color: #555866; }
+
+        /* --- CALL TO ACTION BUTTON --- */
+        .cta-button {
+            display: inline-flex; align-items: center; gap: 1px;
+            background: linear-gradient(90deg, #e50914 0%, #b20610 100%);
+            color: #fff; padding: 8px 14px; border-radius: 24px; border: none; cursor: pointer;
+            font-weight: 700; text-decoration: none; box-shadow: 0 6px 18px rgba(229,9,20,0.18);
+            transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+        }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(229,9,20,0.22); opacity: 0.98; }
+        .cta-button:active { transform: translateY(0); box-shadow: 0 6px 12px rgba(0,0,0,0.25); }
+
+        /* --- MOVIE GRID --- */
+        .grid-container { padding: 25px 4%; }
+        .section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; color: #f8fafc; display: flex; align-items: center; gap: 10px; }
+        .section-title::before { content: ''; width: 4px; height: 20px; background: #e50914; display: inline-block; border-radius: 2px; }
+        
+        .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; }
+        .movie-card { background: #12131a; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.02); }
+        .movie-card:hover { transform: translateY(-5px); border-color: rgba(229, 9, 20, 0.3); }
+        
+        .card-img-box { position: relative; width: 100%; aspect-ratio: 2/3; background: #1c1e29; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .card-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.2s; }
+        .movie-card:hover .card-overlay { opacity: 1; }
+        .card-overlay i { font-size: 2.5rem; color: #e50914; }
+
+        .movie-info { padding: 10px; }
+        .movie-title { font-size: 0.85rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #f1f5f9; }
+        .movie-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #64748b; margin-top: 4px; }
+        .rating-badge { color: #ffb81c; font-weight: 600; }
+        .audio-tag { background: rgba(229, 9, 20, 0.15); color: #e50914; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; }
+
+        /* --- MODAL POPUP SYSTEM --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 4, 6, 0.95);
+            backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center;
+            z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 15px;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        
+        .modal-card {
+            background: #111217; width: 100%; max-width: 580px; border-radius: 16px;
+            border: 1px solid rgba(229, 9, 20, 0.2); max-height: 90vh; 
+            display: flex; flex-direction: column; overflow: hidden; position: relative;
+        }
+        
+        .close-modal-btn {
+            position: absolute; top: 15px; right: 15px; font-size: 1.4rem; color: #fff;
+            background: rgba(0, 0, 0, 0.6); width: 36px; height: 36px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1010;
+            border: 1px solid rgba(255,255,255,0.1); transition: background 0.2s;
+        }
+        .close-modal-btn:hover { background: #e50914; }
+
+        .modal-video-box { 
+            width: 100%; aspect-ratio: 16/9; background: #000; 
+            overflow: hidden; display: none; flex-shrink: 0; z-index: 1005;
+        }
+        .modal-video-box video, .modal-video-box iframe { width: 100%; height: 100%; border: none; object-fit: contain; }
+
+        .modal-body-content { padding: 20px; overflow-y: auto; flex: 1; }
+        .modal-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 5px; color: #fff; padding-right: 40px; }
+        .modal-desc { font-size: 0.85rem; color: #94a3b8; margin-bottom: 20px; line-height: 1.4; }
+
+        .episode-container { display: none; flex-direction: column; gap: 10px; margin-top: 10px; }
+        .section-sub-title { font-size: 0.9rem; font-weight: 600; color: #94a3b8; margin-bottom: 5px; margin-top: 10px; }
+        
+        .episode-btn {
+            background: #181922; border: 1px solid rgba(255,255,255,0.05); color: #fff;
+            padding: 12px 15px; text-align: left; border-radius: 8px; font-weight: 500;
+            display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s;
+        }
+        .episode-btn:hover { background: linear-gradient(135deg, #e50914, #b20610); border-color: transparent; }
+        .episode-btn i { color: #e50914; }
+        .episode-btn:hover i { color: #fff; }
+
+        /* --- BOTTOM NAV (Mobile Only) --- */
+        .bottom-nav {
+            display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: #090a0f;
+            border-top: 1px solid rgba(255,255,255,0.05); justify-content: space-around; padding: 10px 0; z-index: 100;
+        }
+        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; color: #64748b; text-decoration: none; font-size: 0.7rem; gap: 4px; }
+        .bottom-nav-item.active { color: #e50914; }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; width: 100%; padding-bottom: 70px; }
+            .bottom-nav { display: flex; }
+            .movie-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+            .modal-overlay { padding: 0; } 
+            .modal-card { max-width: 100%; width: 100%; height: 100%; max-height: 100vh; border-radius: 0; border: none; }
+            .modal-body-content { padding: 15px; }
+            
+            .close-modal-btn { 
+                top: calc(15px + env(safe-area-inset-top, 10px)); 
+                right: 15px; width: 38px; height: 38px; font-size: 1.2rem;
+                background: rgba(6, 7, 10, 0.85); border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR NAVIGATION (Desktop) -->
+    <div class="sidebar">
+        <div class="sidebar-logo">DETFLIX</div>
+        <ul class="nav-links">
+            <li class="nav-item active" onclick="changeCategory('movie')"><i class="fas fa-film"></i> Movies</li>
+            <li class="nav-item" onclick="changeCategory('tv')"><i class="fas fa-tv"></i> Web Series</li>
+            <li class="nav-item" onclick="changeCategory('drama')"><i class="fas fa-theater-masks"></i> Dramas</li>
+            <li class="nav-item" onclick="changeCategory('anime')"><i class="fas fa-dragon"></i> Anime</li>
+        </ul>
+    </div>
+
+    <!-- MAIN DASHBOARD -->
+    <div class="main-content">
+        <div class="top-header">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchBar" placeholder="Search..." onkeyup="searchContent()">
+            </div>
+            <a href="https://t.me/DETFLIX_H" class="cta-button" target="_blank" rel="noopener">Join <i class="fas fa-paper-plane"></i></a>
+        </div>
+
+        <div class="grid-container">
+            <h2 class="section-title" id="sectionHeading">All Movies</h2>
+            <div class="movie-grid" id="contentGrid"></div>
+        </div>
+    </div>
+
+    <!-- PLAY SYSTEM MODAL POPUP -->
+    <div class="modal-overlay" id="playerModal">
+        <div class="modal-card">
+            <span class="close-modal-btn" onclick="closeModal()">&times;</span>
+            
+            <div class="modal-video-box" id="videoBox">
+                <video id="mainVideoPlayer" controls playsinline></video>
+                <!-- 🛠️ FIX 1: HTML Iframe me allowfullscreen add kiya hai -->
+                <iframe id="mainIframePlayer" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
+            </div>
+
+            <div class="modal-body-content">
+                <h2 class="modal-title" id="modalTitle">Title</h2>
+                <p class="modal-desc" id="modalDesc">Description...</p>
+                
+                <div id="languageTitle" class="section-sub-title" style="display:none;"><i class="fas fa-language"></i> Select Audio Language</div>
+                <div class="episode-container" id="languageBox"></div>
+                
+                <div id="episodeTitle" class="section-sub-title" style="display:none;"><i class="fas fa-list"></i> Select Episode</div>
+                <div class="episode-container" id="episodeBox"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="bottom-nav">
+        <a href="#" class="bottom-nav-item active" onclick="changeCategory('movie')"><i class="fas fa-film"></i>Movies</a>
+        <a href="#" class="bottom-nav-item" onclick="changeCategory('tv')"><i class="fas fa-tv"></i>Series</a>
+        <a href="#" class="bottom-nav-item" onclick="changeCategory('drama')"><i class="fas fa-theater-masks"></i>Dramas</a>
+        <a href="#" class="bottom-nav-item" onclick="changeCategory('anime')"><i class="fas fa-dragon"></i>Anime</a>
+    </div>
+
+    <script>
+        let currentType = 'movie';
+
+        const myDatabase = [
+            {
+                type: "movie",
+                title: "Interstellar",
+                img: "https://tse4.mm.bing.net/th/id/OIP.px1TUhrxw_xLa-yeyvp-9gHaLH?cb=thfvnextfalcon2&pid=ImgDet&w=178&h=267&c=7&dpr=1.5&o=7&rm=3",
+                year: "2014",
+                rating: "DS4K",
+                audio: "",
+                desc: "Interstellar (2014) iMAX BluRay [Hindi (ORG 5.1) + English] Dual Audio [x264/10Bit-HEVC] | Full Movie",
+                videoUrl: "https://zhioihhf5jp4tuz.cdn-centaurus.com/vp/01/09315/zify9ai4t5ef_n/Interstellar.2014.1080P.Nf.Web-Dl.Ddp5.1.Vp9-Vista.mkv.mp4?t=lPGsMGMqP4ZfEl20-KobCTK1E8mDWSJdxGO7Znc66Yo&s=1782232702&e=129600&f=46578088&sp=400&i=150.107&srv=zfrDFVBCJYdZ54KZ"
+            },
+            {
+                type: "movie",
+                title: "Pathaan",
+                img: "https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=600",
+                year: "2023",
+                rating: "8.1",
+                audio: "Hindi",
+                desc: "High quality Hindi server stream.",
+                videoUrl: "https://ok.ru/video/14776520280596"
+            },
+
+
+
+
+
+
+
+
+
+
+            // series add
+
+            {
+                type: "tv",
+                title: "Money Heist (Season 1)",
+                img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600",
+                year: "2021",
+                rating: "8.8",
+                audio: "Hindi/Eng",
+                desc: "A mastermind 'The Professor' plans the biggest heist in history.",
+                episodes: [
+                    { name: "Episode 1 ", url: "" },
+                    { name: "Episode 2 ", url: "" },
+                    { name :"Episode 3 ", url: "" },  
+                    { name: "Episode 4 ", url: "" },
+                    { name: "Episode 5 ", url: "" },
+                    { name :"Episode 6 ", url: "" }, 
+                    { name: "Episode 7 ", url: "" },
+                    { name: "Episode 8 ", url: "" },
+                    { name :"Episode 9 ", url: "" },  
+            ]
+            },
+
+
+
+
+
+
+
+
+  
+            // drama add
+            {
+                type: "drama",
+                title: "Teach You a Lesson",
+                img: "https://tse3.mm.bing.net/th/id/OIF.GHOkFhfDC6yDzpHHKhEqGw?cb=thfvnextfalcon2&rs=1&pid=ImgDetMain&o=7&rm=3",
+                year: "2026",
+                rating: "Ep-10",
+                desc: "Season-1 , Audio-Hindi , 720p , kdrama",
+                episodes: [
+                    { name: "Episode 1", url: "https://zhioihhf5jp4tuz.cdn-centaurus.com/vp/01/14525/40tnz4ll7n1g_n/Teach.You.a.Lesson.S01E01.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=G9KweLRxGGksb4DE57NpnMWdxZ50wUPzlGZWGVnBZak&s=1782231201&e=129600&f=72626552&sp=400&i=150.107&srv=z13jtbat10fa85i" },
+                    { name: "Episode 2", url: "https://lu1r85hg8m.premilkyway.com/vp/01/14525/jiud596w41ub_n/Teach.You.a.Lesson.S01E02.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=FtwSIDa7IWh2pIX3L2ZHKjOVI5iFuhJtB_OzuAd4GG8&s=1782231558&e=129600&f=72626533&sp=400&i=150.107&srv=z13jtbat10fa85i" },
+                    { name: "Episode 3", url: "https://p2qxmiasglj.cdn-centaurus.com/vp/01/14525/nsq2hwwv4evz_n/Teach.You.a.Lesson.S01E03.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=s_zCf-5yztSWLZY2je3AzpwkShw67ev1p-wH0GLT9B4&s=1782231618&e=129600&f=72626507&sp=400&i=150.107&srv=6wyav2r9i6j" },
+                    { name: "Episode 4", url: "https://lvvb9d6p7p.premilkyway.com/vp/01/14525/35emedgtq7a5_n/Teach.You.a.Lesson.S01E04.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=tzNdwkobaFNpGizpXqIuIZaNyatS7c_2FgFgt36cUb8&s=1782231686&e=129600&f=72626467&sp=400&i=150.107&srv=Gy4KXLg7mXRDXE7k" },
+                    { name: "Episode 5", url: "https://rfognbc0mhhj.premilkyway.com/vp/01/14525/iflmjj7qx1gp_n/Teach.You.a.Lesson.S01E05.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=XgO2Fwkcx9hIuvUmrxJ8zEOAxKnl4QDldNqS-iwClqw&s=1782231758&e=129600&f=72626436&sp=400&i=150.107&srv=z13jtbat10fa85i" },
+                    { name: "Episode 6", url: "https://rfognbc0mhhj.premilkyway.com/vp/01/14525/flxcu6rrmejy_n/Teach.You.a.Lesson.S01E06.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=fAVefh6rs3S1mFOOGCe6uLrVp9teK8kioR7EdYpTdKI&s=1782231830&e=129600&f=72626411&sp=400&i=150.107&srv=dwjdqozeoybz" },
+                    { name: "Episode 7", url: "https://lvvb9d6p7p.premilkyway.com/vp/01/14525/5p4g154bxhla_n/Teach.You.a.Lesson.S01E07.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=GTSqLjI9nxR-KAkzlWN8NEuNq_DmkuP4femZbORuRhY&s=1782231900&e=129600&f=72626380&sp=400&i=150.107&srv=yEbrSpZaZQvW6" },
+                    { name: "Episode 8", url: "https://m68btj72qc.premilkyway.com/vp/01/14525/9mauzewgq71g_n/Teach.You.a.Lesson.S01E08.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=Wj8zkAXc-7a9Dz7joPYWG_4UVIzsOeq1i4QrsuoKXeU&s=1782231980&e=129600&f=72626348&sp=400&i=150.107&srv=zukkcg9r2ba2" },
+                    { name: "Episode 9", url: "https://g9hb6ahmf6ejy.cdn-centaurus.com/vp/01/14525/w62q3h66o96u_n/Teach.You.a.Lesson.S01E09.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=9iWmzxaXLvJNFKvbzvINOV0V34nbfutPNbEKdpu4ksY&s=1782232580&e=129600&f=72626319&sp=400&i=150.107&srv=vy7cie2tqwc2cgp" },
+                    { name: "Episode 10", url: "https://lvvb9d6p7p.premilkyway.com/vp/01/14525/lkektgsm8c9f_n/Teach.You.a.Lesson.S01E10.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=Dx4LTgaJBoBcccD_p5im9V9ZBUOMnjMGOPt0a2Cy40s&s=1782232637&e=129600&f=72626296&sp=400&i=150.107&srv=dwjdqozeoybz" },
+                ]
+            },
+            {
+                type: "drama",
+                title: "The Wonderfools",
+                img: "https://static0.srcdn.com/wordpress/wp-content/uploads/sharedimages/2026/05/the-wonderfools-poster.jpg?q=50&fit=crop&w=265&h=392&dpr=1.5",
+                year: "2026",
+                rating: "Ep-8",
+                desc: "Season-1 , Audio-Hindi , 720p , kdrama",
+                episodes: [
+                    { name: "Episode 1", url: "" },
+                    { name: "Episode 2", url: "" },
+                    { name: "Episode 3", url: "" },
+                    { name: "Episode 4", url: "" },
+                    { name: "Episode 5", url: "" },
+                    { name: "Episode 6", url: "" },
+                    { name: "Episode 7", url: "" },
+                    { name: "Episode 8", url: "" },
+                ]
+            },
+
+
+
+
+
+
+
+
+
+            // anime add
+
+            {
+                type: "anime",
+                title: "Naruto Shippuden",
+                img: "https://m.media-amazon.com/images/M/MV5BZGFiMWFhNDAtMzUyZS00NmQ2LTljNDYtMmZjNTc5MDUxMzViXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_FMjpg_UX1000_.jpg",
+                year: "",
+                rating: "All SEASON",
+                audio: "",
+                desc: "Naruto Uzumaki wants to become the greatest ninja.",
+                episodes: [
+                    { name: "Episode 1", url: "https://m68btj72qc.premilkyway.com/vp/01/14159/7d7nbd92h2ui_n/Naruto_Shippuden_-_S01E01__1080p_BD_x265_10bit_Multi_Audio__DD2.0_ESub.mkv.mp4?t=zNAnZrtiNmiJs8ly__szaxDXdJ08WZlCo8HoqcJj7IQ&s=1782224384&e=129600&f=70796372&sp=400&i=150.107&srv=rcw6bat4y3dx8" },
+                    { name: "Episode 2", url: "hh" },
+                    { name: "Episode 3", url: "" },
+                    { name: "Episode 4", url: "" },
+                    { name: "Episode 5", url: "" },
+                    { name: "Episode 6", url: "" },
+                    { name: "Episode 7", url: "" },
+                    { name: "Episode 8", url: "" },
+                ]
+            },
+        ];
+
+        function renderCards(dataList) {
+            const grid = document.getElementById('contentGrid');
+            grid.innerHTML = ""; 
+
+            if(dataList.length === 0) {
+                grid.innerHTML = "<p style='color: #64748b; padding-left: 5px;'>No content found.</p>";
+                return;
+            }
+
+            dataList.forEach(item => {
+                let card = document.createElement('div');
+                card.className = "movie-card";
+                card.innerHTML = `
+                    <div class="card-img-box">
+                        <img src="${item.img}" alt="Poster" loading="lazy">
+                        <div class="card-overlay"><i class="fas fa-play-circle"></i></div>
+                    </div>
+                    <div class="movie-info">
+                        <div class="movie-title">${item.title}</div>
+                        <div class="movie-meta">
+                            <span>${item.year}</span>
+                            <span class="">${item.audio || ''}</span>
+                            <span class="rating-badge"><i class=""></i> ${item.rating}</span>
+                        </div>
+                    </div>
+                `;
+                card.onclick = () => openModal(item);
+                grid.appendChild(card);
+            });
+        }
+
+        function playSmartVideo(url) {
+            const videoBox = document.getElementById('videoBox');
+            const player = document.getElementById('mainVideoPlayer');
+            const iframePlayer = document.getElementById('mainIframePlayer');
+
+            videoBox.style.display = "block";
+
+            if (url.includes("ok.ru/video/")) {
+                url = url.replace("ok.ru/video/", "ok.ru/videoembed/");
+            }
+            
+            if (url.includes("odysee.com") && !url.includes("/$/embed/")) {
+                let cleanUrl = url.split('?')[0]; 
+                url = cleanUrl.replace("odysee.com/", "odysee.com/$/embed/");
+            }
+
+            if (url.includes("drive.google") || url.includes("iframe") || url.includes("streamwish") || url.includes("streamtape") || url.includes("/e/") || url.includes("ok.ru") || url.includes("odysee.com")) {
+                player.style.display = "none";
+                player.pause(); player.src = "";
+                
+                iframePlayer.style.display = "block";
+                iframePlayer.src = url;
+                
+                // 🛠️ FIX 2: JavaScript se fullscreen ki permissions force ki hain
+                iframePlayer.setAttribute("allow", "autoplay; fullscreen; encrypted-media; picture-in-picture");
+                iframePlayer.setAttribute("allowfullscreen", "true");
+            } else {
+                iframePlayer.style.display = "none"; iframePlayer.src = "";
+                player.style.display = "block";
+                player.src = url;
+                player.play();
+            }
+        }
+
+        function openModal(item) {
+            const modal = document.getElementById('playerModal');
+            const videoBox = document.getElementById('videoBox');
+            const episodeBox = document.getElementById('episodeBox');
+            const languageBox = document.getElementById('languageBox');
+            const episodeTitle = document.getElementById('episodeTitle');
+            const languageTitle = document.getElementById('languageTitle');
+            const player = document.getElementById('mainVideoPlayer');
+            const iframePlayer = document.getElementById('mainIframePlayer');
+
+            document.getElementById('modalTitle').innerText = item.title;
+            document.getElementById('modalDesc').innerText = item.desc;
+
+            player.src = ""; iframePlayer.src = "";
+            videoBox.style.display = "none";
+            episodeBox.style.display = "none"; languageBox.style.display = "none";
+            episodeTitle.style.display = "none"; languageTitle.style.display = "none";
+            episodeBox.innerHTML = ""; languageBox.innerHTML = "";
+
+            if (item.type === 'movie') {
+                if (item.videoUrlHindi || item.videoUrlEnglish) {
+                    languageBox.style.display = "flex";
+                    languageTitle.style.display = "block";
+                    
+                    if (item.videoUrlHindi) {
+                        let btnH = document.createElement('div');
+                        btnH.className = "episode-btn";
+                        btnH.innerHTML = `<span>🔊 Play in Hindi</span> <i class="fas fa-play-circle"></i>`;
+                        btnH.onclick = () => playSmartVideo(item.videoUrlHindi);
+                        languageBox.appendChild(btnH);
+                    }
+                    if (item.videoUrlEnglish) {
+                        let btnE = document.createElement('div');
+                        btnE.className = "episode-btn";
+                        btnE.innerHTML = `<span>🌐 Play in English</span> <i class="fas fa-play-circle"></i>`;
+                        btnE.onclick = () => playSmartVideo(item.videoUrlEnglish);
+                        languageBox.appendChild(btnE);
+                    }
+                } else {
+                    playSmartVideo(item.videoUrl);
+                }
+            } else {
+                episodeBox.style.display = "flex";
+                episodeTitle.style.display = "block";
+                item.episodes.forEach(ep => {
+                    let btn = document.createElement('div');
+                    btn.className = "episode-btn";
+                    btn.innerHTML = `<span>${ep.name}</span> <i class="fas fa-play-circle"></i>`;
+                    btn.onclick = () => playSmartVideo(ep.url);
+                    episodeBox.appendChild(btn);
+                });
+            }
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('playerModal');
+            document.getElementById('mainVideoPlayer').pause(); 
+            document.getElementById('mainVideoPlayer').src = "";
+            document.getElementById('mainIframePlayer').src = ""; 
+            modal.classList.remove('active');
+        }
+
+        function changeCategory(type) {
+            currentType = type;
+            document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll(`[onclick="changeCategory('${type}')"]`).forEach(el => el.classList.add('active'));
+            document.getElementById('searchBar').value = ""; 
+
+            let heading = "All Movies";
+            if(type === 'tv') heading = "All Web Series";
+            if(type === 'drama') heading = "All Dramas";
+            if(type === 'anime') heading = "All Anime";
+            document.getElementById('sectionHeading').innerText = heading;
+
+            renderCards(myDatabase.filter(item => item.type === type));
+        }
+
+        function searchContent() {
+            let query = document.getElementById('searchBar').value.toLowerCase().trim();
+            renderCards(myDatabase.filter(item => item.title.toLowerCase().includes(query) && item.type === currentType));
+        }
+
+        window.onload = () => { renderCards(myDatabase.filter(item => item.type === 'movie')); };
+    </script>
+</body>
+</html>
