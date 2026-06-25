@@ -17,16 +17,16 @@
         /* --- SIDEBAR NAVIGATION --- */
         .sidebar {
             width: 240px; height: 100vh; background: #090a0f; position: fixed; left: 0; top: 0;
-            padding: 25px 15px; border-right: 1px solid rgba(229, 9, 20, 0.1); z-index: 90;
+            padding: 25px 15px; border-right: 1px solid rgba(245, 197, 24, 0.1); z-index: 90;
         }
-        .sidebar-logo { font-size: 26px; font-weight: 800; color: #e50914; margin-bottom: 35px; padding-left: 10px; letter-spacing: 1px; }
+        .sidebar-logo { font-size: 26px; font-weight: 800; color: #f5c518; margin-bottom: 35px; padding-left: 10px; letter-spacing: 1px; }
         .nav-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
         .nav-item { 
             display: flex; align-items: center; gap: 15px; padding: 12px 15px; color: #94a3b8; 
             text-decoration: none; font-weight: 500; border-radius: 10px; cursor: pointer; transition: all 0.25s;
         }
-        .nav-item:hover, .nav-item.active { background: rgba(229, 9, 20, 0.1); color: #fff; }
-        .nav-item.active i { color: #e50914; }
+        .nav-item:hover, .nav-item.active { background: rgba(245, 197, 24, 0.1); color: #fff; }
+        .nav-item.active i { color: #f5c518; }
 
         /* --- MAIN CONTENT AREA --- */
         .main-content { margin-left: 240px; width: calc(100% - 240px); min-height: 100vh; padding-bottom: 80px; }
@@ -34,7 +34,7 @@
         .top-header {
             display: flex; justify-content: space-between; align-items: center; padding: 15px 4%;
             background: rgba(6, 7, 10, 0.95); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.03); gap: 15px;
         }
         .search-wrapper {
             display: flex; align-items: center; background: #12131a; width: 100%; max-width: 450px;
@@ -43,37 +43,35 @@
         .search-wrapper input { background: transparent; border: none; outline: none; color: #fff; width: 100%; margin-left: 10px; font-size: 0.9rem; }
         .search-wrapper i { color: #555866; }
 
-        /* --- CALL TO ACTION BUTTON --- */
-        .cta-button {
-            display: inline-flex; align-items: center; gap: 1px;
-            background: linear-gradient(90deg, #e50914 0%, #b20610 100%);
-            color: #fff; padding: 8px 14px; border-radius: 24px; border: none; cursor: pointer;
-            font-weight: 700; text-decoration: none; box-shadow: 0 6px 18px rgba(229,9,20,0.18);
-            transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+        /* Premium Telegram Button Style */
+        .tg-join-btn {
+            display: flex; align-items: center; gap: 8px; background: #f5c518; color: #000;
+            padding: 9px 18px; border-radius: 30px; font-weight: 600; text-decoration: none;
+            font-size: 0.85rem; transition: all 0.25s ease; flex-shrink: 0; box-shadow: 0 4px 12px rgba(245, 197, 24, 0.2);
         }
-        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(229,9,20,0.22); opacity: 0.98; }
-        .cta-button:active { transform: translateY(0); box-shadow: 0 6px 12px rgba(0,0,0,0.25); }
+        .tg-join-btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2); }
+        .tg-join-btn i { font-size: 1.05rem; }
 
         /* --- MOVIE GRID --- */
         .grid-container { padding: 25px 4%; }
         .section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; color: #f8fafc; display: flex; align-items: center; gap: 10px; }
-        .section-title::before { content: ''; width: 4px; height: 20px; background: #e50914; display: inline-block; border-radius: 2px; }
+        .section-title::before { content: ''; width: 4px; height: 20px; background: #f5c518; display: inline-block; border-radius: 2px; }
         
         .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; }
         .movie-card { background: #12131a; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.02); }
-        .movie-card:hover { transform: translateY(-5px); border-color: rgba(229, 9, 20, 0.3); }
+        .movie-card:hover { transform: translateY(-5px); border-color: rgba(245, 197, 24, 0.3); }
         
         .card-img-box { position: relative; width: 100%; aspect-ratio: 2/3; background: #1c1e29; }
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
         .card-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.2s; }
         .movie-card:hover .card-overlay { opacity: 1; }
-        .card-overlay i { font-size: 2.5rem; color: #e50914; }
+        .card-overlay i { font-size: 2.5rem; color: #f5c518; }
 
         .movie-info { padding: 10px; }
         .movie-title { font-size: 0.85rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #f1f5f9; }
         .movie-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #64748b; margin-top: 4px; }
-        .rating-badge { color: #ffb81c; font-weight: 600; }
-        .audio-tag { background: rgba(229, 9, 20, 0.15); color: #e50914; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; }
+        .rating-badge { color: #f5c518; font-weight: 600; }
+        .audio-tag { background: rgba(245, 197, 24, 0.15); color: #f5c518; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; }
 
         /* --- MODAL POPUP SYSTEM --- */
         .modal-overlay {
@@ -85,26 +83,28 @@
         
         .modal-card {
             background: #111217; width: 100%; max-width: 580px; border-radius: 16px;
-            border: 1px solid rgba(229, 9, 20, 0.2); max-height: 90vh; 
+            border: 1px solid rgba(245, 197, 24, 0.2); max-height: 90vh; 
             display: flex; flex-direction: column; overflow: hidden; position: relative;
         }
-        
-        .close-modal-btn {
-            position: absolute; top: 15px; right: 15px; font-size: 1.4rem; color: #fff;
-            background: rgba(0, 0, 0, 0.6); width: 36px; height: 36px; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1010;
-            border: 1px solid rgba(255,255,255,0.1); transition: background 0.2s;
-        }
-        .close-modal-btn:hover { background: #e50914; }
 
+        /* --- VIDEO BOX WITH ABSOLUTE BACK BUTTON --- */
         .modal-video-box { 
             width: 100%; aspect-ratio: 16/9; background: #000; 
-            overflow: hidden; display: none; flex-shrink: 0; z-index: 1005;
+            overflow: hidden; display: none; flex-shrink: 0; z-index: 1005; position: relative;
         }
         .modal-video-box video, .modal-video-box iframe { width: 100%; height: 100%; border: none; object-fit: contain; }
 
+        /* Premium Floating Video Back Button */
+        .video-back-btn {
+            position: absolute; top: 12px; left: 12px; font-size: 1.1rem; color: #000;
+            background: #f5c518; width: 38px; height: 38px; border-radius: 50%;
+            display: none; justify-content: center; align-items: center; cursor: pointer; 
+            z-index: 1020; border: 1px solid rgba(255,255,255,0.15); transition: all 0.2s ease;
+        }
+        .video-back-btn:hover { background: #fff; transform: scale(1.05); }
+
         .modal-body-content { padding: 20px; overflow-y: auto; flex: 1; }
-        .modal-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 5px; color: #fff; padding-right: 40px; }
+        .modal-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 5px; color: #fff; padding-right: 20px; }
         .modal-desc { font-size: 0.85rem; color: #94a3b8; margin-bottom: 20px; line-height: 1.4; }
 
         .episode-container { display: none; flex-direction: column; gap: 10px; margin-top: 10px; }
@@ -115,9 +115,9 @@
             padding: 12px 15px; text-align: left; border-radius: 8px; font-weight: 500;
             display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s;
         }
-        .episode-btn:hover { background: linear-gradient(135deg, #e50914, #b20610); border-color: transparent; }
-        .episode-btn i { color: #e50914; }
-        .episode-btn:hover i { color: #fff; }
+        .episode-btn:hover { background: linear-gradient(135deg, #f5c518, #c69d0e); color: #000; border-color: transparent; }
+        .episode-btn i { color: #f5c518; }
+        .episode-btn:hover i { color: #000; }
 
         /* --- BOTTOM NAV (Mobile Only) --- */
         .bottom-nav {
@@ -125,7 +125,7 @@
             border-top: 1px solid rgba(255,255,255,0.05); justify-content: space-around; padding: 10px 0; z-index: 100;
         }
         .bottom-nav-item { display: flex; flex-direction: column; align-items: center; color: #64748b; text-decoration: none; font-size: 0.7rem; gap: 4px; }
-        .bottom-nav-item.active { color: #e50914; }
+        .bottom-nav-item.active { color: #f5c518; }
 
         @media (max-width: 768px) {
             .sidebar { display: none; }
@@ -136,12 +136,12 @@
             .modal-overlay { padding: 0; } 
             .modal-card { max-width: 100%; width: 100%; height: 100%; max-height: 100vh; border-radius: 0; border: none; }
             .modal-body-content { padding: 15px; }
+            .video-back-btn { top: calc(12px + env(safe-area-inset-top, 5px)); left: 12px; width: 40px; height: 40px; font-size: 1.2rem; }
             
-            .close-modal-btn { 
-                top: calc(15px + env(safe-area-inset-top, 10px)); 
-                right: 15px; width: 38px; height: 38px; font-size: 1.2rem;
-                background: rgba(6, 7, 10, 0.85); border: 1px solid rgba(255, 255, 255, 0.2);
-            }
+            /* Responsive adjustments for Telegram button on mobile */
+            .tg-join-btn span { display: none; }
+            .tg-join-btn { padding: 10px; border-radius: 50%; width: 40px; height: 40px; justify-content: center; }
+            .tg-join-btn i { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -165,23 +165,28 @@
                 <i class="fas fa-search"></i>
                 <input type="text" id="searchBar" placeholder="Search..." onkeyup="searchContent()">
             </div>
-            <a href="https://t.me/DETFLIX_H" class="cta-button" target="_blank" rel="noopener">Join <i class="fas fa-paper-plane"></i></a>
+            
+            <!-- 📢 Premium Telegram Button Added Here -->
+            <a href="https://t.me/DETFLIX_H" target="_blank" class="tg-join-btn">
+                <i class="fab fa-telegram-plane"></i> <span>Join</span>
+            </a>
         </div>
 
         <div class="grid-container">
-            <h2 class="section-title" id="sectionHeading">All Movies</h2>
+            <h2 class="section-title" id="sectionHeading">Movies</h2>
             <div class="movie-grid" id="contentGrid"></div>
         </div>
     </div>
 
     <!-- PLAY SYSTEM MODAL POPUP -->
-    <div class="modal-overlay" id="playerModal">
-        <div class="modal-card">
-            <span class="close-modal-btn" onclick="closeModal()">&times;</span>
+    <div class="modal-overlay" id="playerModal" onclick="closeModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
             
             <div class="modal-video-box" id="videoBox">
+                <!-- Premium Floating Back Arrow Button -->
+                <div class="video-back-btn" id="videoBackBtn" onclick="closeModal()"><i class="fas fa-arrow-left"></i></div>
+                
                 <video id="mainVideoPlayer" controls playsinline></video>
-                <!-- 🛠️ FIX 1: HTML Iframe me allowfullscreen add kiya hai -->
                 <iframe id="mainIframePlayer" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
             </div>
 
@@ -212,23 +217,33 @@
         const myDatabase = [
             {
                 type: "movie",
-                title: "Interstellar",
-                img: "https://tse4.mm.bing.net/th/id/OIP.px1TUhrxw_xLa-yeyvp-9gHaLH?cb=thfvnextfalcon2&pid=ImgDet&w=178&h=267&c=7&dpr=1.5&o=7&rm=3",
-                year: "2014",
-                rating: "DS4K",
-                audio: "",
-                desc: "Interstellar (2014) iMAX BluRay [Hindi (ORG 5.1) + English] Dual Audio [x264/10Bit-HEVC] | Full Movie",
-                videoUrl: "https://zhioihhf5jp4tuz.cdn-centaurus.com/vp/01/09315/zify9ai4t5ef_n/Interstellar.2014.1080P.Nf.Web-Dl.Ddp5.1.Vp9-Vista.mkv.mp4?t=lPGsMGMqP4ZfEl20-KobCTK1E8mDWSJdxGO7Znc66Yo&s=1782232702&e=129600&f=46578088&sp=400&i=150.107&srv=zfrDFVBCJYdZ54KZ"
+                title: "Bhooth Bangla",
+                img: "https://www.wavecinemas.com/uploads/movies/2026_01_19_8661_bhooth-bangla-s.jpg",
+                year: "2026",
+                rating: "",
+                audio: "2h 43m",
+                desc: "A man inherits a palace in rural Mangalpur and plans his sister's wedding there, but strange supernatural events and panicked locals force him to investigate the property's mysterious past.",
+                videoUrl: "https://web.nxsha.app/embed/movie/1239134"
             },
             {
                 type: "movie",
-                title: "Pathaan",
-                img: "https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=600",
-                year: "2023",
-                rating: "8.1",
-                audio: "Hindi",
-                desc: "High quality Hindi server stream.",
-                videoUrl: "https://ok.ru/video/14776520280596"
+                title: "Dhurandhar The Revenge",
+                img: "https://m.media-amazon.com/images/M/MV5BNzdkNjAxNWMtNWY3My00NTI1LTg2YWQtOGI3MDA0NzdhMjEyXkEyXkFqcGc@._V1_.jpg",
+                year: "2026",
+                rating: "",
+                audio: "3h 49m",
+                desc: "As rival gangs, corrupt officials and a ruthless Major Iqbal close in, Hamza's mission for his country spirals into a bloody personal war where the line between patriot and monster disappears in the streets of Lyari.",
+                videoUrl: "https://web.nxsha.app/embed/movie/1582770"
+            },
+            {
+                type: "movie",
+                title: "Interstellar",
+                img: "https://im.ziffdavisinternational.com/ign_tr/screenshot/default/014212_phbp.jpg",
+                year: "2014",
+                rating: "",
+                audio: "2h 49m",
+                desc: "The adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.",
+                videoUrl: "https://web.nxsha.app/embed/movie/157336"
             },
 
 
@@ -239,8 +254,6 @@
 
 
 
-
-            // series add
 
             {
                 type: "tv",
@@ -251,16 +264,21 @@
                 audio: "Hindi/Eng",
                 desc: "A mastermind 'The Professor' plans the biggest heist in history.",
                 episodes: [
-                    { name: "Episode 1 ", url: "" },
-                    { name: "Episode 2 ", url: "" },
-                    { name :"Episode 3 ", url: "" },  
-                    { name: "Episode 4 ", url: "" },
-                    { name: "Episode 5 ", url: "" },
-                    { name :"Episode 6 ", url: "" }, 
-                    { name: "Episode 7 ", url: "" },
-                    { name: "Episode 8 ", url: "" },
-                    { name :"Episode 9 ", url: "" },  
-            ]
+                    { name: "Episode 1 - The Plan", url: "https://ok.ru/video/14776520280596" },
+                    { name: "Episode 2 - Lethal Weapons", url: "https://odysee.com/Teach.You.a.Lesson.S01E01.1080p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-Detflix.Tv:b" }
+                ]
+            },
+            {
+                type: "tv",
+                title: "All of Us Are Dead (Season 1)",
+                img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=600",
+                year: "2026",
+                rating: "",
+                audio: "EP-10",
+                desc: "A high school becomes ground zero for a zombie virus outbreak. Trapped students must fight their way out.",
+                episodes: [
+                    { name: "Episode 01 [Multi Audio]", url: "https://web.nxsha.app/embed/tv/1399/1/1" }
+                ]
             },
 
 
@@ -270,44 +288,27 @@
 
 
 
-  
-            // drama add
+
+
             {
                 type: "drama",
                 title: "Teach You a Lesson",
-                img: "https://tse3.mm.bing.net/th/id/OIF.GHOkFhfDC6yDzpHHKhEqGw?cb=thfvnextfalcon2&rs=1&pid=ImgDetMain&o=7&rm=3",
+                img: "https://ww19.myasiantv.es/wp-content/uploads/2026/05/gN7Tq35raryabkPGcKlb4ZKeutm.jpg",
                 year: "2026",
-                rating: "Ep-10",
-                desc: "Season-1 , Audio-Hindi , 720p , kdrama",
+                rating: "",
+                audio: "EP-10",
+                desc: "The National Assembly and the Minister of Education passes the Amendment to the Act on the Protection of Teachers' Rights. With the passage of the law, a new government organization, the Educational Rights Protection Bureau, is formed. Na Hwa-jin belongs to the Educational Rights Protection Bureau. He is sent to a problem school as a supervisor. There, he can educate the students without any restrictions or limitations.",
                 episodes: [
-                    { name: "Episode 1", url: "https://pro.iqsmartgames.com/svid/rlDcHRzrN9FUIImgTwdtnrcxY-tIoy2E4LbWnA" },
-                    { name: "Episode 2", url: "https://lu1r85hg8m.premilkyway.com/vp/01/14525/jiud596w41ub_n/Teach.You.a.Lesson.S01E02.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=FtwSIDa7IWh2pIX3L2ZHKjOVI5iFuhJtB_OzuAd4GG8&s=1782231558&e=129600&f=72626533&sp=400&i=150.107&srv=z13jtbat10fa85i" },
-                    { name: "Episode 3", url: "https://p2qxmiasglj.cdn-centaurus.com/vp/01/14525/nsq2hwwv4evz_n/Teach.You.a.Lesson.S01E03.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=s_zCf-5yztSWLZY2je3AzpwkShw67ev1p-wH0GLT9B4&s=1782231618&e=129600&f=72626507&sp=400&i=150.107&srv=6wyav2r9i6j" },
-                    { name: "Episode 4", url: "https://lvvb9d6p7p.premilkyway.com/vp/01/14525/35emedgtq7a5_n/Teach.You.a.Lesson.S01E04.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=tzNdwkobaFNpGizpXqIuIZaNyatS7c_2FgFgt36cUb8&s=1782231686&e=129600&f=72626467&sp=400&i=150.107&srv=Gy4KXLg7mXRDXE7k" },
-                    { name: "Episode 5", url: "https://rfognbc0mhhj.premilkyway.com/vp/01/14525/iflmjj7qx1gp_n/Teach.You.a.Lesson.S01E05.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=XgO2Fwkcx9hIuvUmrxJ8zEOAxKnl4QDldNqS-iwClqw&s=1782231758&e=129600&f=72626436&sp=400&i=150.107&srv=z13jtbat10fa85i" },
-                    { name: "Episode 6", url: "https://rfognbc0mhhj.premilkyway.com/vp/01/14525/flxcu6rrmejy_n/Teach.You.a.Lesson.S01E06.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=fAVefh6rs3S1mFOOGCe6uLrVp9teK8kioR7EdYpTdKI&s=1782231830&e=129600&f=72626411&sp=400&i=150.107&srv=dwjdqozeoybz" },
-                    { name: "Episode 7", url: "https://lvvb9d6p7p.premilkyway.com/vp/01/14525/5p4g154bxhla_n/Teach.You.a.Lesson.S01E07.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=GTSqLjI9nxR-KAkzlWN8NEuNq_DmkuP4femZbORuRhY&s=1782231900&e=129600&f=72626380&sp=400&i=150.107&srv=yEbrSpZaZQvW6" },
-                    { name: "Episode 8", url: "https://m68btj72qc.premilkyway.com/vp/01/14525/9mauzewgq71g_n/Teach.You.a.Lesson.S01E08.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=Wj8zkAXc-7a9Dz7joPYWG_4UVIzsOeq1i4QrsuoKXeU&s=1782231980&e=129600&f=72626348&sp=400&i=150.107&srv=zukkcg9r2ba2" },
-                    { name: "Episode 9", url: "https://g9hb6ahmf6ejy.cdn-centaurus.com/vp/01/14525/w62q3h66o96u_n/Teach.You.a.Lesson.S01E09.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=9iWmzxaXLvJNFKvbzvINOV0V34nbfutPNbEKdpu4ksY&s=1782232580&e=129600&f=72626319&sp=400&i=150.107&srv=vy7cie2tqwc2cgp" },
-                    { name: "Episode 10", url: "https://lvvb9d6p7p.premilkyway.com/vp/01/14525/lkektgsm8c9f_n/Teach.You.a.Lesson.S01E10.1080p.NF.WEB-DL.Multi.AAC5.1.AV1-Multimovies.mkv.mp4?t=Dx4LTgaJBoBcccD_p5im9V9ZBUOMnjMGOPt0a2Cy40s&s=1782232637&e=129600&f=72626296&sp=400&i=150.107&srv=dwjdqozeoybz" },
-                ]
-            },
-            {
-                type: "drama",
-                title: "The Wonderfools",
-                img: "https://static0.srcdn.com/wordpress/wp-content/uploads/sharedimages/2026/05/the-wonderfools-poster.jpg?q=50&fit=crop&w=265&h=392&dpr=1.5",
-                year: "2026",
-                rating: "Ep-8",
-                desc: "Season-1 , Audio-Hindi , 720p , kdrama",
-                episodes: [
-                    { name: "Episode 1", url: "https://drive.google.com/file/d/1-tTV19Uo8W7gDlhwruQe2S3fO7ev--av/view?usp=drivesdk" },
-                    { name: "Episode 2", url: "" },
-                    { name: "Episode 3", url: "" },
-                    { name: "Episode 4", url: "" },
-                    { name: "Episode 5", url: "" },
-                    { name: "Episode 6", url: "" },
-                    { name: "Episode 7", url: "" },
-                    { name: "Episode 8", url: "" },
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/276161/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/276161/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/276161/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/276161/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/276161/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/276161/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/276161/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/276161/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/276161/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/276161/1/10" }
                 ]
             },
 
@@ -319,27 +320,19 @@
 
 
 
-            // anime add
 
             {
                 type: "anime",
                 title: "Naruto Shippuden",
-                img: "https://m.media-amazon.com/images/M/MV5BZGFiMWFhNDAtMzUyZS00NmQ2LTljNDYtMmZjNTc5MDUxMzViXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_FMjpg_UX1000_.jpg",
-                year: "",
-                rating: "All SEASON",
-                audio: "",
+                img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=600",
+                year: "2017",
+                rating: "9.1",
+                audio: "Hindi/Eng",
                 desc: "Naruto Uzumaki wants to become the greatest ninja.",
                 episodes: [
-                    { name: "Episode 1", url: "https://m68btj72qc.premilkyway.com/vp/01/14159/7d7nbd92h2ui_n/Naruto_Shippuden_-_S01E01__1080p_BD_x265_10bit_Multi_Audio__DD2.0_ESub.mkv.mp4?t=zNAnZrtiNmiJs8ly__szaxDXdJ08WZlCo8HoqcJj7IQ&s=1782224384&e=129600&f=70796372&sp=400&i=150.107&srv=rcw6bat4y3dx8" },
-                    { name: "Episode 2", url: "hh" },
-                    { name: "Episode 3", url: "" },
-                    { name: "Episode 4", url: "" },
-                    { name: "Episode 5", url: "" },
-                    { name: "Episode 6", url: "" },
-                    { name: "Episode 7", url: "" },
-                    { name: "Episode 8", url: "" },
+                    { name: "Episode 1 - Homecoming", url: "https://ok.ru/video/14776520280596" }
                 ]
-            },
+            }
         ];
 
         function renderCards(dataList) {
@@ -363,8 +356,7 @@
                         <div class="movie-title">${item.title}</div>
                         <div class="movie-meta">
                             <span>${item.year}</span>
-                            <span class="">${item.audio || ''}</span>
-                            <span class="rating-badge"><i class=""></i> ${item.rating}</span>
+                            <span class="audio-tag">${item.audio || 'HINDI'}</span>
                         </div>
                     </div>
                 `;
@@ -377,8 +369,10 @@
             const videoBox = document.getElementById('videoBox');
             const player = document.getElementById('mainVideoPlayer');
             const iframePlayer = document.getElementById('mainIframePlayer');
+            const videoBackBtn = document.getElementById('videoBackBtn');
 
             videoBox.style.display = "block";
+            videoBackBtn.style.display = "flex"; 
 
             if (url.includes("ok.ru/video/")) {
                 url = url.replace("ok.ru/video/", "ok.ru/videoembed/");
@@ -389,15 +383,14 @@
                 url = cleanUrl.replace("odysee.com/", "odysee.com/$/embed/");
             }
 
-            if (url.includes("drive.google") || url.includes("iframe") || url.includes("streamwish") || url.includes("streamtape") || url.includes("/e/") || url.includes("ok.ru") || url.includes("odysee.com")) {
+            if (url.includes("nxsha.app") || url.includes("drive.google") || url.includes("iframe") || url.includes("streamwish") || url.includes("streamtape") || url.includes("/e/") || url.includes("ok.ru") || url.includes("odysee.com")) {
                 player.style.display = "none";
                 player.pause(); player.src = "";
                 
                 iframePlayer.style.display = "block";
                 iframePlayer.src = url;
                 
-                // 🛠️ FIX 2: JavaScript se fullscreen ki permissions force ki hain
-                iframePlayer.setAttribute("allow", "autoplay; fullscreen; encrypted-media; picture-in-picture");
+                iframePlayer.setAttribute("allow", "autoplay; fullscreen; picture-in-picture; encrypted-media; clipboard-write");
                 iframePlayer.setAttribute("allowfullscreen", "true");
             } else {
                 iframePlayer.style.display = "none"; iframePlayer.src = "";
@@ -416,12 +409,14 @@
             const languageTitle = document.getElementById('languageTitle');
             const player = document.getElementById('mainVideoPlayer');
             const iframePlayer = document.getElementById('mainIframePlayer');
+            const videoBackBtn = document.getElementById('videoBackBtn');
 
             document.getElementById('modalTitle').innerText = item.title;
             document.getElementById('modalDesc').innerText = item.desc;
 
             player.src = ""; iframePlayer.src = "";
             videoBox.style.display = "none";
+            videoBackBtn.style.display = "none"; 
             episodeBox.style.display = "none"; languageBox.style.display = "none";
             episodeTitle.style.display = "none"; languageTitle.style.display = "none";
             episodeBox.innerHTML = ""; languageBox.innerHTML = "";
@@ -464,6 +459,7 @@
 
         function closeModal() {
             const modal = document.getElementById('playerModal');
+            document.getElementById('videoBackBtn').style.display = "none"; 
             document.getElementById('mainVideoPlayer').pause(); 
             document.getElementById('mainVideoPlayer').src = "";
             document.getElementById('mainIframePlayer').src = ""; 
@@ -476,10 +472,10 @@
             document.querySelectorAll(`[onclick="changeCategory('${type}')"]`).forEach(el => el.classList.add('active'));
             document.getElementById('searchBar').value = ""; 
 
-            let heading = "All Movies";
-            if(type === 'tv') heading = "All Web Series";
-            if(type === 'drama') heading = "All Dramas";
-            if(type === 'anime') heading = "All Anime";
+            let heading = "Movies";
+            if(type === 'tv') heading = "Series";
+            if(type === 'drama') heading = "Dramas";
+            if(type === 'anime') heading = "Anime";
             document.getElementById('sectionHeading').innerText = heading;
 
             renderCards(myDatabase.filter(item => item.type === type));
