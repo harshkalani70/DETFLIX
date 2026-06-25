@@ -71,7 +71,6 @@
         .movie-title { font-size: 0.85rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #f1f5f9; }
         .movie-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #64748b; margin-top: 4px; }
         .rating-badge { color: #f5c518; font-weight: 600; }
-        .audio-tag { background: rgba(245, 197, 24, 0.15); color: #f5c518; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; }
 
         /* --- MODAL POPUP SYSTEM --- */
         .modal-overlay {
@@ -143,6 +142,8 @@
             .tg-join-btn { padding: 10px; border-radius: 50%; width: 40px; height: 40px; justify-content: center; }
             .tg-join-btn i { font-size: 1.2rem; }
         }
+        .audio-tag { color: #f5c518; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; }
+
     </style>
 </head>
 <body>
@@ -152,8 +153,7 @@
         <div class="sidebar-logo">DETFLIX</div>
         <ul class="nav-links">
             <li class="nav-item active" onclick="changeCategory('movie')"><i class="fas fa-film"></i> Movies</li>
-            <li class="nav-item" onclick="changeCategory('tv')"><i class="fas fa-tv"></i> Web Series</li>
-            <li class="nav-item" onclick="changeCategory('drama')"><i class="fas fa-theater-masks"></i> Dramas</li>
+            <li class="nav-item" onclick="changeCategory('tv')"><i class="fas fa-tv"></i> Series,Drama</li>
             <li class="nav-item" onclick="changeCategory('anime')"><i class="fas fa-dragon"></i> Anime</li>
         </ul>
     </div>
@@ -206,8 +206,7 @@
     <!-- BOTTOM NAVIGATION -->
     <div class="bottom-nav">
         <a href="#" class="bottom-nav-item active" onclick="changeCategory('movie')"><i class="fas fa-film"></i>Movies</a>
-        <a href="#" class="bottom-nav-item" onclick="changeCategory('tv')"><i class="fas fa-tv"></i>Series</a>
-        <a href="#" class="bottom-nav-item" onclick="changeCategory('drama')"><i class="fas fa-theater-masks"></i>Dramas</a>
+        <a href="#" class="bottom-nav-item" onclick="changeCategory('tv')"><i class="fas fa-tv"></i>Series,Drama</a>
         <a href="#" class="bottom-nav-item" onclick="changeCategory('anime')"><i class="fas fa-dragon"></i>Anime</a>
     </div>
 
@@ -217,13 +216,63 @@
         const myDatabase = [
             {
                 type: "movie",
+                title: "Cocktail 2",
+                img: "https://m.media-amazon.com/images/M/MV5BMjE4ZDFiMjctZTk0Yy00Mzk0LWIzMzItZmRjZTM0YzBjYmRiXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "After a decade together, Diya and Kunal's relationship is shaken when Ally, an old friend, re-enters their lives. What begins as a plan between two women spirals into chaos, triggering hilarious, emotional rollercoaster. none of them saw coming.",
+                videoUrl: "https://web.nxsha.app/embed/movie/1392469"
+            },
+            {
+                type: "movie",
                 title: "Bhooth Bangla",
                 img: "https://www.wavecinemas.com/uploads/movies/2026_01_19_8661_bhooth-bangla-s.jpg",
                 year: "2026",
                 rating: "",
-                audio: "2h 43m",
+                audio: "",
                 desc: "A man inherits a palace in rural Mangalpur and plans his sister's wedding there, but strange supernatural events and panicked locals force him to investigate the property's mysterious past.",
                 videoUrl: "https://web.nxsha.app/embed/movie/1239134"
+            },
+            {
+                type: "movie",
+                title: "Karuppu",
+                img: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/karuppu-et00450573-1753253510.jpg",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "In a world where justice falters, guardian deity Vettai Karuppu takes the guise of a lawyer to battle a corrupt legal system preying on the powerless.",
+                videoUrl: "https://web.nxsha.app/embed/movie/1367220"
+            },
+            {
+                type: "movie",
+                title: "Peddi",
+                img: "https://image.tmdb.org/t/p/w780/kJAJNNBYlbqAcpTDxBNnaILSMTy.jpg",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "In 1980s rural Andhra Pradesh, a spirited villager unites his community through sports to defend their pride against a powerful rivals.",
+                videoUrl: "https://web.nxsha.app/embed/movie/1057265"
+            },
+            {
+                type: "movie",
+                title: "KD: The Devil",
+                img: "https://cdn.district.in/movies-assets/images/cinema/KD--The-Devil--2-c0395d10-43c1-11f1-8c3a-f5c819934c0d.jpg?im=Resize,width=400",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "In the early 1970s, a petty criminal Kaali unwittingly involves himself with underworld thugs, catalyzing events beyond his control.",
+                videoUrl: "https://web.nxsha.app/embed/movie/1103473"
+            },
+            {
+                type: "movie",
+                title: "Hai Jawani Toh Ishq Hona Hai",
+                img: "https://cdn.district.in/movies-assets/images/cinema/Hai-Jawani--c09332f0-5e46-11f1-a09a-432b47636954.jpg?im=Resize,width=400",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "When Jass leaves his marriage over conflicting priorities, a new romance abroad is upended by shocking revelations, forcing him to confront love, loyalty, and the true meaning of commitment",
+                videoUrl: "https://web.nxsha.app/embed/movie/1308553"
             },
             {
                 type: "movie",
@@ -231,7 +280,7 @@
                 img: "https://m.media-amazon.com/images/M/MV5BNzdkNjAxNWMtNWY3My00NTI1LTg2YWQtOGI3MDA0NzdhMjEyXkEyXkFqcGc@._V1_.jpg",
                 year: "2026",
                 rating: "",
-                audio: "3h 49m",
+                audio: "",
                 desc: "As rival gangs, corrupt officials and a ruthless Major Iqbal close in, Hamza's mission for his country spirals into a bloody personal war where the line between patriot and monster disappears in the streets of Lyari.",
                 videoUrl: "https://web.nxsha.app/embed/movie/1582770"
             },
@@ -241,7 +290,7 @@
                 img: "https://im.ziffdavisinternational.com/ign_tr/screenshot/default/014212_phbp.jpg",
                 year: "2014",
                 rating: "",
-                audio: "2h 49m",
+                audio: "",
                 desc: "The adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.",
                 videoUrl: "https://web.nxsha.app/embed/movie/157336"
             },
@@ -257,27 +306,62 @@
 
             {
                 type: "tv",
-                title: "Money Heist (Season 1)",
-                img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600",
-                year: "2021",
-                rating: "8.8",
-                audio: "Hindi/Eng",
-                desc: "A mastermind 'The Professor' plans the biggest heist in history.",
+                title: "Bloodhounds",
+                img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ_V9ry6yHf8Ox5woiziMtX2Y4pWUyxw79fdPTPoxJW97dh8p6Z",
+                year: "2023",
+                rating: "",
+                audio: "Season 1",
+                desc: "Faced with ruthless foes with a violent thirst, two young boxers band together - risking life and limb to bring justice and protect their loved ones.",
                 episodes: [
-                    { name: "Episode 1 - The Plan", url: "https://ok.ru/video/14776520280596" },
-                    { name: "Episode 2 - Lethal Weapons", url: "https://odysee.com/Teach.You.a.Lesson.S01E01.1080p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-Detflix.Tv:b" }
+                    { name: "Episode 01 ", url: "https://web.nxsha.app/embed/tv/127529/1/1" },
+                    { name: "Episode 02 ", url: "https://web.nxsha.app/embed/tv/127529/1/2" },
+                    { name: "Episode 03 ", url: "https://web.nxsha.app/embed/tv/127529/1/3" },
+                    { name: "Episode 04 ", url: "https://web.nxsha.app/embed/tv/127529/1/4" },
+                    { name: "Episode 05 ", url: "https://web.nxsha.app/embed/tv/127529/1/5" },
+                    { name: "Episode 06 ", url: "https://web.nxsha.app/embed/tv/127529/1/6" },
+                    { name: "Episode 07 ", url: "https://web.nxsha.app/embed/tv/127529/1/7" },
+                    { name: "Episode 08 ", url: "https://web.nxsha.app/embed/tv/127529/1/8" },
                 ]
             },
             {
                 type: "tv",
-                title: "All of Us Are Dead (Season 1)",
-                img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=600",
-                year: "2026",
+                title: "Bloodhounds",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqf1o8ED8R1auqaij6d1s6F56XLC_tiLv3AAngcH9ve4HiGjKhoTAKm4Fp&s=10",
+                year: "2023",
                 rating: "",
-                audio: "EP-10",
+                audio: "Season 2",
+                desc: "Faced with ruthless foes with a violent thirst, two young boxers band together - risking life and limb to bring justice and protect their loved ones.",
+                episodes: [
+                    { name: "Episode 01 ", url: "https://web.nxsha.app/embed/tv/127529/2/1" },
+                    { name: "Episode 02 ", url: "https://web.nxsha.app/embed/tv/127529/2/2" },
+                    { name: "Episode 03 ", url: "https://web.nxsha.app/embed/tv/127529/2/3" },
+                    { name: "Episode 04 ", url: "https://web.nxsha.app/embed/tv/127529/2/4" },
+                    { name: "Episode 05 ", url: "https://web.nxsha.app/embed/tv/127529/2/5" },
+                    { name: "Episode 06 ", url: "https://web.nxsha.app/embed/tv/127529/2/6" },
+                    { name: "Episode 07 ", url: "https://web.nxsha.app/embed/tv/127529/2/7" }
+                ]
+            },
+            {
+                type: "tv",
+                title: "All of Us Are Dead",
+                img: "https://images.justwatch.com/poster/262858624/s718/all-of-us-are-dead.jpg",
+                year: "2022",
+                rating: "",
+                audio: "",
                 desc: "A high school becomes ground zero for a zombie virus outbreak. Trapped students must fight their way out.",
                 episodes: [
-                    { name: "Episode 01 [Multi Audio]", url: "https://web.nxsha.app/embed/tv/1399/1/1" }
+                    { name: "Episode 01", url: "https://web.nxsha.app/embed/tv/99966/1/1" },
+                    { name: "Episode 02", url: "https://web.nxsha.app/embed/tv/99966/1/2" },
+                    { name: "Episode 03", url: "https://web.nxsha.app/embed/tv/99966/1/3" },
+                    { name: "Episode 04", url: "https://web.nxsha.app/embed/tv/99966/1/4" },
+                    { name: "Episode 05", url: "https://web.nxsha.app/embed/tv/99966/1/5" },
+                    { name: "Episode 06", url: "https://web.nxsha.app/embed/tv/99966/1/6" },
+                    { name: "Episode 07", url: "https://web.nxsha.app/embed/tv/99966/1/7" },
+                    { name: "Episode 08", url: "https://web.nxsha.app/embed/tv/99966/1/8" },
+                    { name: "Episode 09", url: "https://web.nxsha.app/embed/tv/99966/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/99966/1/10" },
+                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/99966/1/11" },
+                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/99966/1/12" }
                 ]
             },
 
@@ -291,12 +375,12 @@
 
 
             {
-                type: "drama",
+                type: "tv",
                 title: "Teach You a Lesson",
                 img: "https://ww19.myasiantv.es/wp-content/uploads/2026/05/gN7Tq35raryabkPGcKlb4ZKeutm.jpg",
                 year: "2026",
                 rating: "",
-                audio: "EP-10",
+                audio: "",
                 desc: "The National Assembly and the Minister of Education passes the Amendment to the Act on the Protection of Teachers' Rights. With the passage of the law, a new government organization, the Educational Rights Protection Bureau, is formed. Na Hwa-jin belongs to the Educational Rights Protection Bureau. He is sent to a problem school as a supervisor. There, he can educate the students without any restrictions or limitations.",
                 episodes: [
                     { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/276161/1/1" },
@@ -309,6 +393,54 @@
                     { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/276161/1/8" },
                     { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/276161/1/9" },
                     { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/276161/1/10" }
+                ]
+            },
+            {
+                type: "tv",
+                title: "The Wonderfools",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg4f-29FIdI0KR7ksk50t9_GmNZSMjq0AgpS29szOvAzTO20e84bDEimU&s=10",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "A goofy group of townies stumbles into superpowers and fights rising evil as doomsday panic grows in this wild, turn-of-the-century action comedy.",
+                episodes: [
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/259837/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/259837/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/259837/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/259837/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/259837/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/259837/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/259837/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/259837/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/259837/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/259837/1/10" }
+                ]
+            },
+            {
+                type: "tv",
+                title: "The Glory",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAZ5wx4XbBlYnGnRd6oMokJJbnOR87ZVPwS4CBjkbHFA&s=10",
+                year: "2022",
+                rating: "",
+                audio: "",
+                desc: "Years after surviving horrific abuse in high school, a woman puts an elaborate revenge scheme in motion to make the perpetrators pay for their crimes.",
+                episodes: [
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/136283/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/136283/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/136283/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/136283/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/136283/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/136283/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/136283/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/136283/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/136283/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/136283/1/10" },
+                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/136283/1/11" },
+                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/136283/1/12" },
+                    { name: "Episode 13", url: "https://web.nxsha.app/embed/tv/136283/1/13" },
+                    { name: "Episode 14", url: "https://web.nxsha.app/embed/tv/136283/1/14" },
+                    { name: "Episode 15", url: "https://web.nxsha.app/embed/tv/136283/1/15" },
+                    { name: "Episode 16", url: "https://web.nxsha.app/embed/tv/136283/1/16" }
                 ]
             },
 
@@ -326,8 +458,8 @@
                 title: "Naruto Shippuden",
                 img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=600",
                 year: "2017",
-                rating: "9.1",
-                audio: "Hindi/Eng",
+                rating: "",
+                audio: "",
                 desc: "Naruto Uzumaki wants to become the greatest ninja.",
                 episodes: [
                     { name: "Episode 1 - Homecoming", url: "https://ok.ru/video/14776520280596" }
@@ -356,7 +488,7 @@
                         <div class="movie-title">${item.title}</div>
                         <div class="movie-meta">
                             <span>${item.year}</span>
-                            <span class="audio-tag">${item.audio || 'HINDI'}</span>
+                            <span class="audio-tag">${item.audio || ''}</span>
                         </div>
                     </div>
                 `;
