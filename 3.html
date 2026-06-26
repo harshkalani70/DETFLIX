@@ -92,7 +92,7 @@
             width: 100%; aspect-ratio: 16/9; background: #000; 
             overflow: hidden; display: none; flex-shrink: 0; z-index: 1005; position: relative;
         }
-        .modal-video-box video, .modal-video-box iframe { width: 100%; height: 100%; border: none; object-fit: contain; }
+        .modal-video-box video, .modal-video-box iframe {width: 100vw; height: 40vh; border: none; object-fit: contain; }
 
         /* Premium Floating Video Back Button */
         .video-back-btn {
@@ -365,16 +365,6 @@
                     { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/99966/1/12" }
                 ]
             },
-
-
-
-
-
-
-
-
-
-
             {
                 type: "tv",
                 title: "Teach You a Lesson",
@@ -463,7 +453,7 @@
                 audio: "S-1",
                 desc: "Naruto Uzumaki is back! After two and a half years of training on the road with Jiraiya of the Sannin, Naruto is back in the Village Hidden in the Leaves and he's ready to show off his new skills. He and Sakura team up to take on their old master Kakashi, who's pretty impressed with their progress. They'll have plenty of opportunity to put it into action when news arrives from the Sand Village that Gaara, Naruto's former rival and now Kazekage of the Sand, has been kidnapped! And the culprits are the very same group who are after Naruto - the Akatsuki!",
                 episodes: [
-                    { name: "Episode 1", url: "https://watch.gkbotz.qzz.io/dl/28943?hash=AgAD1x&chat=-1001619644038" },
+                    { name: "Episode 1", url: "https://drive.google.com/file/d/1-tTV19Uo8W7gDlhwruQe2S3fO7ev--av/preview" },
                     { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/31910/1/2" },
                     { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/31910/1/3" },
                     { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/31910/1/4" },
@@ -870,7 +860,7 @@
                 audio: "S-13",
                 desc: "",
                 episodes: [
-                    { name: "Episode 1 [276]", url: "https://web.nxsha.app/embed/tv/31910/13/276" },
+                    { name: "Episode 1 [276]", url: "https://drive.google.com/file/d/1-tTV19Uo8W7gDlhwruQe2S3fO7ev--av/preview" },
                     { name: "Episode 2 [277]", url: "https://web.nxsha.app/embed/tv/31910/13/277" },
                     { name: "Episode 3 [278]", url: "https://web.nxsha.app/embed/tv/31910/13/278" },
                     { name: "Episode 4 [279]", url: "https://web.nxsha.app/embed/tv/31910/13/279" },
@@ -1035,13 +1025,24 @@
             if (url.includes("ok.ru/video/")) {
                 url = url.replace("ok.ru/video/", "ok.ru/videoembed/");
             }
+
+            // 🎬 Google Drive Link Auto-Converter
+            if (url.includes("drive.google.com") && !url.includes("/preview")) {
+                let cleanUrl = url.split('?')[0]; // Link ke aage se '?usp=sharing' hatane ke liye
+                url = cleanUrl.replace("/view", "/preview"); // '/view' ko badalkar '/preview' karne ke liye
+            }
+
+            // 📢 Telegram Public Post Embed Converter
+            if (url.includes("t.me/") && !url.includes("?embed=1")) {
+                url = url + "?embed=1";
+            }
             
             if (url.includes("odysee.com") && !url.includes("/$/embed/")) {
                 let cleanUrl = url.split('?')[0]; 
                 url = cleanUrl.replace("odysee.com/", "odysee.com/$/embed/");
             }
 
-            if (url.includes("nxsha.app") || url.includes("drive.google") || url.includes("iframe") || url.includes("streamwish") || url.includes("streamtape") || url.includes("/e/") || url.includes("ok.ru") || url.includes("odysee.com")) {
+            if (url.includes("t.me") || url.includes("embed") || url.includes("nxsha.app") || url.includes("drive.google") || url.includes("iframe") || url.includes("streamwish") || url.includes("streamtape") || url.includes("/e/") || url.includes("ok.ru") || url.includes("odysee.com")) {
                 player.style.display = "none";
                 player.pause(); player.src = "";
                 
@@ -1057,6 +1058,75 @@
                 player.play();
             }
         }
+        function playSmartVideo(url) {
+    const videoBox = document.getElementById('videoBox');
+    const player = document.getElementById('mainVideoPlayer');
+    const iframePlayer = document.getElementById('mainIframePlayer');
+    const videoBackBtn = document.getElementById('videoBackBtn');
+
+    videoBox.style.display = "block";
+    videoBackBtn.style.display = "flex"; 
+
+    // 1. OK.ru Link Converter
+    if (url.includes("ok.ru/video/")) {
+        url = url.replace("ok.ru/video/", "ok.ru/videoembed/");
+    }
+    
+    // 2. Odysee Link Converter
+    if (url.includes("odysee.com") && !url.includes("/$/embed/")) {
+        let cleanUrl = url.split('?')[0]; 
+        url = cleanUrl.replace("odysee.com/", "odysee.com/$/embed/");
+    }
+
+    // 3. Google Drive Link Converter
+    if (url.includes("drive.google.com") && !url.includes("/preview")) {
+        let cleanUrl = url.split('?')[0]; 
+        url = cleanUrl.replace("/view", "/preview");
+    }
+
+    // 4. Telegram Normal Link Converter (Agar direct link na ho toh safe fallback)
+    if (url.includes("t.me/")) {
+        if (!url.includes("embed")) {
+            if (url.includes("?")) {
+                url = url + "&embed=1";
+            } else {
+                url = url + "?embed=1";
+            }
+        }
+    }
+
+    // --- 🎬 PLAYER RENDERING LOGIC ---
+    
+    // Check karein ki link iframe waala hai ya direct video file ka
+    // Agar Telegram ka link "embed" wala hai toh hi iframe me chalega
+    const isIframeSource = url.includes("drive.google.com") || 
+                           url.includes("nxsha.app") || 
+                           url.includes("ok.ru") || 
+                           url.includes("odysee.com") ||
+                           (url.includes("t.me") && url.includes("embed"));
+
+                    if (isIframeSource) {
+                    // Iframe Player On (Google Drive, OK.ru, Telegram Embed ke liye)
+                     player.style.display = "none";
+                     player.pause(); 
+                    player.src = "";
+        
+                    iframePlayer.style.display = "block";
+                    iframePlayer.src = url;
+        
+                    iframePlayer.setAttribute("allow", "autoplay; fullscreen; picture-in-picture");
+                    iframePlayer.setAttribute("allowfullscreen", "true");
+                } else {
+                // 🔥 Native Video Player On (Telegram Bot ke direct MP4/Stream links ke liye)
+                // Isme Telegram ka koi watermark ya "View in Telegram" button nahi dikhega!
+                iframePlayer.style.display = "none"; 
+                iframePlayer.src = "";
+        
+                player.style.display = "block";
+                player.src = url;
+                player.play();
+            }
+            }
 
         function openModal(item) {
             const modal = document.getElementById('playerModal');
