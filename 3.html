@@ -153,9 +153,9 @@
     <div class="sidebar">
         <div class="sidebar-logo">DETFLIX</div>
         <ul class="nav-links">
-            <li class="nav-item active" onclick="changeCategory('movie')"><i class="fas fa-film"></i> Movies</li>
+            <li class="nav-item active" onclick="changeCategory('home')"><i class="fas fa-home"></i> Home</li>
+            <li class="nav-item" onclick="changeCategory('movie')"><i class="fas fa-film"></i> Movies</li>
             <li class="nav-item" onclick="changeCategory('tv')"><i class="fas fa-tv"></i> Series,Drama</li>
-            <li class="nav-item" onclick="changeCategory('anime')"><i class="fas fa-dragon"></i> Anime</li>
         </ul>
     </div>
 
@@ -174,7 +174,7 @@
         </div>
 
         <div class="grid-container">
-            <h2 class="section-title" id="sectionHeading">Movies</h2>
+            <h2 class="section-title" id="sectionHeading">Home</h2>
             <div class="movie-grid" id="contentGrid"></div>
         </div>
     </div>
@@ -206,15 +206,368 @@
 
     <!-- BOTTOM NAVIGATION -->
     <div class="bottom-nav">
-        <a href="#" class="bottom-nav-item active" onclick="changeCategory('movie')"><i class="fas fa-film"></i>Movies</a>
+        <a href="#" class="bottom-nav-item active" onclick="changeCategory('home')"><i class="fas fa-film"></i>Home</a>
+        <a href="#" class="bottom-nav-item" onclick="changeCategory('movie')"><i class="fas fa-film"></i>Movies</a>
         <a href="#" class="bottom-nav-item" onclick="changeCategory('tv')"><i class="fas fa-tv"></i>Series,Drama</a>
-        <a href="#" class="bottom-nav-item" onclick="changeCategory('anime')"><i class="fas fa-dragon"></i>Anime</a>
     </div>
 
     <script>
-        let currentType = 'movie';
+        let currentType = 'home';
 
         const myDatabase = [
+            //--Home--
+            {
+                type: "home",
+                title: "See You at Work Tomorrow!",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqsMJL0r6hFmW651Pk6guXmy8D6JAeH4JTzJ2N2opXHHGWN6UX5iTd-k&s=10",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "Cha Ji-yoon is a 7th-year corporate worker who's tired of both work and dating. She crosses paths with Kang Si-woo, the cynical boss with a terrifying reputation. Unexpectedly, she regains spark in her life as she gets to know the kindness behind his stern words. Amid repeated commutes, accidents at work, and failed relationships, the two become each other's irreplaceable anchor.",
+                episodes: [
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/289763/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/289763/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/289763/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/289763/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/289763/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/289763/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/289763/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/289763/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/289763/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/289763/1/10" },
+                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/289763/1/11" },
+                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/289763/1/12" },
+                ]
+            },
+            {
+                type: "home",
+                title: "Cocktail 2",
+                img: "https://m.media-amazon.com/images/M/MV5BMjE4ZDFiMjctZTk0Yy00Mzk0LWIzMzItZmRjZTM0YzBjYmRiXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "After a decade together, Diya and Kunal's relationship is shaken when Ally, an old friend, re-enters their lives. What begins as a plan between two women spirals into chaos, triggering hilarious, emotional rollercoaster. none of them saw coming.",
+                videoUrl: "https://web.nxsha.app/embed/movie/1392469"
+            },
+            {
+                type: "home",
+                title: "Bhooth Bangla",
+                img: "https://www.wavecinemas.com/uploads/movies/2026_01_19_8661_bhooth-bangla-s.jpg",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "A man inherits a palace in rural Mangalpur and plans his sister's wedding there, but strange supernatural events and panicked locals force him to investigate the property's mysterious past.",
+                videoUrl: "https://web.nxsha.app/embed/movie/1239134"
+            },
+            {
+                type: "home",
+                title: "Karuppu",
+                img: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/karuppu-et00450573-1753253510.jpg",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "In a world where justice falters, guardian deity Vettai Karuppu takes the guise of a lawyer to battle a corrupt legal system preying on the powerless.",
+                videoUrl: "https://web.nxsha.app/embed/movie/1367220"
+            },
+            {
+                type: "home",
+                title: "Peddi",
+                img: "https://image.tmdb.org/t/p/w780/kJAJNNBYlbqAcpTDxBNnaILSMTy.jpg",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "In 1980s rural Andhra Pradesh, a spirited villager unites his community through sports to defend their pride against a powerful rivals.",
+                videoUrl: "https://web.nxsha.app/embed/movie/1057265"
+            },
+            {
+                type: "home",
+                title: "KD: The Devil",
+                img: "https://cdn.district.in/movies-assets/images/cinema/KD--The-Devil--2-c0395d10-43c1-11f1-8c3a-f5c819934c0d.jpg?im=Resize,width=400",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "In the early 1970s, a petty criminal Kaali unwittingly involves himself with underworld thugs, catalyzing events beyond his control.",
+                videoUrl: "https://web.nxsha.app/embed/movie/1103473"
+            },
+            {
+                type: "home",
+                title: "Hai Jawani Toh Ishq Hona Hai",
+                img: "https://cdn.district.in/movies-assets/images/cinema/Hai-Jawani--c09332f0-5e46-11f1-a09a-432b47636954.jpg?im=Resize,width=400",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "When Jass leaves his marriage over conflicting priorities, a new romance abroad is upended by shocking revelations, forcing him to confront love, loyalty, and the true meaning of commitment",
+                videoUrl: "https://web.nxsha.app/embed/movie/1308553"
+            },
+            {
+                type: "home",
+                title: "Dhurandhar The Revenge",
+                img: "https://m.media-amazon.com/images/M/MV5BNzdkNjAxNWMtNWY3My00NTI1LTg2YWQtOGI3MDA0NzdhMjEyXkEyXkFqcGc@._V1_.jpg",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "As rival gangs, corrupt officials and a ruthless Major Iqbal close in, Hamza's mission for his country spirals into a bloody personal war where the line between patriot and monster disappears in the streets of Lyari.",
+                videoUrl: "https://web.nxsha.app/embed/movie/1582770"
+            },
+            {
+                type: "home",
+                title: "Queen of Tears",
+                img: "https://i.pinimg.com/236x/c3/6c/e4/c36ce4d0c4a7cd42a7f5032c807ed0a2.jpg",
+                year: "2024",
+                rating: "",
+                audio: "",
+                desc: "The queen of department stores and the prince of supermarkets weather a marital crisis-until love miraculously begins to bloom again.",
+                episodes: [
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/215720/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/215720/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/215720/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/215720/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/215720/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/215720/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/215720/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/215720/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/215720/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/215720/1/10" },
+                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/215720/1/11" },
+                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/215720/1/12" },
+                    { name: "Episode 13", url: "https://web.nxsha.app/embed/tv/215720/1/13" },
+                    { name: "Episode 14", url: "https://web.nxsha.app/embed/tv/215720/1/14" },
+                    { name: "Episode 15", url: "https://web.nxsha.app/embed/tv/215720/1/15" },
+                    { name: "Episode 16", url: "https://web.nxsha.app/embed/tv/215720/1/16" }
+                ]
+            },
+            {
+                type: "home",
+                title: "My Demon",
+                img: "https://www.91-cdn.com/metareel-images/content/posters-7-1705960352769-zthWx1TKEXy9MOfedBaJ0ZLr8vn.jpg?tr=h-350,w-230,q-60&version=5",
+                year: "2023",
+                rating: "",
+                audio: "",
+                desc: "A pitiless demon becomes powerless after getting entangled with an icy heiress, who may hold the key to his lost abilities - and his heart.",
+                episodes: [
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/218539/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/218539/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/218539/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/218539/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/218539/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/218539/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/218539/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/218539/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/218539/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/218539/1/10" },
+                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/218539/1/11" },
+                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/218539/1/12" },
+                    { name: "Episode 13", url: "https://web.nxsha.app/embed/tv/218539/1/13" },
+                    { name: "Episode 14", url: "https://web.nxsha.app/embed/tv/218539/1/14" },
+                    { name: "Episode 15", url: "https://web.nxsha.app/embed/tv/218539/1/15" },
+                    { name: "Episode 16", url: "https://web.nxsha.app/embed/tv/218539/1/16" },
+                ]
+            },
+            {
+                type: "home",
+                title: "Interstellar",
+                img: "https://im.ziffdavisinternational.com/ign_tr/screenshot/default/014212_phbp.jpg",
+                year: "2014",
+                rating: "",
+                audio: "",
+                desc: "The adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.",
+                videoUrl: "https://web.nxsha.app/embed/movie/157336"
+            },
+            {
+                type: "home",
+                title: "Bloodhounds",
+                img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ_V9ry6yHf8Ox5woiziMtX2Y4pWUyxw79fdPTPoxJW97dh8p6Z",
+                year: "2023",
+                rating: "",
+                audio: "S-1",
+                desc: "Faced with ruthless foes with a violent thirst, two young boxers band together - risking life and limb to bring justice and protect their loved ones.",
+                episodes: [
+                    { name: "Episode 01 ", url: "https://web.nxsha.app/embed/tv/127529/1/1" },
+                    { name: "Episode 02 ", url: "https://web.nxsha.app/embed/tv/127529/1/2" },
+                    { name: "Episode 03 ", url: "https://web.nxsha.app/embed/tv/127529/1/3" },
+                    { name: "Episode 04 ", url: "https://web.nxsha.app/embed/tv/127529/1/4" },
+                    { name: "Episode 05 ", url: "https://web.nxsha.app/embed/tv/127529/1/5" },
+                    { name: "Episode 06 ", url: "https://web.nxsha.app/embed/tv/127529/1/6" },
+                    { name: "Episode 07 ", url: "https://web.nxsha.app/embed/tv/127529/1/7" },
+                    { name: "Episode 08 ", url: "https://web.nxsha.app/embed/tv/127529/1/8" },
+                ]
+            },
+            {
+                type: "home",
+                title: "Bloodhounds",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqf1o8ED8R1auqaij6d1s6F56XLC_tiLv3AAngcH9ve4HiGjKhoTAKm4Fp&s=10",
+                year: "2023",
+                rating: "",
+                audio: "S-2",
+                desc: "Faced with ruthless foes with a violent thirst, two young boxers band together - risking life and limb to bring justice and protect their loved ones.",
+                episodes: [
+                    { name: "Episode 01 ", url: "https://web.nxsha.app/embed/tv/127529/2/1" },
+                    { name: "Episode 02 ", url: "https://web.nxsha.app/embed/tv/127529/2/2" },
+                    { name: "Episode 03 ", url: "https://web.nxsha.app/embed/tv/127529/2/3" },
+                    { name: "Episode 04 ", url: "https://web.nxsha.app/embed/tv/127529/2/4" },
+                    { name: "Episode 05 ", url: "https://web.nxsha.app/embed/tv/127529/2/5" },
+                    { name: "Episode 06 ", url: "https://web.nxsha.app/embed/tv/127529/2/6" },
+                    { name: "Episode 07 ", url: "https://web.nxsha.app/embed/tv/127529/2/7" }
+                ]
+            },
+            {
+                type: "home",
+                title: "All of Us Are Dead",
+                img: "https://images.justwatch.com/poster/262858624/s718/all-of-us-are-dead.jpg",
+                year: "2022",
+                rating: "",
+                audio: "",
+                desc: "A high school becomes ground zero for a zombie virus outbreak. Trapped students must fight their way out.",
+                episodes: [
+                    { name: "Episode 01", url: "https://web.nxsha.app/embed/tv/99966/1/1" },
+                    { name: "Episode 02", url: "https://web.nxsha.app/embed/tv/99966/1/2" },
+                    { name: "Episode 03", url: "https://web.nxsha.app/embed/tv/99966/1/3" },
+                    { name: "Episode 04", url: "https://web.nxsha.app/embed/tv/99966/1/4" },
+                    { name: "Episode 05", url: "https://web.nxsha.app/embed/tv/99966/1/5" },
+                    { name: "Episode 06", url: "https://web.nxsha.app/embed/tv/99966/1/6" },
+                    { name: "Episode 07", url: "https://web.nxsha.app/embed/tv/99966/1/7" },
+                    { name: "Episode 08", url: "https://web.nxsha.app/embed/tv/99966/1/8" },
+                    { name: "Episode 09", url: "https://web.nxsha.app/embed/tv/99966/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/99966/1/10" },
+                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/99966/1/11" },
+                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/99966/1/12" }
+                ]
+            },
+            {
+                type: "home",
+                title: "Teach You a Lesson",
+                img: "https://ww19.myasiantv.es/wp-content/uploads/2026/05/gN7Tq35raryabkPGcKlb4ZKeutm.jpg",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "The National Assembly and the Minister of Education passes the Amendment to the Act on the Protection of Teachers' Rights. With the passage of the law, a new government organization, the Educational Rights Protection Bureau, is formed. Na Hwa-jin belongs to the Educational Rights Protection Bureau. He is sent to a problem school as a supervisor. There, he can educate the students without any restrictions or limitations.",
+                episodes: [
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/276161/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/276161/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/276161/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/276161/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/276161/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/276161/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/276161/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/276161/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/276161/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/276161/1/10" }
+                ]
+            },
+            {
+                type: "home",
+                title: "The Wonderfools",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg4f-29FIdI0KR7ksk50t9_GmNZSMjq0AgpS29szOvAzTO20e84bDEimU&s=10",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "A goofy group of townies stumbles into superpowers and fights rising evil as doomsday panic grows in this wild, turn-of-the-century action comedy.",
+                episodes: [
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/259837/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/259837/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/259837/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/259837/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/259837/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/259837/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/259837/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/259837/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/259837/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/259837/1/10" }
+                ]
+            },
+            {
+                type: "home",
+                title: "The Glory",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAZ5wx4XbBlYnGnRd6oMokJJbnOR87ZVPwS4CBjkbHFA&s=10",
+                year: "2022",
+                rating: "",
+                audio: "",
+                desc: "Years after surviving horrific abuse in high school, a woman puts an elaborate revenge scheme in motion to make the perpetrators pay for their crimes.",
+                episodes: [
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/136283/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/136283/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/136283/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/136283/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/136283/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/136283/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/136283/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/136283/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/136283/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/136283/1/10" },
+                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/136283/1/11" },
+                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/136283/1/12" },
+                    { name: "Episode 13", url: "https://web.nxsha.app/embed/tv/136283/1/13" },
+                    { name: "Episode 14", url: "https://web.nxsha.app/embed/tv/136283/1/14" },
+                    { name: "Episode 15", url: "https://web.nxsha.app/embed/tv/136283/1/15" },
+                    { name: "Episode 16", url: "https://web.nxsha.app/embed/tv/136283/1/16" }
+                ]
+            },
+            {
+                type: "home",
+                title: "Vincenzo",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeNGtHv5elaAyxPCvU0a8qB2JLBgn6MRVMqSmlkuxBGg3vow-j4TQspclU&s=10",
+                year: "2021",
+                rating: "",
+                audio: "",
+                desc: "During a visit to his motherland, a Korean-Italian mafia lawyer gives an unrivaled conglomerate a taste of its own medicinewith a side of justice.",
+                episodes: [
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/117376/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/117376/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/117376/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/117376/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/117376/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/117376/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/117376/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/117376/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/117376/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/117376/1/10" },
+                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/117376/1/11" },
+                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/117376/1/12" },
+                    { name: "Episode 13", url: "https://web.nxsha.app/embed/tv/117376/1/13" },
+                    { name: "Episode 14", url: "https://web.nxsha.app/embed/tv/117376/1/14" },
+                    { name: "Episode 15", url: "https://web.nxsha.app/embed/tv/117376/1/15" },
+                    { name: "Episode 16", url: "https://web.nxsha.app/embed/tv/117376/1/16" },
+                    { name: "Episode 17", url: "https://web.nxsha.app/embed/tv/117376/1/17" },
+                    { name: "Episode 18", url: "https://web.nxsha.app/embed/tv/117376/1/18" },
+                    { name: "Episode 19", url: "https://web.nxsha.app/embed/tv/117376/1/19" },
+                    { name: "Episode 20", url: "https://web.nxsha.app/embed/tv/117376/1/20" },
+                ]
+            },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // --- MOVIES ---
             {
                 type: "movie",
                 title: "Cocktail 2",
@@ -305,6 +658,62 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // --- SERIES / DRAMA ---
+            {
+                type: "tv",
+                title: "See You at Work Tomorrow!",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqsMJL0r6hFmW651Pk6guXmy8D6JAeH4JTzJ2N2opXHHGWN6UX5iTd-k&s=10",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "Cha Ji-yoon is a 7th-year corporate worker who's tired of both work and dating. She crosses paths with Kang Si-woo, the cynical boss with a terrifying reputation. Unexpectedly, she regains spark in her life as she gets to know the kindness behind his stern words. Amid repeated commutes, accidents at work, and failed relationships, the two become each other's irreplaceable anchor.",
+                episodes: [
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/289763/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/289763/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/289763/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/289763/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/289763/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/289763/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/289763/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/289763/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/289763/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/289763/1/10" },
+                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/289763/1/11" },
+                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/289763/1/12" },
+                ]
+            },
             {
                 type: "tv",
                 title: "Bloodhounds",
@@ -409,6 +818,135 @@
             },
             {
                 type: "tv",
+                title: "Bloodhounds",
+                img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ_V9ry6yHf8Ox5woiziMtX2Y4pWUyxw79fdPTPoxJW97dh8p6Z",
+                year: "2023",
+                rating: "",
+                audio: "S-1",
+                desc: "Faced with ruthless foes with a violent thirst, two young boxers band together - risking life and limb to bring justice and protect their loved ones.",
+                episodes: [
+                    { name: "Episode 01 ", url: "https://web.nxsha.app/embed/tv/127529/1/1" },
+                    { name: "Episode 02 ", url: "https://web.nxsha.app/embed/tv/127529/1/2" },
+                    { name: "Episode 03 ", url: "https://web.nxsha.app/embed/tv/127529/1/3" },
+                    { name: "Episode 04 ", url: "https://web.nxsha.app/embed/tv/127529/1/4" },
+                    { name: "Episode 05 ", url: "https://web.nxsha.app/embed/tv/127529/1/5" },
+                    { name: "Episode 06 ", url: "https://web.nxsha.app/embed/tv/127529/1/6" },
+                    { name: "Episode 07 ", url: "https://web.nxsha.app/embed/tv/127529/1/7" },
+                    { name: "Episode 08 ", url: "https://web.nxsha.app/embed/tv/127529/1/8" },
+                ]
+            },
+            {
+                type: "tv",
+                title: "Bloodhounds",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqf1o8ED8R1auqaij6d1s6F56XLC_tiLv3AAngcH9ve4HiGjKhoTAKm4Fp&s=10",
+                year: "2023",
+                rating: "",
+                audio: "S-2",
+                desc: "Faced with ruthless foes with a violent thirst, two young boxers band together - risking life and limb to bring justice and protect their loved ones.",
+                episodes: [
+                    { name: "Episode 01 ", url: "https://web.nxsha.app/embed/tv/127529/2/1" },
+                    { name: "Episode 02 ", url: "https://web.nxsha.app/embed/tv/127529/2/2" },
+                    { name: "Episode 03 ", url: "https://web.nxsha.app/embed/tv/127529/2/3" },
+                    { name: "Episode 04 ", url: "https://web.nxsha.app/embed/tv/127529/2/4" },
+                    { name: "Episode 05 ", url: "https://web.nxsha.app/embed/tv/127529/2/5" },
+                    { name: "Episode 06 ", url: "https://web.nxsha.app/embed/tv/127529/2/6" },
+                    { name: "Episode 07 ", url: "https://web.nxsha.app/embed/tv/127529/2/7" }
+                ]
+            },
+            {
+                type: "tv",
+                title: "All of Us Are Dead",
+                img: "https://images.justwatch.com/poster/262858624/s718/all-of-us-are-dead.jpg",
+                year: "2022",
+                rating: "",
+                audio: "",
+                desc: "A high school becomes ground zero for a zombie virus outbreak. Trapped students must fight their way out.",
+                episodes: [
+                    { name: "Episode 01", url: "https://web.nxsha.app/embed/tv/99966/1/1" },
+                    { name: "Episode 02", url: "https://web.nxsha.app/embed/tv/99966/1/2" },
+                    { name: "Episode 03", url: "https://web.nxsha.app/embed/tv/99966/1/3" },
+                    { name: "Episode 04", url: "https://web.nxsha.app/embed/tv/99966/1/4" },
+                    { name: "Episode 05", url: "https://web.nxsha.app/embed/tv/99966/1/5" },
+                    { name: "Episode 06", url: "https://web.nxsha.app/embed/tv/99966/1/6" },
+                    { name: "Episode 07", url: "https://web.nxsha.app/embed/tv/99966/1/7" },
+                    { name: "Episode 08", url: "https://web.nxsha.app/embed/tv/99966/1/8" },
+                    { name: "Episode 09", url: "https://web.nxsha.app/embed/tv/99966/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/99966/1/10" },
+                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/99966/1/11" },
+                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/99966/1/12" }
+                ]
+            },
+            {
+                type: "tv",
+                title: "Teach You a Lesson",
+                img: "https://ww19.myasiantv.es/wp-content/uploads/2026/05/gN7Tq35raryabkPGcKlb4ZKeutm.jpg",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "The National Assembly and the Minister of Education passes the Amendment to the Act on the Protection of Teachers' Rights. With the passage of the law, a new government organization, the Educational Rights Protection Bureau, is formed. Na Hwa-jin belongs to the Educational Rights Protection Bureau. He is sent to a problem school as a supervisor. There, he can educate the students without any restrictions or limitations.",
+                episodes: [
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/276161/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/276161/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/276161/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/276161/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/276161/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/276161/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/276161/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/276161/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/276161/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/276161/1/10" }
+                ]
+            },
+            {
+                type: "tv",
+                title: "The Wonderfools",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg4f-29FIdI0KR7ksk50t9_GmNZSMjq0AgpS29szOvAzTO20e84bDEimU&s=10",
+                year: "2026",
+                rating: "",
+                audio: "",
+                desc: "A goofy group of townies stumbles into superpowers and fights rising evil as doomsday panic grows in this wild, turn-of-the-century action comedy.",
+                episodes: [
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/259837/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/259837/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/259837/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/259837/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/259837/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/259837/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/259837/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/259837/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/259837/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/259837/1/10" }
+                ]
+            },
+            {
+                type: "tv",
+                title: "Queen of Tears",
+                img: "https://i.pinimg.com/236x/c3/6c/e4/c36ce4d0c4a7cd42a7f5032c807ed0a2.jpg",
+                year: "2024",
+                rating: "",
+                audio: "",
+                desc: "The queen of department stores and the prince of supermarkets weather a marital crisis-until love miraculously begins to bloom again.",
+                episodes: [
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/215720/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/215720/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/215720/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/215720/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/215720/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/215720/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/215720/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/215720/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/215720/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/215720/1/10" },
+                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/215720/1/11" },
+                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/215720/1/12" },
+                    { name: "Episode 13", url: "https://web.nxsha.app/embed/tv/215720/1/13" },
+                    { name: "Episode 14", url: "https://web.nxsha.app/embed/tv/215720/1/14" },
+                    { name: "Episode 15", url: "https://web.nxsha.app/embed/tv/215720/1/15" },
+                    { name: "Episode 16", url: "https://web.nxsha.app/embed/tv/215720/1/16" }
+                ]
+            },
+            {
+                type: "tv",
                 title: "The Glory",
                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAZ5wx4XbBlYnGnRd6oMokJJbnOR87ZVPwS4CBjkbHFA&s=10",
                 year: "2022",
@@ -434,551 +972,62 @@
                     { name: "Episode 16", url: "https://web.nxsha.app/embed/tv/136283/1/16" }
                 ]
             },
-
-
-
-
-
-
-
-
-
-
             {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://images.justwatch.com/poster/304636806/s718/season-1.jpg",
-                year: "2007",
+                type: "tv",
+                title: "My Demon",
+                img: "https://www.91-cdn.com/metareel-images/content/posters-7-1705960352769-zthWx1TKEXy9MOfedBaJ0ZLr8vn.jpg?tr=h-350,w-230,q-60&version=5",
+                year: "2023",
                 rating: "",
-                audio: "S-1",
-                desc: "Naruto Uzumaki is back! After two and a half years of training on the road with Jiraiya of the Sannin, Naruto is back in the Village Hidden in the Leaves and he's ready to show off his new skills. He and Sakura team up to take on their old master Kakashi, who's pretty impressed with their progress. They'll have plenty of opportunity to put it into action when news arrives from the Sand Village that Gaara, Naruto's former rival and now Kazekage of the Sand, has been kidnapped! And the culprits are the very same group who are after Naruto - the Akatsuki!",
+                audio: "",
+                desc: "A pitiless demon becomes powerless after getting entangled with an icy heiress, who may hold the key to his lost abilities - and his heart.",
                 episodes: [
-                    { name: "Episode 1", url: "https://download1073.mediafire.com/dmni8bysz2jgj27w3OBs0efWZQDsCSeMuB3afX_AXU1ykEDZGP_naY6yhKv_izjuDFoJCRoo5SkyEOEnZi_H_Ek-ZVQfMJyOqevVxQzq8i-c2eKVIMdbcZ5QApZURvf5DcO_zSE5Vov18CQNf0NFCmsItBOLtNrjkP7wrnISLA/ehn1quwpu8phoxe/%40officialhindianime27.mp4" },
-                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/31910/1/2" },
-                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/31910/1/3" },
-                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/31910/1/4" },
-                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/31910/1/5" },
-                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/31910/1/6" },
-                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/31910/1/7" },
-                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/31910/1/8" },
-                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/31910/1/9" },
-                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/31910/1/10" },
-                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/31910/1/11" },
-                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/31910/1/12" },
-                    { name: "Episode 13", url: "https://web.nxsha.app/embed/tv/31910/1/13" },
-                    { name: "Episode 14", url: "https://web.nxsha.app/embed/tv/31910/1/14" },
-                    { name: "Episode 15", url: "https://web.nxsha.app/embed/tv/31910/1/15" },
-                    { name: "Episode 16", url: "https://web.nxsha.app/embed/tv/31910/1/16" },
-                    { name: "Episode 17", url: "https://web.nxsha.app/embed/tv/31910/1/17" },
-                    { name: "Episode 18", url: "https://web.nxsha.app/embed/tv/31910/1/18" },
-                    { name: "Episode 19", url: "https://web.nxsha.app/embed/tv/31910/1/19" },
-                    { name: "Episode 20", url: "https://web.nxsha.app/embed/tv/31910/1/20" },
-                    { name: "Episode 21", url: "https://web.nxsha.app/embed/tv/31910/1/21" },
-                    { name: "Episode 22", url: "https://web.nxsha.app/embed/tv/31910/1/22" },
-                    { name: "Episode 23", url: "https://web.nxsha.app/embed/tv/31910/1/23" },
-                    { name: "Episode 24", url: "https://web.nxsha.app/embed/tv/31910/1/24" },
-                    { name: "Episode 25", url: "https://web.nxsha.app/embed/tv/31910/1/25" },
-                    { name: "Episode 26", url: "https://web.nxsha.app/embed/tv/31910/1/26" },
-                    { name: "Episode 27", url: "https://web.nxsha.app/embed/tv/31910/1/27" },
-                    { name: "Episode 28", url: "https://web.nxsha.app/embed/tv/31910/1/28" },
-                    { name: "Episode 29", url: "https://web.nxsha.app/embed/tv/31910/1/29" },
-                    { name: "Episode 30", url: "https://web.nxsha.app/embed/tv/31910/1/30" },
-                    { name: "Episode 31", url: "https://web.nxsha.app/embed/tv/31910/1/31" },
-                    { name: "Episode 32", url: "https://web.nxsha.app/embed/tv/31910/1/32" },
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/218539/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/218539/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/218539/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/218539/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/218539/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/218539/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/218539/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/218539/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/218539/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/218539/1/10" },
+                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/218539/1/11" },
+                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/218539/1/12" },
+                    { name: "Episode 13", url: "https://web.nxsha.app/embed/tv/218539/1/13" },
+                    { name: "Episode 14", url: "https://web.nxsha.app/embed/tv/218539/1/14" },
+                    { name: "Episode 15", url: "https://web.nxsha.app/embed/tv/218539/1/15" },
+                    { name: "Episode 16", url: "https://web.nxsha.app/embed/tv/218539/1/16" },
                 ]
             },
             {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyK1uwlqL5SKSOip35K7lGuzn-UWy7MidRLQ&s",
-                year: "2007",
+                type: "tv",
+                title: "Vincenzo",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeNGtHv5elaAyxPCvU0a8qB2JLBgn6MRVMqSmlkuxBGg3vow-j4TQspclU&s=10",
+                year: "2021",
                 rating: "",
-                audio: "S-2",
-                desc: "In the midst of its spying mission, Team Kakashi is suddenly confronted with the Leaf Village's sworn enemy, Orochimaru. Naruto challenges him, and during their battle, his anger brings forth the power of the Nine-Tailed Fox. Naruto will never give up his determination to find Sasuke and bring him home, but in his rage he risks losing all awareness of himself and hurting those he cares for the most.",
+                audio: "",
+                desc: "During a visit to his motherland, a Korean-Italian mafia lawyer gives an unrivaled conglomerate a taste of its own medicinewith a side of justice.",
                 episodes: [
-                    { name: "Episode 1 [33]", url: "https://web.nxsha.app/embed/tv/31910/2/33" },
-                    { name: "Episode 2 [34]", url: "https://web.nxsha.app/embed/tv/31910/2/34" },
-                    { name: "Episode 3 [35]", url: "https://web.nxsha.app/embed/tv/31910/2/35" },
-                    { name: "Episode 4 [36]", url: "https://web.nxsha.app/embed/tv/31910/2/36" },
-                    { name: "Episode 5 [37]", url: "https://web.nxsha.app/embed/tv/31910/2/37" },
-                    { name: "Episode 6 [38]", url: "https://web.nxsha.app/embed/tv/31910/2/38" },
-                    { name: "Episode 7 [39]", url: "https://web.nxsha.app/embed/tv/31910/2/39" },
-                    { name: "Episode 8 [40]", url: "https://web.nxsha.app/embed/tv/31910/2/40" },
-                    { name: "Episode 9 [41]", url: "https://web.nxsha.app/embed/tv/31910/2/41" },
-                    { name: "Episode 10 [42]", url: "https://web.nxsha.app/embed/tv/31910/2/42" },
-                    { name: "Episode 11 [43]", url: "https://web.nxsha.app/embed/tv/31910/2/43" },
-                    { name: "Episode 12 [44]", url: "https://web.nxsha.app/embed/tv/31910/2/44" },
-                    { name: "Episode 13 [45]", url: "https://web.nxsha.app/embed/tv/31910/2/45" },
-                    { name: "Episode 14 [46]", url: "https://web.nxsha.app/embed/tv/31910/2/46" },
-                    { name: "Episode 15 [47]", url: "https://web.nxsha.app/embed/tv/31910/2/47" },
-                    { name: "Episode 16 [48]", url: "https://web.nxsha.app/embed/tv/31910/2/48" },
-                    { name: "Episode 17 [49]", url: "https://web.nxsha.app/embed/tv/31910/2/49" },
-                    { name: "Episode 18 [50]", url: "https://web.nxsha.app/embed/tv/31910/2/50" },
-                    { name: "Episode 19 [51]", url: "https://web.nxsha.app/embed/tv/31910/2/51" },
-                    { name: "Episode 20 [52]", url: "https://web.nxsha.app/embed/tv/31910/2/52" },
-                    { name: "Episode 21 [53]", url: "https://web.nxsha.app/embed/tv/31910/2/53" },
-                ]
-            },
-            {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2DDBJPIb31_muHkOPVd8TyR2oETMui2J5jA&s",
-                year: "2008",
-                rating: "",
-                audio: "S-3",
-                desc: "Defeated by Sasuke, Naruto returns to the hidden Leaf Village to start a new training program with Kakashi and Yamato. Naruto learns that he has Wind-style chakra. Meanwhile, a group of four mysterious people attacks a village in the countryside of the Fire Country. Who are they and what exactly do they want from the Leaf Village ninja?",
-                episodes: [
-                    { name: "Episode 1 [54]", url: "https://web.nxsha.app/embed/tv/31910/3/54" },
-                    { name: "Episode 2 [55]", url: "https://web.nxsha.app/embed/tv/31910/3/55" },
-                    { name: "Episode 3 [56]", url: "https://web.nxsha.app/embed/tv/31910/3/56" },
-                    { name: "Episode 4 [57]", url: "https://web.nxsha.app/embed/tv/31910/3/57" },
-                    { name: "Episode 5 [58]", url: "https://web.nxsha.app/embed/tv/31910/3/58" },
-                    { name: "Episode 6 [59]", url: "https://web.nxsha.app/embed/tv/31910/3/59" },
-                    { name: "Episode 7 [60]", url: "https://web.nxsha.app/embed/tv/31910/3/60" },
-                    { name: "Episode 8 [61]", url: "https://web.nxsha.app/embed/tv/31910/3/61" },
-                    { name: "Episode 9 [62]", url: "https://web.nxsha.app/embed/tv/31910/3/62" },
-                    { name: "Episode 10 [63]", url: "https://web.nxsha.app/embed/tv/31910/3/63" },
-                    { name: "Episode 11 [64]", url: "https://web.nxsha.app/embed/tv/31910/3/64" },
-                    { name: "Episode 12 [65]", url: "https://web.nxsha.app/embed/tv/31910/3/65" },
-                    { name: "Episode 13 [66]", url: "https://web.nxsha.app/embed/tv/31910/3/66" },
-                    { name: "Episode 14 [67]", url: "https://web.nxsha.app/embed/tv/31910/3/67" },
-                    { name: "Episode 15 [68]", url: "https://web.nxsha.app/embed/tv/31910/3/68" },
-                    { name: "Episode 16 [69]", url: "https://web.nxsha.app/embed/tv/31910/3/69" },
-                    { name: "Episode 17 [70]", url: "https://web.nxsha.app/embed/tv/31910/3/70" },
-                    { name: "Episode 18 [71]", url: "https://web.nxsha.app/embed/tv/31910/3/71" },
-                ]
-            },
-            {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://static0.srcdn.com/wordpress/wp-content/uploads/2025/03/031298_season_poster_342.jpg?w=1200&h=628&fit=crop",
-                year: "2008",
-                rating: "",
-                audio: "S-4",
-                desc: "Asuma and Shikamaru have to think on their feet as they face the mind-boggling jutsu of the Akatsuki pair, Hidan and Kakuzu. At the last minute, the Akatsuki are called away, but not before dealing a fatal blow to a revered shinobi of the Leaf. The devastated ninja left behind can think only of revenge, but Tsunade is opposed to the scheme until an offer of help arrives from an unexpected source.",
-                episodes: [
-                    { name: "Episode 1 [72]", url: "https://web.nxsha.app/embed/tv/31910/4/72" },
-                    { name: "Episode 2 [73]", url: "https://web.nxsha.app/embed/tv/31910/4/73" },
-                    { name: "Episode 3 [74]", url: "https://web.nxsha.app/embed/tv/31910/4/74" },
-                    { name: "Episode 4 [75]", url: "https://web.nxsha.app/embed/tv/31910/4/75" },
-                    { name: "Episode 5 [76]", url: "https://web.nxsha.app/embed/tv/31910/4/76" },
-                    { name: "Episode 6 [77]", url: "https://web.nxsha.app/embed/tv/31910/4/77" },
-                    { name: "Episode 7 [78]", url: "https://web.nxsha.app/embed/tv/31910/4/78" },
-                    { name: "Episode 8 [79]", url: "https://web.nxsha.app/embed/tv/31910/4/79" },
-                    { name: "Episode 9 [80]", url: "https://web.nxsha.app/embed/tv/31910/4/80" },
-                    { name: "Episode 10 [81]", url: "https://web.nxsha.app/embed/tv/31910/4/81" },
-                    { name: "Episode 11 [82]", url: "https://web.nxsha.app/embed/tv/31910/4/82" },
-                    { name: "Episode 12 [83]", url: "https://web.nxsha.app/embed/tv/31910/4/83" },
-                    { name: "Episode 13 [84]", url: "https://web.nxsha.app/embed/tv/31910/4/84" },
-                    { name: "Episode 14 [85]", url: "https://web.nxsha.app/embed/tv/31910/4/85" },
-                    { name: "Episode 15 [86]", url: "https://web.nxsha.app/embed/tv/31910/4/86" },
-                    { name: "Episode 16 [87]", url: "https://web.nxsha.app/embed/tv/31910/4/87" },
-                    { name: "Episode 17 [88]", url: "https://web.nxsha.app/embed/tv/31910/4/88" },
-                ]
-            },
-            {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://media.themoviedb.org/t/p/w500/pM50CwLr4mazvKTdNg6r319TKgG.jpg",
-                year: "2009",
-                rating: "",
-                audio: "S-5",
-                desc: "Naruto's new jutsu Rasen Shuriken is unbelievably powerful - but because of the risks to the user, Tsunade forbids Naruto to use it! When Jiraiya returns to the village, Naruto seeks his guidance, and the two head off to a hot springs resort to work on a solution. Meanwhile, Kakashi leads a team in search of Orochimaru's hideout, and when Naruto hears about it, he begs to join them.",
-                episodes: [
-                    { name: "Episode 1 [89]", url: "https://web.nxsha.app/embed/tv/31910/5/89" },
-                    { name: "Episode 2 [90]", url: "https://web.nxsha.app/embed/tv/31910/5/90" },
-                    { name: "Episode 3 [91]", url: "https://web.nxsha.app/embed/tv/31910/5/91" },
-                    { name: "Episode 4 [92]", url: "https://web.nxsha.app/embed/tv/31910/5/92" },
-                    { name: "Episode 5 [93]", url: "https://web.nxsha.app/embed/tv/31910/5/93" },
-                    { name: "Episode 6 [94]", url: "https://web.nxsha.app/embed/tv/31910/5/94" },
-                    { name: "Episode 7 [95]", url: "https://web.nxsha.app/embed/tv/31910/5/95" },
-                    { name: "Episode 8 [96]", url: "https://web.nxsha.app/embed/tv/31910/5/96" },
-                    { name: "Episode 9 [97]", url: "https://web.nxsha.app/embed/tv/31910/5/97" },
-                    { name: "Episode 10 [98]", url: "https://web.nxsha.app/embed/tv/31910/5/98" },
-                    { name: "Episode 11 [99]", url: "https://web.nxsha.app/embed/tv/31910/5/99" },
-                    { name: "Episode 12 [100]", url: "https://web.nxsha.app/embed/tv/31910/5/100" },
-                    { name: "Episode 13 [101]", url: "https://web.nxsha.app/embed/tv/31910/5/101" },
-                    { name: "Episode 14 [102]", url: "https://web.nxsha.app/embed/tv/31910/5/102" },
-                    { name: "Episode 15 [103]", url: "https://web.nxsha.app/embed/tv/31910/5/103" },
-                    { name: "Episode 16 [104]", url: "https://web.nxsha.app/embed/tv/31910/5/104" },
-                    { name: "Episode 17 [105]", url: "https://web.nxsha.app/embed/tv/31910/5/105" },
-                    { name: "Episode 18 [106]", url: "https://web.nxsha.app/embed/tv/31910/5/106" },
-                    { name: "Episode 19 [107]", url: "https://web.nxsha.app/embed/tv/31910/5/107" },
-                    { name: "Episode 20 [108]", url: "https://web.nxsha.app/embed/tv/31910/5/108" },
-                    { name: "Episode 21 [109]", url: "https://web.nxsha.app/embed/tv/31910/5/109" },
-                    { name: "Episode 22 [110]", url: "https://web.nxsha.app/embed/tv/31910/5/110" },
-                    { name: "Episode 23 [111]", url: "https://web.nxsha.app/embed/tv/31910/5/111" },
-                    { name: "Episode 24 [112]", url: "https://web.nxsha.app/embed/tv/31910/5/112" },
-                ]
-            },
-            {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://media.themoviedb.org/t/p/w500/kyMwZOcYobK8yZQJ5Phgpf5Eabr.jpg",
-                year: "2009",
-                rating: "",
-                audio: "S-6",
-                desc: "Sasuke's future hangs in the balance as Orochimaru prepares for reanimation. It's been three years since Sasuke left the Leaf Village seeking the power Orochimaru promised him. Now it's time to face his mentor. Who will master whom in the battle for their very existence? Plus, take a step back in time to a turning point in the young Kakashi's life, as he fights alongside his teammates under the guidance of the Fourth Hokage!",
-                episodes: [
-                    { name: "Episode 1 [113]", url: "https://web.nxsha.app/embed/tv/31910/6/113" },
-                    { name: "Episode 2 [114]", url: "https://web.nxsha.app/embed/tv/31910/6/114" },
-                    { name: "Episode 3 [115]", url: "https://web.nxsha.app/embed/tv/31910/6/115" },
-                    { name: "Episode 4 [116]", url: "https://web.nxsha.app/embed/tv/31910/6/116" },
-                    { name: "Episode 5 [117]", url: "https://web.nxsha.app/embed/tv/31910/6/117" },
-                    { name: "Episode 6 [118]", url: "https://web.nxsha.app/embed/tv/31910/6/118" },
-                    { name: "Episode 7 [119]", url: "https://web.nxsha.app/embed/tv/31910/6/119" },
-                    { name: "Episode 8 [120]", url: "https://web.nxsha.app/embed/tv/31910/6/120" },
-                    { name: "Episode 9 [121]", url: "https://web.nxsha.app/embed/tv/31910/6/121" },
-                    { name: "Episode 10 [122]", url: "https://web.nxsha.app/embed/tv/31910/6/122" },
-                    { name: "Episode 11 [123]", url: "https://web.nxsha.app/embed/tv/31910/6/123" },
-                    { name: "Episode 12 [124]", url: "https://web.nxsha.app/embed/tv/31910/6/124" },
-                    { name: "Episode 13 [125]", url: "https://web.nxsha.app/embed/tv/31910/6/125" },
-                    { name: "Episode 14 [126]", url: "https://web.nxsha.app/embed/tv/31910/6/126" },
-                    { name: "Episode 15 [127]", url: "https://web.nxsha.app/embed/tv/31910/6/127" },
-                    { name: "Episode 16 [128]", url: "https://web.nxsha.app/embed/tv/31910/6/128" },
-                    { name: "Episode 17 [129]", url: "https://web.nxsha.app/embed/tv/31910/6/129" },
-                    { name: "Episode 18 [130]", url: "https://web.nxsha.app/embed/tv/31910/6/130" },
-                    { name: "Episode 19 [131]", url: "https://web.nxsha.app/embed/tv/31910/6/131" },
-                    { name: "Episode 20 [132]", url: "https://web.nxsha.app/embed/tv/31910/6/132" },
-                    { name: "Episode 21 [133]", url: "https://web.nxsha.app/embed/tv/31910/6/133" },
-                    { name: "Episode 22 [134]", url: "https://web.nxsha.app/embed/tv/31910/6/134" },
-                    { name: "Episode 23 [135]", url: "https://web.nxsha.app/embed/tv/31910/6/135" },
-                    { name: "Episode 24 [136]", url: "https://web.nxsha.app/embed/tv/31910/6/136" },
-                    { name: "Episode 25 [137]", url: "https://web.nxsha.app/embed/tv/31910/6/137" },
-                    { name: "Episode 26 [138]", url: "https://web.nxsha.app/embed/tv/31910/6/138" },
-                    { name: "Episode 27 [139]", url: "https://web.nxsha.app/embed/tv/31910/6/139" },
-                    { name: "Episode 28 [140]", url: "https://web.nxsha.app/embed/tv/31910/6/140" },
-                    { name: "Episode 29 [141]", url: "https://web.nxsha.app/embed/tv/31910/6/141" },
-                    { name: "Episode 30 [142]", url: "https://web.nxsha.app/embed/tv/31910/6/142" },
-                    { name: "Episode 31 [143]", url: "https://web.nxsha.app/embed/tv/31910/6/143" },
-                ]
-            },
-            {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://static0.srcdn.com/wordpress/wp-content/uploads/2025/03/031301_season_poster_342.jpg",
-                year: "2010",
-                rating: "",
-                audio: "S-7",
-                desc: "The team is heading back to the village when an urgent assignment comes in from Tsunade that will lead them on a perilous journey to protect a young woman!",
-                episodes: [
-                    { name: "Episode 1 [144]", url: "https://web.nxsha.app/embed/tv/31910/7/144" },
-                    { name: "Episode 2 [145]", url: "https://web.nxsha.app/embed/tv/31910/7/145" },
-                    { name: "Episode 3 [146]", url: "https://web.nxsha.app/embed/tv/31910/7/146" },
-                    { name: "Episode 4 [147]", url: "https://web.nxsha.app/embed/tv/31910/7/147" },
-                    { name: "Episode 5 [148]", url: "https://web.nxsha.app/embed/tv/31910/7/148" },
-                    { name: "Episode 6 [149]", url: "https://web.nxsha.app/embed/tv/31910/7/149" },
-                    { name: "Episode 7 [150]", url: "https://web.nxsha.app/embed/tv/31910/7/150" },
-                    { name: "Episode 8 [151]", url: "https://web.nxsha.app/embed/tv/31910/7/151" },
-                ]
-            },
-            {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://image.tmdb.org/t/p/w500//msnDBdYwXyNgLUzAC5SX1o1mqvq.jpg",
-                year: "2010",
-                rating: "",
-                audio: "S-8",
-                desc: "Naruto and his friends successfully decipher the code Jiraiya left behind, but it's not enough to solve the mystery of Pain. For Naruto, Jiraiya's passing is more than enough to inspire him to follow Fukasaku to Mount Myoboku, where he begins his training in Sage Jutsu. But will the antsy Naruto ever be able to sit still long enough to achieve Sage Mode? Back in the Leaf Village, disaster strikes when the Six Paths of Pain attack the village, and those dearest to Naruto are thrown into the chaos of battle!",
-                episodes: [
-                    { name: "Episode 1 [152]", url: "https://web.nxsha.app/embed/tv/31910/8/152" },
-                    { name: "Episode 2 [153]", url: "https://web.nxsha.app/embed/tv/31910/8/153" },
-                    { name: "Episode 3 [154]", url: "https://web.nxsha.app/embed/tv/31910/8/154" },
-                    { name: "Episode 4 [155]", url: "https://web.nxsha.app/embed/tv/31910/8/155" },
-                    { name: "Episode 5 [156]", url: "https://web.nxsha.app/embed/tv/31910/8/156" },
-                    { name: "Episode 6 [157]", url: "https://web.nxsha.app/embed/tv/31910/8/157" },
-                    { name: "Episode 7 [158]", url: "https://web.nxsha.app/embed/tv/31910/8/158" },
-                    { name: "Episode 8 [159]", url: "https://web.nxsha.app/embed/tv/31910/8/159" },
-                    { name: "Episode 9 [160]", url: "https://web.nxsha.app/embed/tv/31910/8/160" },
-                    { name: "Episode 10 [161]", url: "https://web.nxsha.app/embed/tv/31910/8/161" },
-                    { name: "Episode 11 [162]", url: "https://web.nxsha.app/embed/tv/31910/8/162" },
-                    { name: "Episode 12 [163]", url: "https://web.nxsha.app/embed/tv/31910/8/163" },
-                    { name: "Episode 13 [164]", url: "https://web.nxsha.app/embed/tv/31910/8/164" },
-                    { name: "Episode 14 [165]", url: "https://web.nxsha.app/embed/tv/31910/8/165" },
-                    { name: "Episode 15 [166]", url: "https://web.nxsha.app/embed/tv/31910/8/166" },
-                    { name: "Episode 16 [167]", url: "https://web.nxsha.app/embed/tv/31910/8/167" },
-                    { name: "Episode 17 [168]", url: "https://web.nxsha.app/embed/tv/31910/8/168" },
-                    { name: "Episode 18 [169]", url: "https://web.nxsha.app/embed/tv/31910/8/169" },
-                    { name: "Episode 19 [170]", url: "https://web.nxsha.app/embed/tv/31910/8/170" },
-                    { name: "Episode 20 [171]", url: "https://web.nxsha.app/embed/tv/31910/8/171" },
-                    { name: "Episode 21 [172]", url: "https://web.nxsha.app/embed/tv/31910/8/172" },
-                    { name: "Episode 22 [173]", url: "https://web.nxsha.app/embed/tv/31910/8/173" },
-                    { name: "Episode 23 [174]", url: "https://web.nxsha.app/embed/tv/31910/8/174" },
-                    { name: "Episode 24 [175]", url: "https://web.nxsha.app/embed/tv/31910/8/175" },
-                ]
-            },
-            {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://static0.srcdn.com/wordpress/wp-content/uploads/2025/03/031303_season_poster_342.jpg?w=1200&h=628&fit=crop",
-                year: "2010",
-                rating: "",
-                audio: "S-9",
-                desc: "After Pain's attack, the Leaf Ninja set about rebuilding their village. Naruto and Sakura are thrilled to be reunited with Tazuna and his grandson Inari from the Land of Waves, who have come to help. While the restoration proceeds, the Leaf Ninja and their friends reflect on past events that influenced the village and helped gain allies like the Sand. Plus, we get a glimpse back into Naruto's training journey with Jiraiya, and join the original Team 7 on a mission when Sasuke was still with them!",
-                episodes: [
-                    { name: "Episode 1 [176]", url: "https://web.nxsha.app/embed/tv/31910/9/176" },
-                    { name: "Episode 2 [177]", url: "https://web.nxsha.app/embed/tv/31910/9/177" },
-                    { name: "Episode 3 [178]", url: "https://web.nxsha.app/embed/tv/31910/9/178" },
-                    { name: "Episode 4 [179]", url: "https://web.nxsha.app/embed/tv/31910/9/179" },
-                    { name: "Episode 5 [180]", url: "https://web.nxsha.app/embed/tv/31910/9/180" },
-                    { name: "Episode 6 [181]", url: "https://web.nxsha.app/embed/tv/31910/9/181" },
-                    { name: "Episode 7 [182]", url: "https://web.nxsha.app/embed/tv/31910/9/182" },
-                    { name: "Episode 8 [183]", url: "https://web.nxsha.app/embed/tv/31910/9/183" },
-                    { name: "Episode 9 [184]", url: "https://web.nxsha.app/embed/tv/31910/9/184" },
-                    { name: "Episode 10 [185]", url: "https://web.nxsha.app/embed/tv/31910/9/185" },
-                    { name: "Episode 11 [186]", url: "https://web.nxsha.app/embed/tv/31910/9/186" },
-                    { name: "Episode 12 [187]", url: "https://web.nxsha.app/embed/tv/31910/9/187" },
-                    { name: "Episode 13 [188]", url: "https://web.nxsha.app/embed/tv/31910/9/188" },
-                    { name: "Episode 14 [189]", url: "https://web.nxsha.app/embed/tv/31910/9/189" },
-                    { name: "Episode 15 [190]", url: "https://web.nxsha.app/embed/tv/31910/9/190" },
-                    { name: "Episode 16 [191]", url: "https://web.nxsha.app/embed/tv/31910/9/191" },
-                    { name: "Episode 17 [192]", url: "https://web.nxsha.app/embed/tv/31910/9/192" },
-                    { name: "Episode 18 [193]", url: "https://web.nxsha.app/embed/tv/31910/9/193" },
-                    { name: "Episode 19 [194]", url: "https://web.nxsha.app/embed/tv/31910/9/194" },
-                    { name: "Episode 20 [195]", url: "https://web.nxsha.app/embed/tv/31910/9/195" },
-                    { name: "Episode 21 [196]", url: "https://web.nxsha.app/embed/tv/31910/9/196" },
-                ]
-            },
-            {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://toonflix.in/wp-content/uploads/2025/11/Naruto_-Shippuden-Season-10-Poster-200x300.jpg",
-                year: "2011",
-                rating: "",
-                audio: "S-10",
-                desc: "In the aftermath of the attack on the village, Naruto and Sakura are shocked to discover that Danzo has been selected as the new Hokage. And his first order of business involves Team 7's own Rogue Ninja-Sasuke! Then, the Kage from each village gather for a summit in the Land of Iron, and Naruto seeks a pardon for Sasuke from the Raikage. But the cycle of hatred runs deep in the shinobi world, and while the Five Kage discuss how to deal with the Akatsuki, the mysterious one calling himself Madara steps forward to reveal truths that will turn Naruto's world upside down! Plus, take a step back in time to a turning point in the young Kakashi's life, as he fights alongside his teammates under the guidance of the Fourth Hokage!",
-                episodes: [
-                    { name: "Episode 1 [197]", url: "https://web.nxsha.app/embed/tv/31910/10/197" },
-                    { name: "Episode 2 [198]", url: "https://web.nxsha.app/embed/tv/31910/10/198" },
-                    { name: "Episode 3 [199]", url: "https://web.nxsha.app/embed/tv/31910/10/199" },
-                    { name: "Episode 4 [200]", url: "https://web.nxsha.app/embed/tv/31910/10/200" },
-                    { name: "Episode 5 [201]", url: "https://web.nxsha.app/embed/tv/31910/10/201" },
-                    { name: "Episode 6 [202]", url: "https://web.nxsha.app/embed/tv/31910/10/202" },
-                    { name: "Episode 7 [203]", url: "https://web.nxsha.app/embed/tv/31910/10/203" },
-                    { name: "Episode 8 [204]", url: "https://web.nxsha.app/embed/tv/31910/10/204" },
-                    { name: "Episode 9 [205]", url: "https://web.nxsha.app/embed/tv/31910/10/205" },
-                    { name: "Episode 10 [206]", url: "https://web.nxsha.app/embed/tv/31910/10/206" },
-                    { name: "Episode 11 [207]", url: "https://web.nxsha.app/embed/tv/31910/10/207" },
-                    { name: "Episode 12 [208]", url: "https://web.nxsha.app/embed/tv/31910/10/208" },
-                    { name: "Episode 13 [209]", url: "https://web.nxsha.app/embed/tv/31910/10/209" },
-                    { name: "Episode 14 [210]", url: "https://web.nxsha.app/embed/tv/31910/10/210" },
-                    { name: "Episode 15 [211]", url: "https://web.nxsha.app/embed/tv/31910/10/211" },
-                    { name: "Episode 16 [212]", url: "https://web.nxsha.app/embed/tv/31910/10/212" },
-                    { name: "Episode 17 [213]", url: "https://web.nxsha.app/embed/tv/31910/10/213" },
-                    { name: "Episode 18 [214]", url: "https://web.nxsha.app/embed/tv/31910/10/214" },
-                    { name: "Episode 19 [215]", url: "https://web.nxsha.app/embed/tv/31910/10/215" },
-                    { name: "Episode 20 [216]", url: "https://web.nxsha.app/embed/tv/31910/10/216" },
-                    { name: "Episode 21 [217]", url: "https://web.nxsha.app/embed/tv/31910/10/217" },
-                    { name: "Episode 22 [218]", url: "https://web.nxsha.app/embed/tv/31910/10/218" },
-                    { name: "Episode 23 [219]", url: "https://web.nxsha.app/embed/tv/31910/10/219" },
-                    { name: "Episode 24 [220]", url: "https://web.nxsha.app/embed/tv/31910/10/220" },
-                    { name: "Episode 25 [221]", url: "https://web.nxsha.app/embed/tv/31910/10/221" },
-                ]
-            },
-            {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://media.themoviedb.org/t/p/w500/1dFcEaNmWkKljZl2jfPp28fIxKG.jpg",
-                year: "2011",
-                rating: "",
-                audio: "S-11",
-                desc: "Naruto declares to his friends his intention to take on Sasuke by himself, while the Elders of the Leaf make a serious decision about who will fill the vacant seat of Hokage: Kakashi! In Mount Myoboku, Gerotora, Fukasaku and the Great Lord Elder debate whether or not to give Naruto the key to the Tetragram Seal that Gerotora holds, an act that could potentially unleash Nine Tails.",
-                episodes: [
-                    { name: "Episode 1 [222]", url: "https://web.nxsha.app/embed/tv/31910/11/222" },
-                    { name: "Episode 2 [223]", url: "https://web.nxsha.app/embed/tv/31910/11/223" },
-                    { name: "Episode 3 [224]", url: "https://web.nxsha.app/embed/tv/31910/11/224" },
-                    { name: "Episode 4 [225]", url: "https://web.nxsha.app/embed/tv/31910/11/225" },
-                    { name: "Episode 5 [226]", url: "https://web.nxsha.app/embed/tv/31910/11/226" },
-                    { name: "Episode 6 [227]", url: "https://web.nxsha.app/embed/tv/31910/11/227" },
-                    { name: "Episode 7 [228]", url: "https://web.nxsha.app/embed/tv/31910/11/228" },
-                    { name: "Episode 8 [229]", url: "https://web.nxsha.app/embed/tv/31910/11/229" },
-                    { name: "Episode 9 [230]", url: "https://web.nxsha.app/embed/tv/31910/11/230" },
-                    { name: "Episode 10 [231]", url: "https://web.nxsha.app/embed/tv/31910/11/231" },
-                    { name: "Episode 11 [232]", url: "https://web.nxsha.app/embed/tv/31910/11/232" },
-                    { name: "Episode 12 [233]", url: "https://web.nxsha.app/embed/tv/31910/11/233" },
-                    { name: "Episode 13 [234]", url: "https://web.nxsha.app/embed/tv/31910/11/234" },
-                    { name: "Episode 14 [235]", url: "https://web.nxsha.app/embed/tv/31910/11/235" },
-                    { name: "Episode 15 [236]", url: "https://web.nxsha.app/embed/tv/31910/11/236" },
-                    { name: "Episode 16 [237]", url: "https://web.nxsha.app/embed/tv/31910/11/237" },
-                    { name: "Episode 17 [238]", url: "https://web.nxsha.app/embed/tv/31910/11/238" },
-                    { name: "Episode 18 [239]", url: "https://web.nxsha.app/embed/tv/31910/11/239" },
-                    { name: "Episode 19 [240]", url: "https://web.nxsha.app/embed/tv/31910/11/240" },
-                    { name: "Episode 20 [241]", url: "https://web.nxsha.app/embed/tv/31910/11/241" },
-                    { name: "Episode 21 [242]", url: "https://web.nxsha.app/embed/tv/31910/11/242" },
-                ]
-            },
-            {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://static0.srcdn.com/wordpress/wp-content/uploads/2025/03/031306_season_poster_342.jpg?w=1200&h=628&fit=crop",
-                year: "2012",
-                rating: "",
-                audio: "S-12",
-                desc: "As the Leaf Village prepares for war, each shinobi and clan must contemplate the role they will play in the battles to come. While Naruto's peers seek training from surprising sources, Naruto himself must confront both his biggest weakness and greatest strength - the Nine-Tailed Fox. To reach optimum power, Naruto must learn to control the beast within him, so he seeks help from the one person who has mastered just that, Killer Bee! But the Jinchuriki of Eight Tails wants nothing to do with training Naruto!",
-                episodes: [
-                    { name: "Episode 1 [243]", url: "https://web.nxsha.app/embed/tv/31910/12/243" },
-                    { name: "Episode 2 [244]", url: "https://web.nxsha.app/embed/tv/31910/12/244" },
-                    { name: "Episode 3 [245]", url: "https://web.nxsha.app/embed/tv/31910/12/245" },
-                    { name: "Episode 4 [246]", url: "https://web.nxsha.app/embed/tv/31910/12/246" },
-                    { name: "Episode 5 [247]", url: "https://web.nxsha.app/embed/tv/31910/12/247" },
-                    { name: "Episode 6 [248]", url: "https://web.nxsha.app/embed/tv/31910/12/248" },
-                    { name: "Episode 7 [249]", url: "https://web.nxsha.app/embed/tv/31910/12/249" },
-                    { name: "Episode 8 [250]", url: "https://web.nxsha.app/embed/tv/31910/12/250" },
-                    { name: "Episode 9 [251]", url: "https://web.nxsha.app/embed/tv/31910/12/251" },
-                    { name: "Episode 10 [252]", url: "https://web.nxsha.app/embed/tv/31910/12/252" },
-                    { name: "Episode 11 [253]", url: "https://web.nxsha.app/embed/tv/31910/12/253" },
-                    { name: "Episode 12 [254]", url: "https://web.nxsha.app/embed/tv/31910/12/254" },
-                    { name: "Episode 13 [255]", url: "https://web.nxsha.app/embed/tv/31910/12/255" },
-                    { name: "Episode 14 [256]", url: "https://web.nxsha.app/embed/tv/31910/12/256" },
-                    { name: "Episode 15 [257]", url: "https://web.nxsha.app/embed/tv/31910/12/257" },
-                    { name: "Episode 16 [258]", url: "https://web.nxsha.app/embed/tv/31910/12/258" },
-                    { name: "Episode 17 [259]", url: "https://web.nxsha.app/embed/tv/31910/12/259" },
-                    { name: "Episode 18 [260]", url: "https://web.nxsha.app/embed/tv/31910/12/260" },
-                    { name: "Episode 19 [261]", url: "https://web.nxsha.app/embed/tv/31910/12/261" },
-                    { name: "Episode 20 [262]", url: "https://web.nxsha.app/embed/tv/31910/12/262" },
-                    { name: "Episode 21 [263]", url: "https://web.nxsha.app/embed/tv/31910/12/263" },
-                    { name: "Episode 22 [264]", url: "https://web.nxsha.app/embed/tv/31910/12/264" },
-                    { name: "Episode 23 [265]", url: "https://web.nxsha.app/embed/tv/31910/12/265" },
-                    { name: "Episode 24 [266]", url: "https://web.nxsha.app/embed/tv/31910/12/266" },
-                    { name: "Episode 25 [267]", url: "https://web.nxsha.app/embed/tv/31910/12/267" },
-                    { name: "Episode 26 [268]", url: "https://web.nxsha.app/embed/tv/31910/12/268" },
-                    { name: "Episode 27 [269]", url: "https://web.nxsha.app/embed/tv/31910/12/269" },
-                    { name: "Episode 28 [270]", url: "https://web.nxsha.app/embed/tv/31910/12/270" },
-                    { name: "Episode 29 [271]", url: "https://web.nxsha.app/embed/tv/31910/12/271" },
-                    { name: "Episode 30 [272]", url: "https://web.nxsha.app/embed/tv/31910/12/272" },
-                    { name: "Episode 31 [273]", url: "https://web.nxsha.app/embed/tv/31910/12/273" },
-                    { name: "Episode 32 [274]", url: "https://web.nxsha.app/embed/tv/31910/12/274" },
-                    { name: "Episode 33 [275]", url: "https://web.nxsha.app/embed/tv/31910/12/275" },
-                ]
-            },
-            {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://media.themoviedb.org/t/p/w500/zoVDEzuh4wyXZOHpkODNI7PTMsa.jpg",
-                year: "2012",
-                rating: "",
-                audio: "S-13",
-                desc: "",
-                episodes: [
-                    { name: "Episode 1 [276]", url: "https://drive.google.com/file/d/1-tTV19Uo8W7gDlhwruQe2S3fO7ev--av/preview" },
-                    { name: "Episode 2 [277]", url: "https://web.nxsha.app/embed/tv/31910/13/277" },
-                    { name: "Episode 3 [278]", url: "https://web.nxsha.app/embed/tv/31910/13/278" },
-                    { name: "Episode 4 [279]", url: "https://web.nxsha.app/embed/tv/31910/13/279" },
-                    { name: "Episode 5 [280]", url: "https://web.nxsha.app/embed/tv/31910/13/280" },
-                    { name: "Episode 6 [281]", url: "https://web.nxsha.app/embed/tv/31910/13/281" },
-                    { name: "Episode 7 [282]", url: "https://web.nxsha.app/embed/tv/31910/13/282" },
-                    { name: "Episode 8 [283]", url: "https://web.nxsha.app/embed/tv/31910/13/283" },
-                    { name: "Episode 9 [284]", url: "https://web.nxsha.app/embed/tv/31910/13/284" },
-                    { name: "Episode 10 [285]", url: "https://web.nxsha.app/embed/tv/31910/13/285" },
-                    { name: "Episode 11 [286]", url: "https://web.nxsha.app/embed/tv/31910/13/286" },
-                    { name: "Episode 12 [287]", url: "https://web.nxsha.app/embed/tv/31910/13/287" },
-                    { name: "Episode 13 [288]", url: "https://web.nxsha.app/embed/tv/31910/13/288" },
-                    { name: "Episode 14 [289]", url: "https://web.nxsha.app/embed/tv/31910/13/289" },
-                    { name: "Episode 15 [290]", url: "https://web.nxsha.app/embed/tv/31910/13/290" },
-                    { name: "Episode 16 [291]", url: "https://web.nxsha.app/embed/tv/31910/13/291" },
-                    { name: "Episode 17 [292]", url: "https://web.nxsha.app/embed/tv/31910/13/292" },
-                    { name: "Episode 18 [293]", url: "https://web.nxsha.app/embed/tv/31910/13/293" },
-                    { name: "Episode 19 [294]", url: "https://web.nxsha.app/embed/tv/31910/13/294" },
-                    { name: "Episode 20 [295]", url: "https://web.nxsha.app/embed/tv/31910/13/295" },
-                ]
-            },
-            {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://media.themoviedb.org/t/p/w500/6N05Hvm8YUFGiHyGSsBQKfX4USQ.jpg",
-                year: "2013",
-                rating: "",
-                audio: "S-14",
-                desc: "",
-                episodes: [
-                    { name: "Episode 1 [296]", url: "https://web.nxsha.app/embed/tv/31910/14/296" },
-                    { name: "Episode 2 [297]", url: "https://web.nxsha.app/embed/tv/31910/14/297" },
-                    { name: "Episode 3 [298]", url: "https://web.nxsha.app/embed/tv/31910/14/298" },
-                    { name: "Episode 4 [299]", url: "https://web.nxsha.app/embed/tv/31910/14/299" },
-                    { name: "Episode 5 [300]", url: "https://web.nxsha.app/embed/tv/31910/14/300" },
-                    { name: "Episode 6 [301]", url: "https://web.nxsha.app/embed/tv/31910/14/301" },
-                    { name: "Episode 7 [302]", url: "https://web.nxsha.app/embed/tv/31910/14/302" },
-                    { name: "Episode 8 [303]", url: "https://web.nxsha.app/embed/tv/31910/14/303" },
-                    { name: "Episode 9 [304]", url: "https://web.nxsha.app/embed/tv/31910/14/304" },
-                    { name: "Episode 10 [305]", url: "https://web.nxsha.app/embed/tv/31910/14/305" },
-                    { name: "Episode 11 [306]", url: "https://web.nxsha.app/embed/tv/31910/14/306" },
-                    { name: "Episode 12 [307]", url: "https://web.nxsha.app/embed/tv/31910/14/307" },
-                    { name: "Episode 13 [308]", url: "https://web.nxsha.app/embed/tv/31910/14/308" },
-                    { name: "Episode 14 [309]", url: "https://web.nxsha.app/embed/tv/31910/14/309" },
-                    { name: "Episode 15 [310]", url: "https://web.nxsha.app/embed/tv/31910/14/310" },
-                    { name: "Episode 16 [311]", url: "https://web.nxsha.app/embed/tv/31910/14/311" },
-                    { name: "Episode 17 [312]", url: "https://web.nxsha.app/embed/tv/31910/14/312" },
-                    { name: "Episode 18 [313]", url: "https://web.nxsha.app/embed/tv/31910/14/313" },
-                    { name: "Episode 19 [314]", url: "https://web.nxsha.app/embed/tv/31910/14/314" },
-                    { name: "Episode 20 [315]", url: "https://web.nxsha.app/embed/tv/31910/14/315" },
-                    { name: "Episode 21 [316]", url: "https://web.nxsha.app/embed/tv/31910/14/316" },
-                    { name: "Episode 22 [317]", url: "https://web.nxsha.app/embed/tv/31910/14/317" },
-                    { name: "Episode 23 [318]", url: "https://web.nxsha.app/embed/tv/31910/14/318" },
-                    { name: "Episode 24 [319]", url: "https://web.nxsha.app/embed/tv/31910/14/319" },
-                    { name: "Episode 25 [320]", url: "https://web.nxsha.app/embed/tv/31910/14/320" },
-                ]
-            },
-            {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://static0.srcdn.com/wordpress/wp-content/uploads/2025/03/031309_season_poster_342.jpg?q=50&fit=crop&w=265&h=392&dpr=1.5",
-                year: "2013",
-                rating: "",
-                audio: "S-15",
-                desc: "",
-                episodes: [
-                    { name: "Episode 1 [321]", url: "https://web.nxsha.app/embed/tv/31910/15/321" },
-                    { name: "Episode 2 [322]", url: "https://web.nxsha.app/embed/tv/31910/15/322" },
-                    { name: "Episode 3 [323]", url: "https://web.nxsha.app/embed/tv/31910/15/323" },
-                    { name: "Episode 4 [324]", url: "https://web.nxsha.app/embed/tv/31910/15/324" },
-                    { name: "Episode 5 [325]", url: "https://web.nxsha.app/embed/tv/31910/15/325" },
-                    { name: "Episode 6 [326]", url: "https://web.nxsha.app/embed/tv/31910/15/326" },
-                    { name: "Episode 7 [327]", url: "https://web.nxsha.app/embed/tv/31910/15/327" },
-                    { name: "Episode 8 [328]", url: "https://web.nxsha.app/embed/tv/31910/15/328" },
-                    { name: "Episode 9 [329]", url: "https://web.nxsha.app/embed/tv/31910/15/329" },
-                    { name: "Episode 10 [330]", url: "https://web.nxsha.app/embed/tv/31910/15/330" },
-                    { name: "Episode 11 [331]", url: "https://web.nxsha.app/embed/tv/31910/15/331" },
-                    { name: "Episode 12 [332]", url: "https://web.nxsha.app/embed/tv/31910/15/332" },
-                    { name: "Episode 13 [333]", url: "https://web.nxsha.app/embed/tv/31910/15/333" },
-                    { name: "Episode 14 [334]", url: "https://web.nxsha.app/embed/tv/31910/15/334" },
-                    { name: "Episode 15 [335]", url: "https://web.nxsha.app/embed/tv/31910/15/335" },
-                    { name: "Episode 16 [336]", url: "https://web.nxsha.app/embed/tv/31910/15/336" },
-                    { name: "Episode 17 [337]", url: "https://web.nxsha.app/embed/tv/31910/15/337" },
-                    { name: "Episode 18 [338]", url: "https://web.nxsha.app/embed/tv/31910/15/338" },
-                    { name: "Episode 19 [339]", url: "https://web.nxsha.app/embed/tv/31910/15/339" },
-                    { name: "Episode 20 [340]", url: "https://web.nxsha.app/embed/tv/31910/15/340" },
-                    { name: "Episode 21 [341]", url: "https://web.nxsha.app/embed/tv/31910/15/341" },
-                    { name: "Episode 22 [342]", url: "https://web.nxsha.app/embed/tv/31910/15/342" },
-                    { name: "Episode 23 [343]", url: "https://web.nxsha.app/embed/tv/31910/15/343" },
-                    { name: "Episode 24 [344]", url: "https://web.nxsha.app/embed/tv/31910/15/344" },
-                    { name: "Episode 25 [345]", url: "https://web.nxsha.app/embed/tv/31910/15/345" },
-                    { name: "Episode 26 [346]", url: "https://web.nxsha.app/embed/tv/31910/15/346" },
-                    { name: "Episode 27 [347]", url: "https://web.nxsha.app/embed/tv/31910/15/347" },
-                    { name: "Episode 28 [348]", url: "https://web.nxsha.app/embed/tv/31910/15/348" },
-                ]
-            },
-            {
-                type: "anime",
-                title: "Naruto Shippuden",
-                img: "https://image.tmdb.org/t/p/original/qk74cPdTULS59BOLhlJJX1dVFUq.jpg",
-                year: "2014",
-                rating: "",
-                audio: "S-16",
-                desc: "",
-                episodes: [
-                    { name: "Episode 1 [349]", url: "https://web.nxsha.app/embed/tv/31910/16/349" },
-                    { name: "Episode 2 [350]", url: "https://web.nxsha.app/embed/tv/31910/16/350" },
-                    { name: "Episode 3 [351]", url: "https://web.nxsha.app/embed/tv/31910/16/351" },
-                    { name: "Episode 4 [352]", url: "https://web.nxsha.app/embed/tv/31910/16/352" },
-                    { name: "Episode 5 [353]", url: "https://web.nxsha.app/embed/tv/31910/16/353" },
-                    { name: "Episode 6 [354]", url: "https://web.nxsha.app/embed/tv/31910/16/354" },
-                    { name: "Episode 7 [355]", url: "https://web.nxsha.app/embed/tv/31910/16/355" },
-                    { name: "Episode 8 [356]", url: "https://web.nxsha.app/embed/tv/31910/16/356" },
-                    { name: "Episode 9 [357]", url: "https://web.nxsha.app/embed/tv/31910/16/357" },
-                    { name: "Episode 10 [358]", url: "https://web.nxsha.app/embed/tv/31910/16/358" },
-                    { name: "Episode 11 [359]", url: "https://web.nxsha.app/embed/tv/31910/16/359" },
-                    { name: "Episode 12 [360]", url: "https://web.nxsha.app/embed/tv/31910/16/360" },
-                    { name: "Episode 13 [361]", url: "https://web.nxsha.app/embed/tv/31910/16/361" },
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/117376/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/117376/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/117376/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/117376/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/117376/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/117376/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/117376/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/117376/1/8" },
+                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/117376/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/117376/1/10" },
+                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/117376/1/11" },
+                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/117376/1/12" },
+                    { name: "Episode 13", url: "https://web.nxsha.app/embed/tv/117376/1/13" },
+                    { name: "Episode 14", url: "https://web.nxsha.app/embed/tv/117376/1/14" },
+                    { name: "Episode 15", url: "https://web.nxsha.app/embed/tv/117376/1/15" },
+                    { name: "Episode 16", url: "https://web.nxsha.app/embed/tv/117376/1/16" },
+                    { name: "Episode 17", url: "https://web.nxsha.app/embed/tv/117376/1/17" },
+                    { name: "Episode 18", url: "https://web.nxsha.app/embed/tv/117376/1/18" },
+                    { name: "Episode 19", url: "https://web.nxsha.app/embed/tv/117376/1/19" },
+                    { name: "Episode 20", url: "https://web.nxsha.app/embed/tv/117376/1/20" },
                 ]
             },
         ];
@@ -1014,51 +1063,6 @@
         }
 
         function playSmartVideo(url) {
-            const videoBox = document.getElementById('videoBox');
-            const player = document.getElementById('mainVideoPlayer');
-            const iframePlayer = document.getElementById('mainIframePlayer');
-            const videoBackBtn = document.getElementById('videoBackBtn');
-
-            videoBox.style.display = "block";
-            videoBackBtn.style.display = "flex"; 
-
-            if (url.includes("ok.ru/video/")) {
-                url = url.replace("ok.ru/video/", "ok.ru/videoembed/");
-            }
-
-            // 🎬 Google Drive Link Auto-Converter
-            if (url.includes("drive.google.com") && !url.includes("/preview")) {
-                let cleanUrl = url.split('?')[0]; // Link ke aage se '?usp=sharing' hatane ke liye
-                url = cleanUrl.replace("/view", "/preview"); // '/view' ko badalkar '/preview' karne ke liye
-            }
-
-            // 📢 Telegram Public Post Embed Converter
-            if (url.includes("t.me/") && !url.includes("?embed=1")) {
-                url = url + "?embed=1";
-            }
-            
-            if (url.includes("odysee.com") && !url.includes("/$/embed/")) {
-                let cleanUrl = url.split('?')[0]; 
-                url = cleanUrl.replace("odysee.com/", "odysee.com/$/embed/");
-            }
-
-            if (url.includes("t.me") || url.includes("embed") || url.includes("nxsha.app") || url.includes("drive.google") || url.includes("iframe") || url.includes("streamwish") || url.includes("streamtape") || url.includes("/e/") || url.includes("ok.ru") || url.includes("odysee.com")) {
-                player.style.display = "none";
-                player.pause(); player.src = "";
-                
-                iframePlayer.style.display = "block";
-                iframePlayer.src = url;
-                
-                iframePlayer.setAttribute("allow", "autoplay; fullscreen; picture-in-picture; encrypted-media; clipboard-write");
-                iframePlayer.setAttribute("allowfullscreen", "true");
-            } else {
-                iframePlayer.style.display = "none"; iframePlayer.src = "";
-                player.style.display = "block";
-                player.src = url;
-                player.play();
-            }
-        }
-        function playSmartVideo(url) {
     const videoBox = document.getElementById('videoBox');
     const player = document.getElementById('mainVideoPlayer');
     const iframePlayer = document.getElementById('mainIframePlayer');
@@ -1084,7 +1088,7 @@
         url = cleanUrl.replace("/view", "/preview");
     }
 
-    // 4. Telegram Normal Link Converter (Agar direct link na ho toh safe fallback)
+    // 4. Telegram Normal Link Converter
     if (url.includes("t.me/")) {
         if (!url.includes("embed")) {
             if (url.includes("?")) {
@@ -1095,39 +1099,42 @@
         }
     }
 
+    // 5. 🔮 Vimeo Link Converter (Naya Add Kiya)
+    if (url.includes("vimeo.com") && !url.includes("player.vimeo.com")) {
+        let cleanUrl = url.split('?')[0]; 
+        let videoId = cleanUrl.split('/').pop(); // Link ke aakhiri se Video ID nikalega
+        url = `https://player.vimeo.com/video/${videoId}`;
+    }
+
     // --- 🎬 PLAYER RENDERING LOGIC ---
     
-    // Check karein ki link iframe waala hai ya direct video file ka
-    // Agar Telegram ka link "embed" wala hai toh hi iframe me chalega
+    // Vimeo ko bhi iframe sources ki list me jod diya hai
     const isIframeSource = url.includes("drive.google.com") || 
                            url.includes("nxsha.app") || 
                            url.includes("ok.ru") || 
                            url.includes("odysee.com") ||
+                           url.includes("vimeo.com") || // 🔥 Vimeo check
                            (url.includes("t.me") && url.includes("embed"));
 
-                    if (isIframeSource) {
-                    // Iframe Player On (Google Drive, OK.ru, Telegram Embed ke liye)
-                     player.style.display = "none";
-                     player.pause(); 
-                    player.src = "";
+    if (isIframeSource) {
+        player.style.display = "none";
+        player.pause(); 
+        player.src = "";
         
-                    iframePlayer.style.display = "block";
-                    iframePlayer.src = url;
+        iframePlayer.style.display = "block";
+        iframePlayer.src = url;
         
-                    iframePlayer.setAttribute("allow", "autoplay; fullscreen; picture-in-picture");
-                    iframePlayer.setAttribute("allowfullscreen", "true");
-                } else {
-                // 🔥 Native Video Player On (Telegram Bot ke direct MP4/Stream links ke liye)
-                // Isme Telegram ka koi watermark ya "View in Telegram" button nahi dikhega!
-                iframePlayer.style.display = "none"; 
-                iframePlayer.src = "";
+        iframePlayer.setAttribute("allow", "autoplay; fullscreen; picture-in-picture");
+        iframePlayer.setAttribute("allowfullscreen", "true");
+    } else {
+        iframePlayer.style.display = "none"; 
+        iframePlayer.src = "";
         
-                player.style.display = "block";
-                player.src = url;
-                player.play();
-            }
-            }
-
+        player.style.display = "block";
+        player.src = url;
+        player.play();
+    }
+}
         function openModal(item) {
             const modal = document.getElementById('playerModal');
             const videoBox = document.getElementById('videoBox');
@@ -1149,7 +1156,7 @@
             episodeTitle.style.display = "none"; languageTitle.style.display = "none";
             episodeBox.innerHTML = ""; languageBox.innerHTML = "";
 
-            if (item.type === 'movie') {
+            if (item.videoUrlHindi || item.videoUrlEnglish || item.videoUrl) {
                 if (item.videoUrlHindi || item.videoUrlEnglish) {
                     languageBox.style.display = "flex";
                     languageTitle.style.display = "block";
@@ -1171,7 +1178,7 @@
                 } else {
                     playSmartVideo(item.videoUrl);
                 }
-            } else {
+            } else if (Array.isArray(item.episodes) && item.episodes.length > 0) {
                 episodeBox.style.display = "flex";
                 episodeTitle.style.display = "block";
                 item.episodes.forEach(ep => {
@@ -1181,6 +1188,8 @@
                     btn.onclick = () => playSmartVideo(ep.url);
                     episodeBox.appendChild(btn);
                 });
+            } else {
+                console.warn('No playable source found for item:', item);
             }
             modal.classList.add('active');
         }
@@ -1200,7 +1209,8 @@
             document.querySelectorAll(`[onclick="changeCategory('${type}')"]`).forEach(el => el.classList.add('active'));
             document.getElementById('searchBar').value = ""; 
 
-            let heading = "Movies";
+            let heading = "Home";
+            if(type === 'movie') heading = "Movies";
             if(type === 'tv') heading = "Series";
             if(type === 'drama') heading = "Dramas";
             if(type === 'anime') heading = "Anime";
@@ -1214,7 +1224,7 @@
             renderCards(myDatabase.filter(item => item.title.toLowerCase().includes(query) && item.type === currentType));
         }
 
-        window.onload = () => { renderCards(myDatabase.filter(item => item.type === 'movie')); };
+        window.onload = () => { renderCards(myDatabase.filter(item => item.type === 'home')); };
     </script>
 </body>
 </html>
