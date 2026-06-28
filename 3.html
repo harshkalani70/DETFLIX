@@ -151,14 +151,27 @@
             background: #111111; border: 1px solid rgba(245,197,24,0.14); color: #ffffff;
             padding: 12px 15px; text-align: left; border-radius: 16px; font-weight: 500;
             display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s;
+            opacity: 0;
+            animation: slideUpIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
+        .episode-btn:nth-child(1) { animation-delay: 0.05s; }
+        .episode-btn:nth-child(2) { animation-delay: 0.1s; }
+        .episode-btn:nth-child(3) { animation-delay: 0.15s; }
+        .episode-btn:nth-child(4) { animation-delay: 0.2s; }
+        .episode-btn:nth-child(5) { animation-delay: 0.25s; }
+        .episode-btn:nth-child(6) { animation-delay: 0.3s; }
+        .episode-btn:nth-child(7) { animation-delay: 0.35s; }
+        .episode-btn:nth-child(8) { animation-delay: 0.4s; }
+        .episode-btn:nth-child(9) { animation-delay: 0.45s; }
+        .episode-btn:nth-child(10) { animation-delay: 0.5s; }
+        .episode-btn:nth-child(n+11) { animation-delay: 0.55s; }
         .episode-btn:hover { background: rgba(245,197,24,0.12); color: #f5c518; border-color: rgba(245,197,24,0.30); }
         .episode-btn i { color: #f5c518; }
         .episode-btn:hover i { color: #d4a400; }
 
         /* --- BOTTOM NAV (Mobile Only) --- */
         .bottom-nav {
-            display: none; border-radius: 300px 300px 300px 300px; position: fixed; bottom: 5px; left: 0; width: 100%; background: #050505;
+            display: none; border-radius: 300px 300px 300px 300px; position: fixed; bottom: 10px; left: 0; width: 100%; background: #050505;
             border-top: 1px solid rgba(245,197,24,0.14); justify-content: space-around; padding: 10px 0px; z-index: 100;
         }
         .bottom-nav-item { display: flex; flex-direction: column; align-items: center; color: #b3b3b3; text-decoration: none; font-size: 0.7rem; gap: 4px; }
@@ -197,6 +210,16 @@
         @keyframes popIn {
             from { opacity: 0; transform: scale(0.96); }
             to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideUpIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
     </style>
@@ -1031,6 +1054,14 @@
                     { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/117376/1/11" },
                     { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/117376/1/12" },
                     { name: "Episode 13", url: "https://web.nxsha.app/embed/tv/117376/1/13" },
+                    { name: "Episode 14", url: "https://web.nxsha.app/embed/tv/117376/1/14" },
+                    { name: "Episode 15", url: "https://web.nxsha.app/embed/tv/117376/1/15" },
+                    { name: "Episode 16", url: "https://web.nxsha.app/embed/tv/117376/1/16" },
+                    { name: "Episode 17", url: "https://web.nxsha.app/embed/tv/117376/1/17" },
+                    { name: "Episode 18", url: "https://web.nxsha.app/embed/tv/117376/1/18" },
+                    { name: "Episode 19", url: "https://web.nxsha.app/embed/tv/117376/1/19" },
+                    { name: "Episode 20", url: "https://web.nxsha.app/embed/tv/117376/1/20" },
+
             ]
             },
             {
