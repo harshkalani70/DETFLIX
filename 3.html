@@ -13,78 +13,115 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: #06070a; color: #fff; overflow-x: hidden; display: flex; }
+        body { background: #040404; color: #ffffff; overflow-x: hidden; display: flex; }
 
         /* --- SIDEBAR NAVIGATION --- */
         .sidebar {
-            width: 240px; height: 100vh; background: #090a0f; position: fixed; left: 0; top: 0;
-            padding: 25px 15px; border-right: 1px solid rgba(245, 197, 24, 0.1); z-index: 90;
+            width: 240px; height: 100vh; background: #050505; position: fixed; left: 0; top: 0;
+            padding: 25px 18px; border-right: 1px solid rgba(245,197,24,0.16); z-index: 90;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.55);
         }
         .sidebar-logo { font-size: 26px; font-weight: 800; color: #f5c518; margin-bottom: 35px; padding-left: 10px; letter-spacing: 1px; }
-        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
         .nav-item { 
-            display: flex; align-items: center; gap: 15px; padding: 12px 15px; color: #94a3b8; 
-            text-decoration: none; font-weight: 500; border-radius: 10px; cursor: pointer; transition: all 0.25s;
+            display: flex; align-items: center; gap: 15px; padding: 12px 15px; color: #c7c7c7; 
+            text-decoration: none; font-weight: 500; border-radius: 14px; cursor: pointer; transition: all 0.25s ease;
         }
-        .nav-item:hover, .nav-item.active { background: rgba(245, 197, 24, 0.1); color: #fff; }
+        .nav-item:hover, .nav-item.active { background: rgba(245,197,24,0.16); color: #f5c518; }
         .nav-item.active i { color: #f5c518; }
 
         /* --- MAIN CONTENT AREA --- */
         .main-content { margin-left: 240px; width: calc(100% - 240px); min-height: 100vh; padding-bottom: 80px; }
 
         .top-header {
-            display: flex; justify-content: space-between; align-items: center; padding: 15px 4%;
-            background: rgba(6, 7, 10, 0.95); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100;
-            border-bottom: 1px solid rgba(255,255,255,0.03); gap: 15px;
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 4%;
+            background: rgba(0,0,0,0.96); backdrop-filter: blur(22px); position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.16); gap: 15px; box-shadow: 0 10px 35px rgba(0,0,0,0.55);
+            animation: fadeInDown 0.45s ease both;
         }
         .search-wrapper {
-            display: flex; align-items: center; background: #12131a; width: 100%; max-width: 450px;
-            padding: 8px 18px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05);
+            display: flex; align-items: center; background: #000000; width: 100%; max-width: 450px;
+            padding: 10px 18px; border-radius: 20px; border: 1px solid rgba(255, 200, 0, 0.14);
         }
-        .search-wrapper input { background: transparent; border: none; outline: none; color: #fff; width: 100%; margin-left: 10px; font-size: 0.9rem; }
-        .search-wrapper i { color: #555866; }
+        .search-wrapper input { background: transparent; border: none; outline: none; color: #f8f8f8; width: 100%; margin-left: 10px; font-size: 0.95rem; }
+        .search-wrapper i { color: #b3b3b3; }
+
+        .top-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .header-btn {
+            border: none;
+            background: rgba(255,255,255,0.08);
+            color: #f5c518;
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.25s ease, transform 0.25s ease;
+        }
+        .header-btn:hover {
+            background: rgba(245,197,24,0.22);
+            transform: translateY(-1px);
+        }
+        .header-btn.active {
+            background: #f5c518;
+            color: #000;
+            box-shadow: 0 12px 22px rgba(245,197,24,0.25);
+        }
 
         /* Premium Telegram Button Style */
         .tg-join-btn {
             display: flex; align-items: center; gap: 8px; background: #f5c518; color: #000;
-            padding: 9px 18px; border-radius: 30px; font-weight: 600; text-decoration: none;
-            font-size: 0.85rem; transition: all 0.25s ease; flex-shrink: 0; box-shadow: 0 4px 12px rgba(245, 197, 24, 0.2);
+            padding: 10px 18px; border-radius: 24px; font-weight: 600; text-decoration: none;
+            font-size: 0.9rem; transition: all 0.25s ease; flex-shrink: 0; box-shadow: 0 10px 30px rgba(245,197,24,0.35);
+            animation: pulse 2.5s ease infinite 1s;
         }
-        .tg-join-btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2); }
+        .tg-join-btn:hover { background: #d4a400; transform: translateY(-1px); }
         .tg-join-btn i { font-size: 1.05rem; }
 
         /* --- MOVIE GRID --- */
         .grid-container { padding: 25px 4%; }
-        .section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; color: #f8fafc; display: flex; align-items: center; gap: 10px; }
+        .section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; color: #ffffff; display: flex; align-items: center; gap: 10px; }
         .section-title::before { content: ''; width: 4px; height: 20px; background: #f5c518; display: inline-block; border-radius: 2px; }
+        .top-buttons { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .header-btn { border: none; background: rgba(255,255,255,0.08); color: #f5c518; padding: 10px 16px; border-radius: 999px; font-weight: 600; cursor: pointer; transition: background 0.25s ease, transform 0.25s ease; }
+        .header-btn:hover { background: rgba(245,197,24,0.22); transform: translateY(-1px); }
+        .header-btn.active { background: #f5c518; color: #000; box-shadow: 0 12px 22px rgba(245,197,24,0.25); }
         
         .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; }
-        .movie-card { background: #12131a; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.02); }
-        .movie-card:hover { transform: translateY(-5px); border-color: rgba(245, 197, 24, 0.3); }
+        .movie-card { background: #111111; border-radius: 15px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; border: 1px solid rgba(245,197,24,0.14); opacity: 0; transform: translateY(20px); animation: fadeInUp 0.45s ease forwards; }
+        .movie-card:nth-child(1) { animation-delay: 0.08s; }
+        .movie-card:nth-child(2) { animation-delay: 0.12s; }
+        .movie-card:nth-child(3) { animation-delay: 0.16s; }
+        .movie-card:nth-child(4) { animation-delay: 0.18s; }
+        .movie-card:hover { transform: translateY(-4px); border-color: rgba(245,197,24,0.4); box-shadow: 0 20px 35px rgba(0,0,0,0.55); }
         
-        .card-img-box { position: relative; width: 100%; aspect-ratio: 2/3; background: #1c1e29; }
+        .card-img-box { position: relative; width: 100%; aspect-ratio: 2/3; background: #111111; }
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .card-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.2s; }
+        .card-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(245,197,24,0.14); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.2s; }
         .movie-card:hover .card-overlay { opacity: 1; }
         .card-overlay i { font-size: 2.5rem; color: #f5c518; }
 
-        .movie-info { padding: 10px; }
-        .movie-title { font-size: 0.85rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #f1f5f9; }
-        .movie-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #64748b; margin-top: 4px; }
+        .movie-info { padding: 14px; }
+        .movie-title { font-size: 0.9rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #f5c518; }
+        .movie-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #b3b3b3; margin-top: 6px; }
         .rating-badge { color: #f5c518; font-weight: 600; }
 
         /* --- MODAL POPUP SYSTEM --- */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 4, 6, 0.95);
-            backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(18px); display: flex; justify-content: center; align-items: center;
             z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 15px;
         }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         
         .modal-card {
-            background: #111217; width: 100%; max-width: 580px; border-radius: 16px;
-            border: 1px solid rgba(245, 197, 24, 0.2); max-height: 90vh; 
-            display: flex; flex-direction: column; overflow: hidden; position: relative;
+            background: #111111; width: 100%; max-width: 580px; border-radius: 28px;
+            border: 1px solid rgba(245,197,24,0.18); max-height: 90vh; 
+            display: flex; flex-direction: column; overflow: hidden; position: relative; box-shadow: 0 40px 70px rgba(0,0,0,0.65); animation: popIn 0.35s ease both;
         }
 
         /* --- VIDEO BOX WITH ABSOLUTE BACK BUTTON --- */
@@ -99,32 +136,32 @@
             position: absolute; top: 12px; left: 12px; font-size: 1.1rem; color: #000;
             background: #f5c518; width: 38px; height: 38px; border-radius: 50%;
             display: none; justify-content: center; align-items: center; cursor: pointer; 
-            z-index: 1020; border: 1px solid rgba(255,255,255,0.15); transition: all 0.2s ease;
+            z-index: 1020; border: 1px solid rgba(245,197,24,0.25); transition: all 0.2s ease;
         }
-        .video-back-btn:hover { background: #fff; transform: scale(1.05); }
+        .video-back-btn:hover { background: #d4a400; transform: scale(1.05); }
 
         .modal-body-content { padding: 20px; overflow-y: auto; flex: 1; }
-        .modal-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 5px; color: #fff; padding-right: 20px; }
-        .modal-desc { font-size: 0.85rem; color: #94a3b8; margin-bottom: 20px; line-height: 1.4; }
+        .modal-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 5px; color: #ffffff; padding-right: 20px; }
+        .modal-desc { font-size: 0.85rem; color: #d3d3d3; margin-bottom: 20px; line-height: 1.6; }
 
         .episode-container { display: none; flex-direction: column; gap: 10px; margin-top: 10px; }
-        .section-sub-title { font-size: 0.9rem; font-weight: 600; color: #94a3b8; margin-bottom: 5px; margin-top: 10px; }
+        .section-sub-title { font-size: 0.9rem; font-weight: 600; color: #3c3c4399; margin-bottom: 5px; margin-top: 10px; }
         
         .episode-btn {
-            background: #181922; border: 1px solid rgba(255,255,255,0.05); color: #fff;
-            padding: 12px 15px; text-align: left; border-radius: 8px; font-weight: 500;
+            background: #111111; border: 1px solid rgba(245,197,24,0.14); color: #ffffff;
+            padding: 12px 15px; text-align: left; border-radius: 16px; font-weight: 500;
             display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s;
         }
-        .episode-btn:hover { background: linear-gradient(135deg, #f5c518, #c69d0e); color: #000; border-color: transparent; }
+        .episode-btn:hover { background: rgba(245,197,24,0.12); color: #f5c518; border-color: rgba(245,197,24,0.30); }
         .episode-btn i { color: #f5c518; }
-        .episode-btn:hover i { color: #000; }
+        .episode-btn:hover i { color: #d4a400; }
 
         /* --- BOTTOM NAV (Mobile Only) --- */
         .bottom-nav {
-            display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: #090a0f;
-            border-top: 1px solid rgba(255,255,255,0.05); justify-content: space-around; padding: 10px 0; z-index: 100;
+            display: none; border-radius: 100px 100px 100px 100px; position: fixed; bottom: 0; left: 0; width: 100%; background: #050505;
+            border-top: 1px solid rgba(245,197,24,0.14); justify-content: space-around; padding: 10px 0; z-index: 100;
         }
-        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; color: #64748b; text-decoration: none; font-size: 0.7rem; gap: 4px; }
+        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; color: #b3b3b3; text-decoration: none; font-size: 0.7rem; gap: 4px; }
         .bottom-nav-item.active { color: #f5c518; }
 
         @media (max-width: 768px) {
@@ -143,7 +180,24 @@
             .tg-join-btn { padding: 10px; border-radius: 50%; width: 40px; height: 40px; justify-content: center; }
             .tg-join-btn i { font-size: 1.2rem; }
         }
-        .audio-tag { color: #f5c518; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; }
+        .audio-tag { color: #f5c518; padding: 2px 6px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: translateY(0); box-shadow: 0 10px 25px rgba(245,197,24,0.18); }
+            50% { transform: translateY(-1px); box-shadow: 0 14px 28px rgba(245,197,24,0.22); }
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
 
     </style>
 </head>
@@ -158,7 +212,6 @@
             <li class="nav-item" onclick="changeCategory('tv')"><i class="fas fa-tv"></i> Series,Drama</li>
         </ul>
     </div>
-
     <!-- MAIN DASHBOARD -->
     <div class="main-content">
         <div class="top-header">
@@ -172,7 +225,6 @@
                 <i class="fab fa-telegram-plane"></i> <span>Join</span>
             </a>
         </div>
-
         <div class="grid-container">
             <h2 class="section-title" id="sectionHeading">Home</h2>
             <div class="movie-grid" id="contentGrid"></div>
@@ -198,6 +250,9 @@
                 <div id="languageTitle" class="section-sub-title" style="display:none;"><i class="fas fa-language"></i> Select Audio Language</div>
                 <div class="episode-container" id="languageBox"></div>
                 
+                <div id="seasonTitle" class="section-sub-title" style="display:none;"><i class="fas fa-tv"></i> Select Season</div>
+                <div class="episode-container" id="seasonBox"></div>
+
                 <div id="episodeTitle" class="section-sub-title" style="display:none;"><i class="fas fa-list"></i> Select Episode</div>
                 <div class="episode-container" id="episodeBox"></div>
             </div>
@@ -206,9 +261,9 @@
 
     <!-- BOTTOM NAVIGATION -->
     <div class="bottom-nav">
-        <a href="#" class="bottom-nav-item active" onclick="changeCategory('home')"><i class="fas fa-film"></i>Home</a>
-        <a href="#" class="bottom-nav-item" onclick="changeCategory('movie')"><i class="fas fa-film"></i>Movies</a>
-        <a href="#" class="bottom-nav-item" onclick="changeCategory('tv')"><i class="fas fa-tv"></i>Series,Drama</a>
+        <a href="#" class="bottom-nav-item active" onclick="changeCategory('home')"><i class="fas fa-home"></i>Home</a>
+        <a href="#" class="bottom-nav-item" onclick="changeCategory('movie')"><i class="fas fa-film"></i>Movie</a>
+        <a href="#" class="bottom-nav-item" onclick="changeCategory('tv')"><i class="fas fa-tv"></i>Series</a>
     </div>
 
     <script>
@@ -334,6 +389,25 @@
                     { name: "Episode 14", url: "https://web.nxsha.app/embed/tv/215720/1/14" },
                     { name: "Episode 15", url: "https://web.nxsha.app/embed/tv/215720/1/15" },
                     { name: "Episode 16", url: "https://web.nxsha.app/embed/tv/215720/1/16" }
+                ]
+            },
+            {
+                type: "home",
+                title: "Weak Hero",
+                img: "https://occ-0-1148-299.1.nflxso.net/dnm/api/v6/mAcAr9TxZIVbINe88xb3Teg5_OA/AAAABUVYh6qHzPx5KKaODBYbf1uYRUMJUCvVvdp-FnW04X94CwJC6dFHOceRxP4gPp9Qq0Eyiu9Y2m2kW8bmLR05ofAT53vu6UNoQFJl.jpg?r=062",
+                year: "2022",
+                rating: "",
+                audio: "S-1",
+                desc: "With the aid of unexpected friends, a gifted but introverted student confronts bullies and violent foes -unaware of how dangerous his world will become.",
+                episodes: [
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/200709/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/200709/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/200709/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/200709/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/200709/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/200709/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/200709/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/200709/1/8" },
                 ]
             },
             {
@@ -716,66 +790,6 @@
             },
             {
                 type: "tv",
-                title: "Bloodhounds",
-                img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ_V9ry6yHf8Ox5woiziMtX2Y4pWUyxw79fdPTPoxJW97dh8p6Z",
-                year: "2023",
-                rating: "",
-                audio: "S-1",
-                desc: "Faced with ruthless foes with a violent thirst, two young boxers band together - risking life and limb to bring justice and protect their loved ones.",
-                episodes: [
-                    { name: "Episode 01 ", url: "https://web.nxsha.app/embed/tv/127529/1/1" },
-                    { name: "Episode 02 ", url: "https://web.nxsha.app/embed/tv/127529/1/2" },
-                    { name: "Episode 03 ", url: "https://web.nxsha.app/embed/tv/127529/1/3" },
-                    { name: "Episode 04 ", url: "https://web.nxsha.app/embed/tv/127529/1/4" },
-                    { name: "Episode 05 ", url: "https://web.nxsha.app/embed/tv/127529/1/5" },
-                    { name: "Episode 06 ", url: "https://web.nxsha.app/embed/tv/127529/1/6" },
-                    { name: "Episode 07 ", url: "https://web.nxsha.app/embed/tv/127529/1/7" },
-                    { name: "Episode 08 ", url: "https://web.nxsha.app/embed/tv/127529/1/8" },
-                ]
-            },
-            {
-                type: "tv",
-                title: "Bloodhounds",
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqf1o8ED8R1auqaij6d1s6F56XLC_tiLv3AAngcH9ve4HiGjKhoTAKm4Fp&s=10",
-                year: "2023",
-                rating: "",
-                audio: "S-2",
-                desc: "Faced with ruthless foes with a violent thirst, two young boxers band together - risking life and limb to bring justice and protect their loved ones.",
-                episodes: [
-                    { name: "Episode 01 ", url: "https://web.nxsha.app/embed/tv/127529/2/1" },
-                    { name: "Episode 02 ", url: "https://web.nxsha.app/embed/tv/127529/2/2" },
-                    { name: "Episode 03 ", url: "https://web.nxsha.app/embed/tv/127529/2/3" },
-                    { name: "Episode 04 ", url: "https://web.nxsha.app/embed/tv/127529/2/4" },
-                    { name: "Episode 05 ", url: "https://web.nxsha.app/embed/tv/127529/2/5" },
-                    { name: "Episode 06 ", url: "https://web.nxsha.app/embed/tv/127529/2/6" },
-                    { name: "Episode 07 ", url: "https://web.nxsha.app/embed/tv/127529/2/7" }
-                ]
-            },
-            {
-                type: "tv",
-                title: "All of Us Are Dead",
-                img: "https://images.justwatch.com/poster/262858624/s718/all-of-us-are-dead.jpg",
-                year: "2022",
-                rating: "",
-                audio: "",
-                desc: "A high school becomes ground zero for a zombie virus outbreak. Trapped students must fight their way out.",
-                episodes: [
-                    { name: "Episode 01", url: "https://web.nxsha.app/embed/tv/99966/1/1" },
-                    { name: "Episode 02", url: "https://web.nxsha.app/embed/tv/99966/1/2" },
-                    { name: "Episode 03", url: "https://web.nxsha.app/embed/tv/99966/1/3" },
-                    { name: "Episode 04", url: "https://web.nxsha.app/embed/tv/99966/1/4" },
-                    { name: "Episode 05", url: "https://web.nxsha.app/embed/tv/99966/1/5" },
-                    { name: "Episode 06", url: "https://web.nxsha.app/embed/tv/99966/1/6" },
-                    { name: "Episode 07", url: "https://web.nxsha.app/embed/tv/99966/1/7" },
-                    { name: "Episode 08", url: "https://web.nxsha.app/embed/tv/99966/1/8" },
-                    { name: "Episode 09", url: "https://web.nxsha.app/embed/tv/99966/1/9" },
-                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/99966/1/10" },
-                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/99966/1/11" },
-                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/99966/1/12" }
-                ]
-            },
-            {
-                type: "tv",
                 title: "Teach You a Lesson",
                 img: "https://ww19.myasiantv.es/wp-content/uploads/2026/05/gN7Tq35raryabkPGcKlb4ZKeutm.jpg",
                 year: "2026",
@@ -855,67 +869,40 @@
             },
             {
                 type: "tv",
-                title: "All of Us Are Dead",
-                img: "https://images.justwatch.com/poster/262858624/s718/all-of-us-are-dead.jpg",
+                title: "Weak Hero",
+                img: "https://occ-0-1148-299.1.nflxso.net/dnm/api/v6/mAcAr9TxZIVbINe88xb3Teg5_OA/AAAABUVYh6qHzPx5KKaODBYbf1uYRUMJUCvVvdp-FnW04X94CwJC6dFHOceRxP4gPp9Qq0Eyiu9Y2m2kW8bmLR05ofAT53vu6UNoQFJl.jpg?r=062",
                 year: "2022",
                 rating: "",
-                audio: "",
-                desc: "A high school becomes ground zero for a zombie virus outbreak. Trapped students must fight their way out.",
+                audio: "S-1",
+                desc: "With the aid of unexpected friends, a gifted but introverted student confronts bullies and violent foes -unaware of how dangerous his world will become.",
                 episodes: [
-                    { name: "Episode 01", url: "https://web.nxsha.app/embed/tv/99966/1/1" },
-                    { name: "Episode 02", url: "https://web.nxsha.app/embed/tv/99966/1/2" },
-                    { name: "Episode 03", url: "https://web.nxsha.app/embed/tv/99966/1/3" },
-                    { name: "Episode 04", url: "https://web.nxsha.app/embed/tv/99966/1/4" },
-                    { name: "Episode 05", url: "https://web.nxsha.app/embed/tv/99966/1/5" },
-                    { name: "Episode 06", url: "https://web.nxsha.app/embed/tv/99966/1/6" },
-                    { name: "Episode 07", url: "https://web.nxsha.app/embed/tv/99966/1/7" },
-                    { name: "Episode 08", url: "https://web.nxsha.app/embed/tv/99966/1/8" },
-                    { name: "Episode 09", url: "https://web.nxsha.app/embed/tv/99966/1/9" },
-                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/99966/1/10" },
-                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/99966/1/11" },
-                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/99966/1/12" }
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/200709/1/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/200709/1/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/200709/1/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/200709/1/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/200709/1/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/200709/1/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/200709/1/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/200709/1/8" },
                 ]
             },
             {
-                type: "tv",
-                title: "Teach You a Lesson",
-                img: "https://ww19.myasiantv.es/wp-content/uploads/2026/05/gN7Tq35raryabkPGcKlb4ZKeutm.jpg",
-                year: "2026",
+                type: "drama",
+                title: "Weak Hero",
+                img: "https://media.themoviedb.org/t/p/w500/aW7mGixv2dZdQtbve4deYyfewHH.jpg",
+                year: "2025",
                 rating: "",
-                audio: "",
-                desc: "The National Assembly and the Minister of Education passes the Amendment to the Act on the Protection of Teachers' Rights. With the passage of the law, a new government organization, the Educational Rights Protection Bureau, is formed. Na Hwa-jin belongs to the Educational Rights Protection Bureau. He is sent to a problem school as a supervisor. There, he can educate the students without any restrictions or limitations.",
+                audio: "S-1",
+                desc: "With the aid of unexpected friends, a gifted but introverted student confronts bullies and violent foes -unaware of how dangerous his world will become.",
                 episodes: [
-                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/276161/1/1" },
-                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/276161/1/2" },
-                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/276161/1/3" },
-                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/276161/1/4" },
-                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/276161/1/5" },
-                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/276161/1/6" },
-                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/276161/1/7" },
-                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/276161/1/8" },
-                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/276161/1/9" },
-                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/276161/1/10" }
-                ]
-            },
-            {
-                type: "tv",
-                title: "The Wonderfools",
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg4f-29FIdI0KR7ksk50t9_GmNZSMjq0AgpS29szOvAzTO20e84bDEimU&s=10",
-                year: "2026",
-                rating: "",
-                audio: "",
-                desc: "A goofy group of townies stumbles into superpowers and fights rising evil as doomsday panic grows in this wild, turn-of-the-century action comedy.",
-                episodes: [
-                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/259837/1/1" },
-                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/259837/1/2" },
-                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/259837/1/3" },
-                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/259837/1/4" },
-                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/259837/1/5" },
-                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/259837/1/6" },
-                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/259837/1/7" },
-                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/259837/1/8" },
-                    { name: "Episode 9", url: "https://web.nxsha.app/embed/tv/259837/1/9" },
-                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/259837/1/10" }
+                    { name: "Episode 1", url: "https://web.nxsha.app/embed/tv/200709/2/1" },
+                    { name: "Episode 2", url: "https://web.nxsha.app/embed/tv/200709/2/2" },
+                    { name: "Episode 3", url: "https://web.nxsha.app/embed/tv/200709/2/3" },
+                    { name: "Episode 4", url: "https://web.nxsha.app/embed/tv/200709/2/4" },
+                    { name: "Episode 5", url: "https://web.nxsha.app/embed/tv/200709/2/5" },
+                    { name: "Episode 6", url: "https://web.nxsha.app/embed/tv/200709/2/6" },
+                    { name: "Episode 7", url: "https://web.nxsha.app/embed/tv/200709/2/7" },
+                    { name: "Episode 8", url: "https://web.nxsha.app/embed/tv/200709/2/8" },
                 ]
             },
             {
@@ -1001,6 +988,29 @@
             },
             {
                 type: "tv",
+                title: "All of Us Are Dead",
+                img: "https://images.justwatch.com/poster/262858624/s718/all-of-us-are-dead.jpg",
+                year: "2022",
+                rating: "",
+                audio: "",
+                desc: "A high school becomes ground zero for a zombie virus outbreak. Trapped students must fight their way out.",
+                episodes: [
+                    { name: "Episode 01", url: "https://web.nxsha.app/embed/tv/99966/1/1" },
+                    { name: "Episode 02", url: "https://web.nxsha.app/embed/tv/99966/1/2" },
+                    { name: "Episode 03", url: "https://web.nxsha.app/embed/tv/99966/1/3" },
+                    { name: "Episode 04", url: "https://web.nxsha.app/embed/tv/99966/1/4" },
+                    { name: "Episode 05", url: "https://web.nxsha.app/embed/tv/99966/1/5" },
+                    { name: "Episode 06", url: "https://web.nxsha.app/embed/tv/99966/1/6" },
+                    { name: "Episode 07", url: "https://web.nxsha.app/embed/tv/99966/1/7" },
+                    { name: "Episode 08", url: "https://web.nxsha.app/embed/tv/99966/1/8" },
+                    { name: "Episode 09", url: "https://web.nxsha.app/embed/tv/99966/1/9" },
+                    { name: "Episode 10", url: "https://web.nxsha.app/embed/tv/99966/1/10" },
+                    { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/99966/1/11" },
+                    { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/99966/1/12" }
+                ]
+            },
+            {
+                type: "tv",
                 title: "Vincenzo",
                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeNGtHv5elaAyxPCvU0a8qB2JLBgn6MRVMqSmlkuxBGg3vow-j4TQspclU&s=10",
                 year: "2021",
@@ -1021,13 +1031,90 @@
                     { name: "Episode 11", url: "https://web.nxsha.app/embed/tv/117376/1/11" },
                     { name: "Episode 12", url: "https://web.nxsha.app/embed/tv/117376/1/12" },
                     { name: "Episode 13", url: "https://web.nxsha.app/embed/tv/117376/1/13" },
-                    { name: "Episode 14", url: "https://web.nxsha.app/embed/tv/117376/1/14" },
-                    { name: "Episode 15", url: "https://web.nxsha.app/embed/tv/117376/1/15" },
-                    { name: "Episode 16", url: "https://web.nxsha.app/embed/tv/117376/1/16" },
-                    { name: "Episode 17", url: "https://web.nxsha.app/embed/tv/117376/1/17" },
-                    { name: "Episode 18", url: "https://web.nxsha.app/embed/tv/117376/1/18" },
-                    { name: "Episode 19", url: "https://web.nxsha.app/embed/tv/117376/1/19" },
-                    { name: "Episode 20", url: "https://web.nxsha.app/embed/tv/117376/1/20" },
+            ]
+            },
+            {
+                type: "tv",
+                title: "Money Heist",
+                img: "https://image.tmdb.org/t/p/original/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg",
+                year: "2017-2021",
+                rating: "8.6",
+                audio: "",
+                desc: "All five seasons of Money Heist.",
+                seasons: [
+                    {
+                        season: 1,
+                        episodes: [
+                            { name: "S-1 ,EP-1", url: "https://web.nxsha.app/embed/tv/71446/1/1" },
+                            { name: "S-1 ,EP-2", url: "https://web.nxsha.app/embed/tv/71446/1/2" },
+                            { name: "S-1 ,EP-3", url: "https://web.nxsha.app/embed/tv/71446/1/3" },
+                            { name: "S-1 ,EP-4", url: "https://web.nxsha.app/embed/tv/71446/1/4" },
+                            { name: "S-1 ,EP-5", url: "https://web.nxsha.app/embed/tv/71446/1/5" },
+                            { name: "S-1 ,EP-6", url: "https://web.nxsha.app/embed/tv/71446/1/6" },
+                            { name: "S-1 ,EP-7", url: "https://web.nxsha.app/embed/tv/71446/1/7" },
+                            { name: "S-1 ,EP-8", url: "https://web.nxsha.app/embed/tv/71446/1/8" },
+                            { name: "S-1 ,EP-9", url: "https://web.nxsha.app/embed/tv/71446/1/9" },
+                            { name: "S-1 ,EP-10", url: "https://web.nxsha.app/embed/tv/71446/1/10" },
+                            { name: "S-1 ,EP-11", url: "https://web.nxsha.app/embed/tv/71446/1/11" },
+                            { name: "S-1 ,EP-12", url: "https://web.nxsha.app/embed/tv/71446/1/12" },
+                            { name: "S-1 ,EP-13", url: "https://web.nxsha.app/embed/tv/71446/1/13" },
+                        ]
+                    },
+                    {
+                        season: 2,
+                        episodes: [
+                            { name: "S-2 ,EP-1", url: "https://web.nxsha.app/embed/tv/71446/2/1" },
+                            { name: "S-2 ,EP-2", url: "https://web.nxsha.app/embed/tv/71446/2/2" },
+                            { name: "S-2 ,EP-3", url: "https://web.nxsha.app/embed/tv/71446/2/3" },
+                            { name: "S-2 ,EP-4", url: "https://web.nxsha.app/embed/tv/71446/2/4" },
+                            { name: "S-2 ,EP-5", url: "https://web.nxsha.app/embed/tv/71446/2/5" },
+                            { name: "S-2 ,EP-6", url: "https://web.nxsha.app/embed/tv/71446/2/6" },
+                            { name: "S-2 ,EP-7", url: "https://web.nxsha.app/embed/tv/71446/2/7" },
+                            { name: "S-2 ,EP-8", url: "https://web.nxsha.app/embed/tv/71446/2/8" },
+                            { name: "S-2 ,EP-9", url: "https://web.nxsha.app/embed/tv/71446/2/9" },
+                        ]
+                    },
+                    {
+                        season: 3,
+                        episodes: [
+                            { name: "S-3 ,EP-1", url: "https://web.nxsha.app/embed/tv/71446/3/1" },
+                            { name: "S-3 ,EP-2", url: "https://web.nxsha.app/embed/tv/71446/3/2" },
+                            { name: "S-3 ,EP-3", url: "https://web.nxsha.app/embed/tv/71446/3/3" },
+                            { name: "S-3 ,EP-4", url: "https://web.nxsha.app/embed/tv/71446/3/4" },
+                            { name: "S-3 ,EP-5", url: "https://web.nxsha.app/embed/tv/71446/3/5" },
+                            { name: "S-3 ,EP-6", url: "https://web.nxsha.app/embed/tv/71446/3/6" },
+                            { name: "S-3 ,EP-7", url: "https://web.nxsha.app/embed/tv/71446/3/7" },
+                            { name: "S-3 ,EP-8", url: "https://web.nxsha.app/embed/tv/71446/3/8" },
+                        ]
+                    },
+                    {
+                        season: 4,
+                        episodes: [
+                            { name: "S-4 ,EP-1", url: "https://web.nxsha.app/embed/tv/71446/4/1" },
+                            { name: "S-4 ,EP-2", url: "https://web.nxsha.app/embed/tv/71446/4/2" },
+                            { name: "S-4 ,EP-3", url: "https://web.nxsha.app/embed/tv/71446/4/3" },
+                            { name: "S-4 ,EP-4", url: "https://web.nxsha.app/embed/tv/71446/4/4" },
+                            { name: "S-4 ,EP-5", url: "https://web.nxsha.app/embed/tv/71446/4/5" },
+                            { name: "S-4 ,EP-6", url: "https://web.nxsha.app/embed/tv/71446/4/6" },
+                            { name: "S-4 ,EP-7", url: "https://web.nxsha.app/embed/tv/71446/4/7" },
+                            { name: "S-4 ,EP-8", url: "https://web.nxsha.app/embed/tv/71446/4/8" },
+                        ]
+                    },
+                    {
+                        season: 5,
+                        episodes: [
+                            { name: "S-5 ,EP-1", url: "https://web.nxsha.app/embed/tv/71446/5/1" },
+                            { name: "S-5 ,EP-2", url: "https://web.nxsha.app/embed/tv/71446/5/2" },
+                            { name: "S-5 ,EP-3", url: "https://web.nxsha.app/embed/tv/71446/5/3" },
+                            { name: "S-5 ,EP-4", url: "https://web.nxsha.app/embed/tv/71446/5/4" },
+                            { name: "S-5 ,EP-5", url: "https://web.nxsha.app/embed/tv/71446/5/5" },
+                            { name: "S-5 ,EP-6", url: "https://web.nxsha.app/embed/tv/71446/5/6" },
+                            { name: "S-5 ,EP-7", url: "https://web.nxsha.app/embed/tv/71446/5/7" },
+                            { name: "S-5 ,EP-8", url: "https://web.nxsha.app/embed/tv/71446/5/8" },
+                            { name: "S-5 ,EP-9", url: "https://web.nxsha.app/embed/tv/71446/5/9" },
+                            { name: "S-5 ,EP-10", url: "https://web.nxsha.app/embed/tv/71446/5/10" }
+                        ]
+                    }
                 ]
             },
         ];
@@ -1140,8 +1227,10 @@
             const videoBox = document.getElementById('videoBox');
             const episodeBox = document.getElementById('episodeBox');
             const languageBox = document.getElementById('languageBox');
+            const seasonBox = document.getElementById('seasonBox');
             const episodeTitle = document.getElementById('episodeTitle');
             const languageTitle = document.getElementById('languageTitle');
+            const seasonTitle = document.getElementById('seasonTitle');
             const player = document.getElementById('mainVideoPlayer');
             const iframePlayer = document.getElementById('mainIframePlayer');
             const videoBackBtn = document.getElementById('videoBackBtn');
@@ -1152,9 +1241,9 @@
             player.src = ""; iframePlayer.src = "";
             videoBox.style.display = "none";
             videoBackBtn.style.display = "none"; 
-            episodeBox.style.display = "none"; languageBox.style.display = "none";
-            episodeTitle.style.display = "none"; languageTitle.style.display = "none";
-            episodeBox.innerHTML = ""; languageBox.innerHTML = "";
+            episodeBox.style.display = "none"; languageBox.style.display = "none"; seasonBox.style.display = "none";
+            episodeTitle.style.display = "none"; languageTitle.style.display = "none"; seasonTitle.style.display = "none";
+            episodeBox.innerHTML = ""; languageBox.innerHTML = ""; seasonBox.innerHTML = "";
 
             if (item.videoUrlHindi || item.videoUrlEnglish || item.videoUrl) {
                 if (item.videoUrlHindi || item.videoUrlEnglish) {
@@ -1178,6 +1267,28 @@
                 } else {
                     playSmartVideo(item.videoUrl);
                 }
+            } else if (Array.isArray(item.seasons) && item.seasons.length > 0) {
+                // Render seasons list; clicking a season shows its episodes
+                seasonBox.style.display = "flex";
+                seasonTitle.style.display = "block";
+                item.seasons.forEach(s => {
+                    let sbtn = document.createElement('div');
+                    sbtn.className = "episode-btn";
+                    sbtn.innerHTML = `<span>Season ${s.season}</span> <i class="fas fa-angle-right"></i>`;
+                    sbtn.onclick = () => {
+                        episodeBox.style.display = "flex";
+                        episodeTitle.style.display = "block";
+                        episodeBox.innerHTML = "";
+                        (s.episodes || []).forEach(ep => {
+                            let ebtn = document.createElement('div');
+                            ebtn.className = "episode-btn";
+                            ebtn.innerHTML = `<span>${ep.name}</span> <i class="fas fa-play-circle"></i>`;
+                            ebtn.onclick = () => playSmartVideo(ep.url);
+                            episodeBox.appendChild(ebtn);
+                        });
+                    };
+                    seasonBox.appendChild(sbtn);
+                });
             } else if (Array.isArray(item.episodes) && item.episodes.length > 0) {
                 episodeBox.style.display = "flex";
                 episodeTitle.style.display = "block";
