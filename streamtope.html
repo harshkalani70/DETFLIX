@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link rel="icon" href="https://marketplace.canva.com/co6wM/MAHFQIco6wM/1/tl/canva-golden-film-camera-icon-MAHFQIco6wM.png">
+    <title>DETFLIX - Ultimate Movies, Series, Drama & Anime Hub</title>
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: #040404; color: #ffffff; overflow-x: hidden; display: flex; }
+
+        /* --- SIDEBAR NAVIGATION --- */
+        .sidebar {
+            width: 240px; height: 100vh; background: #050505; position: fixed; left: 0; top: 0;
+            padding: 25px 18px; border-right: 1px solid rgba(245,197,24,0.16); z-index: 90;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+        }
+        .sidebar-logo { font-size: 26px; font-weight: 800; color: #f5c518; margin-bottom: 35px; padding-left: 10px; letter-spacing: 1px; }
+        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .nav-item { 
+            display: flex; align-items: center; gap: 15px; padding: 12px 15px; color: #c7c7c7; 
+            text-decoration: none; font-weight: 500; border-radius: 14px; cursor: pointer; transition: all 0.25s ease;
+        }
+        .nav-item:hover, .nav-item.active { background: rgba(245,197,24,0.16); color: #f5c518; }
+        .nav-item.active i { color: #f5c518; }
+
+        /* --- MAIN CONTENT AREA --- */
+        .main-content { margin-left: 240px; width: calc(100% - 240px); min-height: 100vh; padding-bottom: 80px; }
+
+        .top-header {
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 4%;
+            background: rgba(0,0,0,0.96); backdrop-filter: blur(22px); position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.16); gap: 15px; box-shadow: 0 10px 35px rgba(0,0,0,0.55);
+        }
+        .search-wrapper {
+            display: flex; align-items: center; background: #000000; width: 100%; max-width: 450px;
+            padding: 10px 18px; border-radius: 20px; border: 1px solid rgba(255, 200, 0, 0.14);
+        }
+        .search-wrapper input { background: transparent; border: none; outline: none; color: #f8f8f8; width: 100%; margin-left: 10px; font-size: 0.95rem; }
+        .search-wrapper i { color: #b3b3b3; }
+
+        .tg-join-btn {
+            display: flex; align-items: center; gap: 8px; background: #f5c518; color: #000;
+            padding: 10px 18px; border-radius: 24px; font-weight: 600; text-decoration: none;
+            font-size: 0.9rem; transition: all 0.25s ease; flex-shrink: 0; box-shadow: 0 10px 30px rgba(245,197,24,0.35);
+        }
+        .tg-join-btn:hover { background: #d4a400; }
+
+        /* --- MOVIE GRID --- */
+        .grid-container { padding: 25px 4%; }
+        .section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; color: #ffffff; display: flex; align-items: center; gap: 10px; }
+        .section-title::before { content: ''; width: 4px; height: 20px; background: #f5c518; display: inline-block; border-radius: 2px; }
+        
+        .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; }
+        .movie-card { background: #111111; border-radius: 15px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; border: 1px solid rgba(245,197,24,0.14); }
+        .movie-card:hover { transform: translateY(-4px); border-color: rgba(245,197,24,0.4); box-shadow: 0 20px 35px rgba(0,0,0,0.55); }
+        
+        .card-img-box { position: relative; width: 100%; aspect-ratio: 2/3; background: #111111; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .card-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.2s; }
+        .movie-card:hover .card-overlay { opacity: 1; }
+        .card-overlay i { font-size: 2.5rem; color: #f5c518; }
+
+        .movie-info { padding: 14px; }
+        .movie-title { font-size: 0.85rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #f5c518; }
+        .movie-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #b3b3b3; margin-top: 6px; }
+        .rating-badge { color: #f5c518; font-weight: 900;}
+
+        /* --- MODAL POPUP SYSTEM --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(18px); display: flex; justify-content: center; align-items: center;
+            z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 15px;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        
+        .modal-card {
+            background: #111111; width: 100%; max-width: 580px; border-radius: 28px;
+            border: 1px solid rgba(245,197,24,0.18); max-height: 90vh; 
+            display: flex; flex-direction: column; overflow: hidden; position: relative; box-shadow: 0 40px 70px rgba(0,0,0,0.65);
+        }
+
+        /* TRAILER BOX */
+        .modal-video-box { 
+            width: 100%; aspect-ratio: 16/9; background: #000; 
+            overflow: hidden; flex-shrink: 0; z-index: 1005; position: relative;
+        }
+        .modal-video-box iframe { width: 100%; height: 100%; border: none; }
+
+        .video-back-btn {
+            position: absolute; top: 12px; right: 12px; font-size: 1.1rem; color: #000;
+            background: #f5c518; width: 38px; height: 38px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; cursor: pointer; 
+            z-index: 1020; transition: all 0.2s ease;
+        }
+        .video-back-btn:hover { background: #d4a400; transform: scale(1.05); }
+
+        .modal-body-content { padding: 20px; overflow-y: auto; flex: 1; }
+        .modal-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 5px; color: #ffffff; }
+        .modal-desc { font-size: 0.85rem; color: #d3d3d3; margin-bottom: 20px; line-height: 1.6; }
+
+        /* --- MULTI-QUALITY MOVIE BUTTONS --- */
+        .movie-qualities-wrapper { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+        .quality-btn {
+            display: flex; align-items: center; justify-content: space-between;
+            width: 100%; background: #222; border: 1px solid rgba(245,197,24,0.15); color: #fff; 
+            padding: 14px 20px; border-radius: 16px; font-weight: 600; text-decoration: none; 
+            cursor: pointer; transition: all 0.2s ease; font-size: 0.95rem;
+        }
+        .quality-btn:hover { background: #f5c518; color: #000; border-color: #f5c518; }
+        .quality-badge { background: rgba(245,197,24,0.2); color: #f5c518; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; }
+        .quality-btn:hover .quality-badge { background: #000; color: #f5c518; }
+
+        /* SEASON BUTTONS SYSTEM */
+        .seasons-wrapper { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; }
+        .seasons-wrapper::-webkit-scrollbar { height: 4px; }
+        .seasons-wrapper::-webkit-scrollbar-thumb { background: rgba(245,197,24,0.3); border-radius: 10px; }
+        
+        .season-tab-btn {
+            background: #222; color: #fff; border: 1px solid rgba(245,197,24,0.15);
+            padding: 8px 16px; border-radius: 12px; font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; white-space: nowrap;
+        }
+        .season-tab-btn.active, .season-tab-btn:hover { background: #f5c518; color: #000; border-color: #f5c518; }
+
+        /* EPISODE SYSTEM */
+        .episode-container { display: flex; flex-direction: column; gap: 10px; }
+        .section-sub-title { font-size: 0.9rem; font-weight: 600; color: #f5c518; margin-bottom: 8px; }
+        
+        .episode-btn {
+            background: #1a1a1a; border: 1px solid rgba(245,197,24,0.14); color: #ffffff;
+            padding: 12px 15px; text-align: left; border-radius: 16px; font-weight: 500;
+            display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s;
+        }
+        .episode-btn:hover { background: rgba(245,197,24,0.16); color: #f5c518; border-color: rgba(245,197,24,0.40); }
+        .episode-btn i { color: #f5c518; }
+
+        /* --- BOTTOM NAV (Mobile) --- */
+        .bottom-nav {
+            display: none; border-radius: 30px 30px 0 0; position: fixed; bottom: 0; left: 0; width: 100%; background: #050505;
+            border-top: 1px solid rgba(245,197,24,0.14); justify-content: space-around; padding: 12px 0px; z-index: 100;
+        }
+        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; color: #b3b3b3; text-decoration: none; font-size: 0.7rem; gap: 4px; }
+        .bottom-nav-item.active { color: #f5c518; }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; width: 100%; padding-bottom: 70px; }
+            .bottom-nav { display: flex; }
+            .movie-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            .modal-overlay { padding: 0; } 
+            .modal-card { max-width: 100%; width: 100%; height: 100%; max-height: 100vh; border-radius: 0; border: none; }
+            .modal-body-content { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <div class="sidebar">
+        <div class="sidebar-logo">DETFLIX</div>
+        <ul class="nav-links">
+            <li class="nav-item active" data-cat="home" onclick="changeCategory('home')"><i class="fas fa-home"></i> Home</li>
+            <li class="nav-item" data-cat="movie" onclick="changeCategory('movie')"><i class="fas fa-film"></i> Movies</li>
+            <li class="nav-item" data-cat="tv" onclick="changeCategory('tv')"><i class="fas fa-tv"></i> Series,Drama</li>
+        </ul>
+    </div>
+
+    <!-- MAIN DASHBOARD -->
+    <div class="main-content">
+        <div class="top-header">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchBar" placeholder="Search..." onkeyup="searchContent()">
+            </div>
+            
+            <a href="https://t.me/DETFLIX_H" target="_blank" class="tg-join-btn">
+                <i class="fab fa-telegram-plane"></i> <span>Join</span>
+            </a>
+        </div>
+        <div class="grid-container">
+            <h2 class="section-title" id="sectionHeading">Home</h2>
+            <div class="movie-grid" id="contentGrid"></div>
+        </div>
+    </div>
+
+    <!-- POPUP MODAL -->
+    <div class="modal-overlay" id="playerModal" onclick="closeModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            
+            <!-- Trailer Section -->
+            <div class="modal-video-box" id="videoBox">
+                <div class="video-back-btn" onclick="closeModal()"><i class="fas fa-times"></i></div>
+                <iframe id="trailerPlayer" allowfullscreen="true" src=""></iframe>
+            </div>
+
+            <div class="modal-body-content">
+                <h2 class="modal-title" id="modalTitle">Title</h2>
+                <p class="modal-desc" id="modalDesc">Description...</p>
+                
+                <!-- Multi-Quality Movie Section -->
+                <div id="movieSection" style="display: none;">
+                    <div class="section-sub-title"><i class="fas fa-layer-group"></i> Select Video Quality</div>
+                    <div class="movie-qualities-wrapper">
+                        <button class="quality-btn" id="btn480p"><span><i class="fas fa-play-circle"></i> Watch Movie</span> <span class="quality-badge">480p</span></button>
+                        <button class="quality-btn" id="btn720p"><span><i class="fas fa-play-circle"></i> Watch Movie</span> <span class="quality-badge">720p</span></button>
+                        <button class="quality-btn" id="btn1080p"><span><i class="fas fa-play-circle"></i> Watch Movie</span> <span class="quality-badge">1080p</span></button>
+                    </div>
+                </div>
+
+                <!-- TV Series Season Tab Switcher -->
+                <div id="seasonsSection" style="display: none;">
+                    <div class="section-sub-title"><i class="fas fa-folder-open"></i> Select Season</div>
+                    <div class="seasons-wrapper" id="seasonsBox"></div>
+                </div>
+
+                <!-- TV Series Episodes List -->
+                <div id="episodesSection" style="display: none;">
+                    <div class="section-sub-title" id="episodeTitle"><i class="fas fa-list"></i> Episodes</div>
+                    <div class="episode-container" id="episodeBox"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="bottom-nav">
+        <a href="#" class="bottom-nav-item active" data-cat="home" onclick="changeCategory('home')"><i class="fas fa-home"></i>Home</a>
+        <a href="#" class="bottom-nav-item" data-cat="movie" onclick="changeCategory('movie')"><i class="fas fa-film"></i>Movie</a>
+        <a href="#" class="bottom-nav-item" data-cat="tv" onclick="changeCategory('tv')"><i class="fas fa-tv"></i>Series</a>
+    </div>
+
+    <script>
+        let currentCategory = 'home';
+
+        // DATABASE: Yahan Movie me 3 alg qualities ki Streamtape links daal sakte hain
+        const myDatabase = [
+            {
+                type: "movie",
+                title: "Welcome to the Jungle",
+                img: "https://cdn.district.in/movies-assets/images/cinema/Welcome-to-The-Jungle1-f1cf2df0-6946-11f1-8859-9d4ca726d23b.jpeg",
+                year: "2026",
+                rating: "7.2",
+                desc: "A group of quirky characters gets stuck in a dangerous jungle.",
+                trailerUrl: "https://www.youtube.com/embed/R704yP3dlXw?si=nS0maEKMl4z8gkMh", 
+                url480p: "https://streamtape.com/v/xxxx_480p", // Apni streamtape links yahan daalein
+                url720p: "https://streamtape.com/v/xxxx_720p",
+                url1080p: "https://streamtape.com/v/xxxx_1080p"
+            },
+            {
+                type: "tv",
+                title: "See You at Work Tomorrow!",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqsMJL0r6hFmW651Pk6guXmy8D6JAeH4JTzJ2N2opXHHGWN6UX5iTd-k&s=10",
+                year: "2026",
+                rating: "8.5",
+                desc: "Cha Ji-yoon is a 7th-year corporate worker who's tired of both work and dating.",
+                trailerUrl: "https://www.youtube.com/embed/6f16YVgZc44?si=byZMsKz_k6Uiq9cc", 
+                seasons: [
+                    {
+                        seasonName: "Season 1",
+                        episodes: [
+                            { name: "S01 Episode 1", url: "https://streamtape.com/v/tv_ep1" },
+                            { name: "S01 Episode 2", url: "https://streamtape.com/v/tv_ep2" }
+                        ]
+                    }
+                ]
+            },
+            {
+                type: "tv",
+                title: "Teach You a Lesson",
+                img: "https://ww19.myasiantv.es/wp-content/uploads/2026/05/gN7Tq35raryabkPGcKlb4ZKeutm.jpg",
+                year: "2026",
+                rating: "",
+                desc: "Na Hwa-jin belongs to the Educational Rights Protection Bureau. He is sent to a problem school as a supervisor.",
+                trailerUrl: "https://www.youtube.com/embed/i3J3EVfZNiY?si=0DmPhRQhx3CDl-sr", 
+                seasons: [
+                    {
+                        seasonName: "Season 1",
+                        episodes: [
+                            { name: "Episode 1", url: "https://streamtape.com/v/reXzQmLgAQsbBQ2/" },
+                            { name: "Episode 2", url: "https://streamtape.com/v/XYDeaJVMymtDqzZ/" },
+                            { name: "Episode 3", url: "https://streamtape.com/v/dK0pq3WBo8UkRge/" },
+                            { name: "Episode 4", url: "https://streamtape.com/v/LX2289bJBrsRG72/" },
+                            { name: "Episode 5", url: "https://streamtape.com/v/dPaPmzjQrXfg1V/" },
+                            { name: "Episode 6", url: "https://streamtape.com/v/zPoKmbGAdwcYmeB/" },
+                            { name: "Episode 7", url: "https://streamtape.com/v/Rmg2QYeoR3TdWvo/" },
+                            { name: "Episode 8", url: "https://streamtape.com/v/xo7pjpVZo3tkraY/" },
+                            { name: "Episode 9", url: "https://streamtape.com/v/3V1VWzKyb2udyPa/" },
+                            { name: "Episode 10", url: "https://streamtape.com/v/vWXBZbpkPetDpZ/" },
+                        ]
+                    }
+                ]
+            },
+            {
+                type: "tv",
+                title: "The Wonderfools",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg4f-29FIdI0KR7ksk50t9_GmNZSMjq0AgpS29szOvAzTO20e84bDEimU&s=10",
+                year: "2026",
+                rating: "",
+                desc: "A goofy group of townies stumbles into superpowers and fights rising evil as doomsday panic grows in this wild, turn-of-the-century action comedy.",
+                trailerUrl: "https://www.youtube.com/embed/4ulRDU-i2AU?si=kKwtMUcq3Cc2qUPu",
+                seasons: [
+                    {
+                        seasonName: "Season 1",
+                        episodes: [
+                            { name: "Episode 1", url: "https://streamtape.com/v/8Kl38ApBBGFoo9l/" },
+                            { name: "Episode 2", url: "https://streamtape.com/v/p2JW89Xl4yFr3W8/" },
+                            { name: "Episode 3", url: "https://streamtape.com/v/7mzypxzLjBCAOby/" },
+                            { name: "Episode 4", url: "https://streamtape.com/v/Oo2mDQO4DJSZ217/" },
+                            { name: "Episode 5", url: "https://streamtape.com/v/1zev48xJYBSeOmk/" },
+                            { name: "Episode 6", url: "https://streamtape.com/v/QXx7PjRd4OF06Go/" },
+                            { name: "Episode 7", url: "" },
+                            { name: "Episode 8", url: "https://streamtape.com/v/L3WqqWz88xURw44/" },
+                        ]
+                    }
+                ]
+            },
+            {
+                type: "tv",
+                title: "Bloodhounds",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqf1o8ED8R1auqaij6d1s6F56XLC_tiLv3AAngcH9ve4HiGjKhoTAKm4Fp&s=10",
+                year: "2026",
+                rating: "",
+                desc: "Faced with ruthless foes with a violent thirst, two young boxers band together - risking life and limb to bring justice and protect their loved ones.",
+                trailerUrl: "https://www.youtube.com/embed/sVHfdlOGPv0?si=cxsW3t_zmjx1RI0-",
+                seasons: [
+                    {
+                        seasonName: "Season 1",
+                        episodes: [
+                            { name: "Episode 1", url: "" },
+                            { name: "Episode 2", url: "" },
+                            { name: "Episode 3", url: "" },
+                            { name: "Episode 4", url: "" },
+                            { name: "Episode 5", url: "" },
+                            { name: "Episode 6", url: "" },
+                            { name: "Episode 7", url: "" },
+                            { name: "Episode 8", url: "" },
+                            { name: "Episode 9", url: "" },
+                            { name: "Episode 10", url: "" },
+                        ]
+                    },
+                    {
+                        seasonName: "Season 2",
+                        episodes: [
+                            { name: "Episode 1", url: "" },
+                            { name: "Episode 2", url: "" },
+                            { name: "Episode 3", url: "" },
+                            { name: "Episode 4", url: "" },
+                            { name: "Episode 5", url: "" },
+                            { name: "Episode 6", url: "" },
+                            { name: "Episode 7", url: "" },
+                            { name: "Episode 8", url: "" },
+                            { name: "Episode 9", url: "" },
+                            { name: "Episode 10", url: "" },
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // --- RENDER FUNCTION ---
+        function renderGrid(items) {
+            const grid = document.getElementById('contentGrid');
+            grid.innerHTML = '';
+            if (items.length === 0) {
+                grid.innerHTML = `<p style="color: #b3b3b3; padding: 20px 0;">No results found.</p>`;
+                return;
+            }
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'movie-card';
+                card.onclick = () => openModal(item);
+                card.innerHTML = `
+                    <div class="card-img-box">
+                        <img src="${item.img}" alt="${item.title}" loading="lazy">
+                        <div class="card-overlay"><i class="fas fa-info-circle"></i></div>
+                    </div>
+                    <div class="movie-info">
+                        <div class="movie-title">${item.title}</div>
+                        <div class="movie-meta">
+                            <span>${item.year}</span>
+                            <span class="rating-badge">
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- CATEGORY CONTROLLER ---
+        function changeCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(el => {
+                if (el.getAttribute('data-cat') === cat) el.classList.add('active');
+                else el.classList.remove('active');
+            });
+            const heading = document.getElementById('sectionHeading');
+            if (cat === 'home') heading.innerText = 'Home Updates';
+            else if (cat === 'movie') heading.innerText = 'Ultimate Movies';
+            else if (cat === 'tv') heading.innerText = 'Series & K-Dramas';
+            filterData();
+        }
+
+        function filterData() {
+            let filtered = myDatabase;
+            if (currentCategory !== 'home') filtered = myDatabase.filter(item => item.type === currentCategory);
+            renderGrid(filtered);
+        }
+
+        function searchContent() {
+            const query = document.getElementById('searchBar').value.toLowerCase().trim();
+            let baseList = myDatabase;
+            if (currentCategory !== 'home') baseList = myDatabase.filter(item => item.type === currentCategory);
+            const searchResults = baseList.filter(item => item.title.toLowerCase().includes(query));
+            renderGrid(searchResults);
+        }
+
+        // --- OPEN MODAL POPUP & QUALITIES / SEASONS LOGIC ---
+        function openModal(item) {
+            const modal = document.getElementById('playerModal');
+            document.getElementById('modalTitle').innerText = item.title;
+            document.getElementById('modalDesc').innerText = item.desc;
+
+            const trailerPlayer = document.getElementById('trailerPlayer');
+            const videoBox = document.getElementById('videoBox');
+
+            // Trailer setup
+            if(item.trailerUrl) {
+                videoBox.style.display = 'block';
+                trailerPlayer.src = item.trailerUrl;
+            } else {
+                videoBox.style.display = 'none';
+                trailerPlayer.src = '';
+            }
+
+            const movieSection = document.getElementById('movieSection');
+            const seasonsSection = document.getElementById('seasonsSection');
+            const episodesSection = document.getElementById('episodesSection');
+            const seasonsBox = document.getElementById('seasonsBox');
+
+            // Reset Displays
+            movieSection.style.display = 'none';
+            seasonsSection.style.display = 'none';
+            episodesSection.style.display = 'none';
+
+            // IF MOVIE TYPE -> Show Multi-Quality Buttons
+            if (item.type === "movie") {
+                movieSection.style.display = 'block';
+                
+                setupQualityButton('btn480p', item.url480p);
+                setupQualityButton('btn720p', item.url720p);
+                setupQualityButton('btn1080p', item.url1080p);
+            } 
+            // IF TV SERIES TYPE -> Show Seasons & Episodes
+            else if (item.type === "tv" && item.seasons && item.seasons.length > 0) {
+                seasonsSection.style.display = 'block';
+                episodesSection.style.display = 'block';
+                seasonsBox.innerHTML = '';
+
+                item.seasons.forEach((season, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = `season-tab-btn ${index === 0 ? 'active' : ''}`;
+                    btn.innerText = season.seasonName;
+                    
+                    btn.onclick = () => {
+                        document.querySelectorAll('.season-tab-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        loadEpisodes(season.episodes);
+                    };
+                    seasonsBox.appendChild(btn);
+                });
+
+                // Load initial first season
+                loadEpisodes(item.seasons[0].episodes);
+            }
+
+            modal.classList.add('active');
+        }
+
+        // Helper to configure Quality buttons or hide them if blank
+        function setupQualityButton(btnId, url) {
+            const btn = document.getElementById(btnId);
+            if(url && url.trim() !== "") {
+                btn.style.display = 'flex';
+                btn.onclick = () => window.open(url, '_blank');
+            } else {
+                btn.style.display = 'none';
+            }
+        }
+
+        // Load series episodes list
+        function loadEpisodes(episodes) {
+            const epBox = document.getElementById('episodeBox');
+            epBox.innerHTML = '';
+            
+            episodes.forEach(ep => {
+                const btn = document.createElement('div');
+                btn.className = 'episode-btn';
+                btn.innerHTML = `<span>${ep.name}</span><i class="fas fa-external-link-alt"></i>`;
+                btn.onclick = () => window.open(ep.url, '_blank');
+                epBox.appendChild(btn);
+            });
+        }
+
+        function closeModal() {
+            document.getElementById('playerModal').classList.remove('active');
+            document.getElementById('trailerPlayer').src = '';
+        }
+
+        window.onload = () => {
+            filterData();
+        };
+    </script>
+</body>
+</html>
