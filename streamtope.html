@@ -1,542 +1,1199 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://marketplace.canva.com/co6wM/MAHFQIco6wM/1/tl/canva-golden-film-camera-icon-MAHFQIco6wM.png">
-    <title>DETFLIX - Ultimate Movies, Series, Drama & Anime Hub</title>
-
-    <!-- FontAwesome Icons -->
+    <title>DETFLIX - Premium UI</title>
+    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        /* --- GLOBAL STYLES --- */
+        :root {
+            --bg-main: #0a0a0a;
+            --bg-sidebar: #121212;
+            --bg-card: #1a1a1a;
+            --accent-yellow: #ffc107;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+        }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: #040404; color: #ffffff; overflow-x: hidden; display: flex; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-        /* --- SIDEBAR NAVIGATION --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- SIDEBAR (LAPTOP VIEW) --- */
         .sidebar {
-            width: 240px; height: 100vh; background: #050505; position: fixed; left: 0; top: 0;
-            padding: 25px 18px; border-right: 1px solid rgba(245,197,24,0.16); z-index: 90;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+            width: 80px;
+            background-color: var(--bg-sidebar);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            border-right: 1px solid #222;
+            z-index: 1000;
         }
-        .sidebar-logo { font-size: 26px; font-weight: 800; color: #f5c518; margin-bottom: 35px; padding-left: 10px; letter-spacing: 1px; }
-        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-        .nav-item { 
-            display: flex; align-items: center; gap: 15px; padding: 12px 15px; color: #c7c7c7; 
-            text-decoration: none; font-weight: 500; border-radius: 14px; cursor: pointer; transition: all 0.25s ease;
-        }
-        .nav-item:hover, .nav-item.active { background: rgba(245,197,24,0.16); color: #f5c518; }
-        .nav-item.active i { color: #f5c518; }
 
-        /* --- MAIN CONTENT AREA --- */
-        .main-content { margin-left: 240px; width: calc(100% - 240px); min-height: 100vh; padding-bottom: 80px; }
-
-        .top-header {
-            display: flex; justify-content: space-between; align-items: center; padding: 10px 4%;
-            background: rgba(0,0,0,0.96); backdrop-filter: blur(22px); position: sticky; top: 0; z-index: 100;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.16); gap: 15px; box-shadow: 0 10px 35px rgba(0,0,0,0.55);
+        .logo-box {
+            background-color: #121212f2;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 50px;
+            cursor: pointer;
         }
-        .search-wrapper {
-            display: flex; align-items: center; background: #000000; width: 100%; max-width: 450px;
-            padding: 10px 18px; border-radius: 20px; border: 1px solid rgba(255, 200, 0, 0.14);
-        }
-        .search-wrapper input { background: transparent; border: none; outline: none; color: #f8f8f8; width: 100%; margin-left: 10px; font-size: 0.95rem; }
-        .search-wrapper i { color: #b3b3b3; }
 
-        .tg-join-btn {
-            display: flex; align-items: center; gap: 8px; background: #f5c518; color: #000;
-            padding: 10px 18px; border-radius: 24px; font-weight: 600; text-decoration: none;
-            font-size: 0.9rem; transition: all 0.25s ease; flex-shrink: 0; box-shadow: 0 10px 30px rgba(245,197,24,0.35);
+        .logo-box i {
+            color: #ffe205;
+            font-size: 20px;
         }
-        .tg-join-btn:hover { background: #d4a400; }
 
-        /* --- MOVIE GRID --- */
-        .grid-container { padding: 25px 4%; }
-        .section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; color: #ffffff; display: flex; align-items: center; gap: 10px; }
-        .section-title::before { content: ''; width: 4px; height: 20px; background: #f5c518; display: inline-block; border-radius: 2px; }
+        .nav-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            flex-grow: 1;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .nav-btn i {
+            color: var(--text-muted);
+            font-size: 20px;
+            transition: color 0.3s, transform 0.25s ease;
+        }
+
+        .nav-btn:hover i,
+        .nav-btn.active i {
+            color: var(--accent-yellow);
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            margin-left: 80px; /* Space for sidebar */
+            padding: 30px 20px 30px 40px;
+            width: calc(100% - 80px);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .section-header i {
+            color: var(--accent-yellow);
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .section-header h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: rgb(246, 205, 0);
+        }
+
+        /* --- MOVIE ROW (HORIZONTAL SCROLL) --- */
+        .movie-row {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 1px;
+            margin-bottom: 10px;
+            /* Hide scrollbar */
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+        }
         
-        .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; }
-        .movie-card { background: #111111; border-radius: 15px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; border: 1px solid rgba(245,197,24,0.14); }
-        .movie-card:hover { transform: translateY(-4px); border-color: rgba(245,197,24,0.4); box-shadow: 0 20px 35px rgba(0,0,0,0.55); }
+        .movie-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* --- MOVIE CARD --- */
+        .movie-card {
+            flex: 0 0 180px; /* Fixed width for cards */
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .poster-container {
+            position: relative;
+            width: 100%;
+            height: 270px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: var(--bg-card);
+            margin-bottom: 12px;
+        }
+
+        .poster-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        /* Rating Badge */
+        .rating-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            z-index: 2;
+        }
+
+        .rating-badge i {
+            color: var(--accent-yellow);
+            font-size: 10px;
+        }
+
+        /* Play Button Hover Overlay */
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .play-btn {
+            background-color: var(--accent-yellow);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .play-btn i {
+            color: black;
+            font-size: 20px;
+            margin-left: 4px; /* visually center play icon */
+        }
+
+        .movie-card:hover .play-overlay {
+            opacity: 1;
+        }
         
-        .card-img-box { position: relative; width: 100%; aspect-ratio: 2/3; background: #111111; }
-        .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .card-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.2s; }
-        .movie-card:hover .card-overlay { opacity: 1; }
-        .card-overlay i { font-size: 2.5rem; color: #f5c518; }
+        .movie-card:hover .play-btn {
+            transform: scale(1);
+        }
 
-        .movie-info { padding: 14px; }
-        .movie-title { font-size: 0.85rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #f5c518; }
-        .movie-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #b3b3b3; margin-top: 6px; }
-        .rating-badge { color: #f5c518; font-weight: 900;}
+        .movie-card:hover .poster-container img {
+            transform: scale(1.05);
+        }
 
-        /* --- MODAL POPUP SYSTEM --- */
+        /* Text Details */
+        .movie-info h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            white-space: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .movie-info p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* --- SEARCH BAR --- */
+        .top-bar {
+            display: none;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .top-bar.active {
+            display: flex;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: min(100%, 360px);
+            background: #171717;
+            border: 1px solid #2a2a2a;
+            border-radius: 999px;
+            padding: 10px 14px;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.22);
+            animation: fadeUp 0.35s ease both;
+        }
+
+        .search-box input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: white;
+            font-size: 14px;
+        }
+
+        .search-box i {
+            color: var(--accent-yellow);
+        }
+
+        /* --- MODAL POPUP --- */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(18px); display: flex; justify-content: center; align-items: center;
-            z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 15px;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.86);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
         }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
         .modal-card {
-            background: #111111; width: 100%; max-width: 580px; border-radius: 28px;
-            border: 1px solid rgba(245,197,24,0.18); max-height: 90vh; 
-            display: flex; flex-direction: column; overflow: hidden; position: relative; box-shadow: 0 40px 70px rgba(0,0,0,0.65);
+            width: min(100%, 620px);
+            max-height: 90vh;
+            overflow: auto;
+            background: #121212;
+            border: 1px solid rgba(255,193,7,0.2);
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+            transform: translateY(20px) scale(0.97);
+            transition: transform 0.25s ease;
+            animation: popIn 0.3s ease both;
         }
 
-        /* TRAILER BOX */
-        .modal-video-box { 
-            width: 100%; aspect-ratio: 16/9; background: #000; 
-            overflow: hidden; flex-shrink: 0; z-index: 1005; position: relative;
+        .modal-overlay.active .modal-card {
+            transform: translateY(0) scale(1);
         }
-        .modal-video-box iframe { width: 100%; height: 100%; border: none; }
 
-        .video-back-btn {
-            position: absolute; top: 12px; right: 12px; font-size: 1.1rem; color: #000;
-            background: #f5c518; width: 38px; height: 38px; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center; cursor: pointer; 
-            z-index: 1020; transition: all 0.2s ease;
+        .modal-media {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
         }
-        .video-back-btn:hover { background: #d4a400; transform: scale(1.05); }
 
-        .modal-body-content { padding: 20px; overflow-y: auto; flex: 1; }
-        .modal-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 5px; color: #ffffff; }
-        .modal-desc { font-size: 0.85rem; color: #d3d3d3; margin-bottom: 20px; line-height: 1.6; }
-
-        /* --- MULTI-QUALITY MOVIE BUTTONS --- */
-        .movie-qualities-wrapper { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-        .quality-btn {
-            display: flex; align-items: center; justify-content: space-between;
-            width: 100%; background: #222; border: 1px solid rgba(245,197,24,0.15); color: #fff; 
-            padding: 14px 20px; border-radius: 16px; font-weight: 600; text-decoration: none; 
-            cursor: pointer; transition: all 0.2s ease; font-size: 0.95rem;
+        .modal-media iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
-        .quality-btn:hover { background: #f5c518; color: #000; border-color: #f5c518; }
-        .quality-badge { background: rgba(245,197,24,0.2); color: #f5c518; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; }
-        .quality-btn:hover .quality-badge { background: #000; color: #f5c518; }
 
-        /* SEASON BUTTONS SYSTEM */
-        .seasons-wrapper { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; }
-        .seasons-wrapper::-webkit-scrollbar { height: 4px; }
-        .seasons-wrapper::-webkit-scrollbar-thumb { background: rgba(245,197,24,0.3); border-radius: 10px; }
-        
-        .season-tab-btn {
-            background: #222; color: #fff; border: 1px solid rgba(245,197,24,0.15);
-            padding: 8px 16px; border-radius: 12px; font-size: 0.85rem; font-weight: 600;
-            cursor: pointer; transition: all 0.2s; white-space: nowrap;
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 50%;
+            background: var(--accent-yellow);
+            color: #000;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 2;
         }
-        .season-tab-btn.active, .season-tab-btn:hover { background: #f5c518; color: #000; border-color: #f5c518; }
 
-        /* EPISODE SYSTEM */
-        .episode-container { display: flex; flex-direction: column; gap: 10px; }
-        .section-sub-title { font-size: 0.9rem; font-weight: 600; color: #f5c518; margin-bottom: 8px; }
-        
+        .modal-body {
+            padding: 18px 18px 20px;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .modal-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            color: var(--accent-yellow);
+            font-size: 14px;
+            font-weight: 700;
+            margin: 14px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quality-list,
+        .season-list,
+        .episode-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .quality-btn,
+        .season-btn,
         .episode-btn {
-            background: #1a1a1a; border: 1px solid rgba(245,197,24,0.14); color: #ffffff;
-            padding: 12px 15px; text-align: left; border-radius: 16px; font-weight: 500;
-            display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s;
+            width: 100%;
+            border: 1px solid rgba(255,193,7,0.2);
+            background: #1b1b1b;
+            color: white;
+            border-radius: 12px;
+            padding: 10px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
-        .episode-btn:hover { background: rgba(245,197,24,0.16); color: #f5c518; border-color: rgba(245,197,24,0.40); }
-        .episode-btn i { color: #f5c518; }
 
-        /* --- BOTTOM NAV (Mobile) --- */
-        .bottom-nav {
-            display: none; border-radius: 30px 30px 0 0; position: fixed; bottom: 0; left: 0; width: 100%; background: #050505;
-            border-top: 1px solid rgba(245,197,24,0.14); justify-content: space-around; padding: 12px 0px; z-index: 100;
+        .quality-btn:hover,
+        .season-btn:hover,
+        .episode-btn:hover {
+            background: rgba(255,193,7,0.12);
+            border-color: var(--accent-yellow);
+            transform: translateY(-1px);
         }
-        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; color: #b3b3b3; text-decoration: none; font-size: 0.7rem; gap: 4px; }
-        .bottom-nav-item.active { color: #f5c518; }
 
+        .quality-badge {
+            background: rgba(255,193,7,0.16);
+            color: var(--accent-yellow);
+            padding: 3px 8px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .season-btn.active {
+            background: var(--accent-yellow);
+            color: #000;
+            border-color: var(--accent-yellow);
+        }
+
+        .episode-item {
+            border: 1px solid rgba(255,193,7,0.12);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #181818;
+        }
+
+        .episode-head { width: 100%; }
+
+        .episode-body {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 10px;
+            transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+        }
+
+        .episode-item.open .episode-body {
+            max-height: 220px;
+            opacity: 1;
+            padding: 8px 10px 10px;
+        }
+
+        .episode-item.open .episode-btn i {
+            transform: rotate(90deg);
+        }
+
+        .episode-btn i {
+            transition: transform 0.2s ease;
+        }
+
+        .episode-quality-btn {
+            justify-content: space-between;
+        }
+
+        .movie-card,
+        .section-header,
+        .nav-btn,
+        .quality-btn,
+        .season-btn,
+        .episode-btn {
+            animation: fadeUp 0.35s ease both;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* --- MOBILE RESPONSIVE (SMARTPHONES) --- */
         @media (max-width: 768px) {
-            .sidebar { display: none; }
-            .main-content { margin-left: 0; width: 100%; padding-bottom: 70px; }
-            .bottom-nav { display: flex; }
-            .movie-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-            .modal-overlay { padding: 0; } 
-            .modal-card { max-width: 100%; width: 100%; height: 100%; max-height: 100vh; border-radius: 0; border: none; }
-            .modal-body-content { padding: 15px; }
+            body {
+                flex-direction: column;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px 15px 80px 15px; /* Bottom padding for mobile nav */
+            }
+
+            /* Convert Sidebar to Bottom Navigation */
+            .sidebar {
+                width: 100%;
+                height: 60px;
+                top: auto;
+                bottom: 0;
+                flex-direction: row;
+                justify-content: space-around;
+                padding: 0;
+                border-right: none;
+                border-top: 1px solid #222;
+                background-color: rgba(18, 18, 18, 0.95);
+                backdrop-filter: blur(10px);
+            }
+
+            .logo-box {
+                display: none; /* Hide top logo on mobile */
+            }
+
+            .nav-icons {
+                flex-direction: row;
+                width: 100%;
+                justify-content: space-around;
+                align-items: center;
+                gap: 0;
+            }
+
+            .nav-icons i {
+                font-size: 22px;
+            }
+
+            /* Adjust Movie Cards for Mobile */
+            .movie-card {
+                flex: 0 0 130px;
+            }
+
+            .poster-container {
+                height: 195px;
+            }
+            
+            .section-header h2 {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- SIDEBAR NAVIGATION -->
-    <div class="sidebar">
-        <div class="sidebar-logo">DETFLIX</div>
-        <ul class="nav-links">
-            <li class="nav-item active" data-cat="home" onclick="changeCategory('home')"><i class="fas fa-home"></i> Home</li>
-            <li class="nav-item" data-cat="movie" onclick="changeCategory('movie')"><i class="fas fa-film"></i> Movies</li>
-            <li class="nav-item" data-cat="tv" onclick="changeCategory('tv')"><i class="fas fa-tv"></i> Series,Drama</li>
-        </ul>
-    </div>
+    <!-- SIDEBAR / BOTTOM NAV -->
+    <nav class="sidebar">
+        <div class="logo-box">
+            <img src="https://marketplace.canva.com/co6wM/MAHFQIco6wM/1/tl/canva-golden-film-camera-icon-MAHFQIco6wM.png" alt="Logo" style="width: 24px; height: 24px;">
+        </div>
+        <div class="nav-icons">
+            <button class="nav-btn active" data-nav="home" onclick="setActiveNav('home')"><i class="fa-solid fa-house"></i></button>
+            <button class="nav-btn" data-nav="search" onclick="setActiveNav('search')"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button class="nav-btn" data-nav="movies" onclick="setActiveNav('movies')"><i class="fa-solid fa-film"></i></button>
+            <button class="nav-btn" data-nav="tv" onclick="setActiveNav('tv')"><i class="fa-solid fa-tv"></i></button>
+        </div>
+    </nav>
 
-    <!-- MAIN DASHBOARD -->
-    <div class="main-content">
-        <div class="top-header">
-            <div class="search-wrapper">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchBar" placeholder="Search..." onkeyup="searchContent()">
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="top-bar" id="topBar">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search movies or series..." oninput="renderContent()">
             </div>
-            
-            <a href="https://t.me/DETFLIX_H" target="_blank" class="tg-join-btn">
-                <i class="fab fa-telegram-plane"></i> <span>Join</span>
-            </a>
         </div>
-        <div class="grid-container">
-            <h2 class="section-title" id="sectionHeading">Home</h2>
-            <div class="movie-grid" id="contentGrid"></div>
-        </div>
-    </div>
 
-    <!-- POPUP MODAL -->
-    <div class="modal-overlay" id="playerModal" onclick="closeModal()">
+        <div id="contentSections"></div>
+    </main>
+
+    <div class="modal-overlay" id="mediaModal" onclick="closeModal()">
         <div class="modal-card" onclick="event.stopPropagation()">
-            
-            <!-- Trailer Section -->
-            <div class="modal-video-box" id="videoBox">
-                <div class="video-back-btn" onclick="closeModal()"><i class="fas fa-times"></i></div>
-                <iframe id="trailerPlayer" allowfullscreen="true" src=""></iframe>
+            <div class="modal-media">
+                <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+                <iframe id="modalPlayer" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
-
-            <div class="modal-body-content">
-                <h2 class="modal-title" id="modalTitle">Title</h2>
-                <p class="modal-desc" id="modalDesc">Description...</p>
-                
-                <!-- Multi-Quality Movie Section -->
-                <div id="movieSection" style="display: none;">
-                    <div class="section-sub-title"><i class="fas fa-layer-group"></i> Select Video Quality</div>
-                    <div class="movie-qualities-wrapper">
-                        <button class="quality-btn" id="btn480p"><span><i class="fas fa-play-circle"></i> Watch Movie</span> <span class="quality-badge">480p</span></button>
-                        <button class="quality-btn" id="btn720p"><span><i class="fas fa-play-circle"></i> Watch Movie</span> <span class="quality-badge">720p</span></button>
-                        <button class="quality-btn" id="btn1080p"><span><i class="fas fa-play-circle"></i> Watch Movie</span> <span class="quality-badge">1080p</span></button>
-                    </div>
-                </div>
-
-                <!-- TV Series Season Tab Switcher -->
-                <div id="seasonsSection" style="display: none;">
-                    <div class="section-sub-title"><i class="fas fa-folder-open"></i> Select Season</div>
-                    <div class="seasons-wrapper" id="seasonsBox"></div>
-                </div>
-
-                <!-- TV Series Episodes List -->
-                <div id="episodesSection" style="display: none;">
-                    <div class="section-sub-title" id="episodeTitle"><i class="fas fa-list"></i> Episodes</div>
-                    <div class="episode-container" id="episodeBox"></div>
-                </div>
+            <div class="modal-body">
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <p class="modal-desc" id="modalDesc"></p>
+                <div id="qualitySection"></div>
+                <div id="seasonSection"></div>
+                <div id="episodeSection"></div>
             </div>
         </div>
-    </div>
-
-    <!-- BOTTOM NAVIGATION -->
-    <div class="bottom-nav">
-        <a href="#" class="bottom-nav-item active" data-cat="home" onclick="changeCategory('home')"><i class="fas fa-home"></i>Home</a>
-        <a href="#" class="bottom-nav-item" data-cat="movie" onclick="changeCategory('movie')"><i class="fas fa-film"></i>Movie</a>
-        <a href="#" class="bottom-nav-item" data-cat="tv" onclick="changeCategory('tv')"><i class="fas fa-tv"></i>Series</a>
     </div>
 
     <script>
-        let currentCategory = 'home';
-
-        // DATABASE: Yahan Movie me 3 alg qualities ki Streamtape links daal sakte hain
-        const myDatabase = [
+        const contentItems = [
             {
-                type: "movie",
-                title: "Pilot",
-                img: "https://m.media-amazon.com/images/M/MV5BYjhhZWJhZWMtOGRiZC00ZDdkLWEwOGUtNzY3ZjY2ZDdhMDJhXkEyXkFqcGc@._V1_QL75_UX184.5_.jpg",
-                year: "2024",
-                rating: "",
-                desc: "A story about a pilot who suddenly loses his job, then unexpectedly gets rehired with a new identity.",
-                trailerUrl: "https://www.youtube.com/embed/lRNNwL4bnhA?si=3DiaAlFWLDeeDoxE", 
-                url480p: "https://streamtape.com/v/2WLrWVRP3KSZ2QO/", // Apni streamtape links yahan daalein
-                url720p: "https://streamtape.com/v/pVoa8MxRW4TrK1r/",
-                url1080p: "https://streamtape.com/v/LaYYaeDqVrc6km/"
+                section: 'movies',
+                type: 'movie',
+                title: 'Pilot',
+                date: 'July 31, 2024',
+                img: 'https://m.media-amazon.com/images/M/MV5BYjhhZWJhZWMtOGRiZC00ZDdkLWEwOGUtNzY3ZjY2ZDdhMDJhXkEyXkFqcGc@._V1_QL75_UX184.5_.jpg',
+                desc: 'A story about a pilot who suddenly loses his job, then unexpectedly gets rehired with a new identity.',
+                bookmarked: true,
+                trailerUrl: 'https://www.youtube.com/embed/lRNNwL4bnhA?si=3DiaAlFWLDeeDoxE',
+                url480p: 'https://streamtape.com/v/2WLrWVRP3KSZ2QO/',
+                url720p: 'https://streamtape.com/v/pVoa8MxRW4TrK1r/',
+                url1080p: 'https://streamtape.com/v/LaYYaeDqVrc6km/'
             },
             {
-                type: "tv",
-                title: "See You at Work Tomorrow!",
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqsMJL0r6hFmW651Pk6guXmy8D6JAeH4JTzJ2N2opXHHGWN6UX5iTd-k&s=10",
-                year: "2026",
-                rating: "8.5",
-                desc: "Cha Ji-yoon is a 7th-year corporate worker who's tired of both work and dating.",
-                trailerUrl: "https://www.youtube.com/embed/6f16YVgZc44?si=byZMsKz_k6Uiq9cc", 
+                section: 'tv',
+                type: 'series',
+                title: 'See You at Work Tomorrow!',
+                date: '2026',
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqsMJL0r6hFmW651Pk6guXmy8D6JAeH4JTzJ2N2opXHHGWN6UX5iTd-k&s=10',
+                desc: 'Cha Ji-yoon is a 7th-year corporate worker who,s tired of both work and dating.',
+                bookmarked: true,
+                trailerUrl: 'https://www.youtube.com/embed/6f16YVgZc44',
                 seasons: [
                     {
-                        seasonName: "Season 1",
+                        seasonName: 'Season 1',
                         episodes: [
-                            { name: "S01 Episode 1", url: "https://streamtape.com/v/L2WeWVGzGyFRQ8J/" },
-                            { name: "S01 Episode 2", url: "https://streamtape.com/v/oZo78ly9dXhJy27/" },
-                            { name: "S01 Episode 3", url: "https://streamtape.com/v/BXZ2yV2awmFybvd/" },
-                            { name: "S01 Episode 4", url: "https://streamtape.com/v/9j71Z1OOPBIaKgk/" },           
+                            { name: 'Episode 1', 
+                              url480p: 'https://streamtape.com/v/0zoGqRBd2WSbjjj/See_You_at_Work_Tomorrow_S01E01_480p_AMZN_WEB-DL_%5B_Hindi.mkv.mp4', 
+                              url720p: 'https://streamtape.com/v/L2WeWVGzGyFRQ8J/See_You_at_Work_Tomorrow_S01E01_720p_AMZN_WEB-DL_%5B_Hindi.mkv.mp4', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 2', 
+                              url480p: 'https://streamtape.com/v/Lezg4Rz2M2UygK/See_You_at_Work_Tomorrow_S01E02_480p_AMZN_WEB-DL_%5B_Hindi.mkv.mp4', 
+                              url720p: 'https://streamtape.com/v/oZo78ly9dXhJy27/See_You_at_Work_Tomorrow_S01E02_720p_AMZN_WEB-DL_%5B_Hindi.mkv.mp4', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 3', 
+                              url480p: 'https://streamtape.com/v/kKgdpLJaglFOMAK/See_You_at_Work_Tomorrow_S01E03_480p_AMZN_WEB-DL_%5B_Hindi.mkv.mp4', 
+                              url720p: 'https://streamtape.com/v/BXZ2yV2awmFybvd/See_You_at_Work_Tomorrow_S01E03_720p_AMZN_WEB-DL_%5B_Hindi.mkv.mp4', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 4', 
+                              url480p: 'https://streamtape.com/v/g0pXKgadZyuqyVq/See_You_at_Work_Tomorrow_S01E04_480p_AMZN_WEB-DL_%5B_Hindi.mkv.mp4', 
+                              url720p: 'https://streamtape.com/v/9j71Z1OOPBIaKgk/See_You_at_Work_Tomorrow_S01E04_720p_AMZN_WEB-DL_%5B_Hindi.mkv.mp4', 
+                              url1080p: '' 
+                            },
                         ]
                     }
                 ]
             },
             {
-                type: "tv",
-                title: "Teach You a Lesson",
-                img: "https://ww19.myasiantv.es/wp-content/uploads/2026/05/gN7Tq35raryabkPGcKlb4ZKeutm.jpg",
-                year: "2026",
-                rating: "",
-                desc: "Na Hwa-jin belongs to the Educational Rights Protection Bureau. He is sent to a problem school as a supervisor.",
-                trailerUrl: "https://www.youtube.com/embed/i3J3EVfZNiY?si=0DmPhRQhx3CDl-sr", 
+                section: 'tv',
+                type: 'series',
+                title: 'Notes from the Last Row',
+                date: '2023',
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkedMWAZ1InaPhWaioKSTTR7oubnhcDsMlcl3u6lNJQqw5eXkcfMu7Rks&s=10',
+                desc: 'A literature professor discovers a student\'s talent and offers him writing lessons — but as he sinks into the story, their sessions spiral into chaos.',
+                trailerUrl: 'https://www.youtube.com/embed/5p9E0VvXOyk?si=9KYDHYyg6Bs3YBLu',
                 seasons: [
                     {
-                        seasonName: "Season 1",
+                        seasonName: 'Season 1',
                         episodes: [
-                            { name: "Episode 1", url: "https://streamtape.com/v/reXzQmLgAQsbBQ2/" },
-                            { name: "Episode 2", url: "https://streamtape.com/v/XYDeaJVMymtDqzZ/" },
-                            { name: "Episode 3", url: "https://streamtape.com/v/dK0pq3WBo8UkRge/" },
-                            { name: "Episode 4", url: "https://streamtape.com/v/LX2289bJBrsRG72/" },
-                            { name: "Episode 5", url: "https://streamtape.com/v/dPaPmzjQrXfg1V/" },
-                            { name: "Episode 6", url: "https://streamtape.com/v/zPoKmbGAdwcYmeB/" },
-                            { name: "Episode 7", url: "https://streamtape.com/v/Rmg2QYeoR3TdWvo/" },
-                            { name: "Episode 8", url: "https://streamtape.com/v/xo7pjpVZo3tkraY/" },
-                            { name: "Episode 9", url: "https://streamtape.com/v/3V1VWzKyb2udyPa/" },
-                            { name: "Episode 10", url: "https://streamtape.com/v/vWXBZbpkPetDpZ/" },
+                            { name: 'Episode 1', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/xlMM3BmGv7IkgXj/Notes.from.the.Last.Row.S01E01.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 2', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/AK30PPBmgJSXV1m/Notes.from.the.Last.Row.S01E02.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 3', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/860gW31vaMSozPV/Notes.from.the.Last.Row.S01E03.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 4', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/y7j2pDvkYLT34r/Notes.from.the.Last.Row.S01E04.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 5', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/6XK4vrkbzbI9GP8/Notes.from.the.Last.Row.S01E05.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 6', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/xZPOAOy88JCkBOy/Notes.from.the.Last.Row.S01E06.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
                         ]
                     }
                 ]
             },
             {
-                type: "tv",
-                title: "The Wonderfools",
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg4f-29FIdI0KR7ksk50t9_GmNZSMjq0AgpS29szOvAzTO20e84bDEimU&s=10",
-                year: "2026",
-                rating: "",
-                desc: "A goofy group of townies stumbles into superpowers and fights rising evil as doomsday panic grows in this wild, turn-of-the-century action comedy.",
-                trailerUrl: "https://www.youtube.com/embed/4ulRDU-i2AU?si=kKwtMUcq3Cc2qUPu",
+                section: 'tv',
+                type: 'series',
+                title: 'Teach You a Lesson',
+                date: '2026',
+                img: 'https://ww19.myasiantv.es/wp-content/uploads/2026/05/gN7Tq35raryabkPGcKlb4ZKeutm.jpg',
+                desc: 'Na Hwa-jin belongs to the Educational Rights Protection Bureau. He is sent to a problem school as a supervisor.',
+                trailerUrl: 'https://www.youtube.com/embed/7LYTrIiZECs?si=DIvbYZTWRd54gYb2',
                 seasons: [
                     {
-                        seasonName: "Season 1",
+                        seasonName: 'Season 1',
                         episodes: [
-                            { name: "Episode 1", url: "https://streamtape.com/v/8Kl38ApBBGFoo9l/" },
-                            { name: "Episode 2", url: "https://streamtape.com/v/p2JW89Xl4yFr3W8/" },
-                            { name: "Episode 3", url: "https://streamtape.com/v/7mzypxzLjBCAOby/" },
-                            { name: "Episode 4", url: "https://streamtape.com/v/Oo2mDQO4DJSZ217/" },
-                            { name: "Episode 5", url: "https://streamtape.com/v/1zev48xJYBSeOmk/" },
-                            { name: "Episode 6", url: "https://streamtape.com/v/QXx7PjRd4OF06Go/" },
-                            { name: "Episode 7", url: "https://streamtape.com/v/ZzR67y32B4sq8d7/" },
-                            { name: "Episode 8", url: "https://streamtape.com/v/L3WqqWz88xURw44/" },
+                            { name: 'Episode 1', 
+                              url480p: 'https://streamtape.com/v/akG1m9mwBKcx8Gl/Teach.You.a.Lesson.S01E01.480p', 
+                              url720p: 'https://streamtape.com/v/reXzQmLgAQsbBQ2/Teach.You.a.Lesson.S01E01', 
+                              url1080p: 'https://streamtape.com/v/RyVWrmmpW1Fd3de/Teach.You.a.Lesson.S01E01.1080p' 
+                            },
+                            { name: 'Episode 2', 
+                              url480p: 'https://streamtape.com/v/w7JM3Led0xSJvM9/Teach.You.a.Lesson.S01E02.480p', 
+                              url720p: 'https://streamtape.com/v/XYDeaJVMymtDqzZ/Teach.You.a.Lesson.S01E02', 
+                              url1080p: 'https://streamtape.com/v/JwQAKl8Jo1ij3J3/Teach.You.a.Lesson.S01E02.1080p' 
+                            },
+                            { name: 'Episode 3', 
+                              url480p: 'https://streamtape.com/v/LvL3mbYOXvuRwzV/Teach.You.a.Lesson.S01E03.480p', 
+                              url720p: 'https://streamtape.com/v/dK0pq3WBo8UkRge/Teach.You.a.Lesson.S01E03', 
+                              url1080p: 'https://streamtape.com/v/kgyDaj3DBgfOM6j/Teach.You.a.Lesson.S01E03.1080p' 
+                            },
+                            { name: 'Episode 4', 
+                              url480p: 'https://streamtape.com/v/ALv2AlQ2POTm6Y/Teach.You.a.Lesson.S01E04.480p', 
+                              url720p: 'https://streamtape.com/v/LX2289bJBrsRG72/Teach.You.a.Lesson.S01E04', 
+                              url1080p: 'https://streamtape.com/v/6WALGv1Q6eF9Dv4/Teach.You.a.Lesson.S01E04.1080p' 
+                            },
+                            { name: 'Episode 5', 
+                              url480p: 'https://streamtape.com/v/zxzGl33V2zhYYxm/Teach.You.a.Lesson.S01E05.480p', 
+                              url720p: 'https://streamtape.com/v/dPaPmzjQrXfg1V/Teach.You.a.Lesson.S01E05.720p', 
+                              url1080p: 'https://streamtape.com/v/BLKoLMVmW7cmw9/Teach.You.a.Lesson.S01E05.1080p' 
+                            },
+                            { name: 'Episode 6', 
+                              url480p: 'https://streamtape.com/v/61L4Be0ryaSZ09/Teach.You.a.Lesson.S01E06.480p', 
+                              url720p: 'https://streamtape.com/v/zPoKmbGAdwcYmeB/Teach.You.a.Lesson.S01E06.720p', 
+                              url1080p: 'https://streamtape.com/v/jpAqRYXrPRtzRQb/Teach.You.a.Lesson.S01E06.1080p'
+                            },
+                            { name: 'Episode 7', 
+                              url480p: 'https://streamtape.com/v/K7g73xAowvF0GlR/Teach.You.a.Lesson.S01E07.480p', 
+                              url720p: 'https://streamtape.com/v/Rmg2QYeoR3TdWvo/Teach.You.a.Lesson.S01E07.720p', 
+                              url1080p: 'https://streamtape.com/v/bwRko9zaevtPpwV/Teach.You.a.Lesson.S01E07.1080p' 
+                            },
+                            { name: 'Episode 8', 
+                              url480p: 'https://streamtape.com/v/m3792JjRKLTkPA/Teach.You.a.Lesson.S01E08.480p', 
+                              url720p: 'https://streamtape.com/v/xo7pjpVZo3tkraY/Teach.You.a.Lesson.S01E08.720p', 
+                              url1080p: 'https://streamtape.com/v/Zqog32kGxLFqL61/Teach.You.a.Lesson.S01E08.1080p' 
+                            },
+                            { name: 'Episode 9', 
+                              url480p: 'https://streamtape.com/v/GXgKQGppWAu1Xl2/Teach.You.a.Lesson.S01E09.480p', 
+                              url720p: 'https://streamtape.com/v/3V1VWzKyb2udyPa/Teach.You.a.Lesson.S01E09.720p', 
+                              url1080p: 'https://streamtape.com/v/JkDwbgY9AdiJxJ/Teach.You.a.Lesson.S01E09.1080p' 
+                            },
+                            { name: 'Episode 10', 
+                              url480p: 'https://streamtape.com/v/WwK1Ko7jxOUbKBe/Teach.You.a.Lesson.S01E10.480p', 
+                              url720p: 'https://streamtape.com/v/vWXBZbpkPetDpZ/Teach.You.a.Lesson.S01E10.720p', 
+                              url1080p: 'https://streamtape.com/v/Yy7dllXMYOUvv3A/Teach.You.a.Lesson.S01E10.1080p' 
+                            },
                         ]
                     }
                 ]
             },
             {
-                type: "tv",
-                title: "Bloodhounds",
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqf1o8ED8R1auqaij6d1s6F56XLC_tiLv3AAngcH9ve4HiGjKhoTAKm4Fp&s=10",
-                year: "2026",
-                rating: "",
-                desc: "Faced with ruthless foes with a violent thirst, two young boxers band together - risking life and limb to bring justice and protect their loved ones.",
-                trailerUrl: "https://www.youtube.com/embed/sVHfdlOGPv0?si=cxsW3t_zmjx1RI0-",
+                section: 'tv',
+                type: 'series',
+                title: 'The Wonderfools',
+                date: '2026',
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg4f-29FIdI0KR7ksk50t9_GmNZSMjq0AgpS29szOvAzTO20e84bDEimU&s=10',
+                desc: 'A goofy group of townies stumbles into superpowers and fights rising evil as doomsday panic grows in this wild, turn-of-the-century action comedy.',
+                trailerUrl: 'https://www.youtube.com/embed/4ulRDU-i2AU?si=kKwtMUcq3Cc2qUPu',
                 seasons: [
                     {
-                        seasonName: "Season 1",
+                        seasonName: 'Season 1',
                         episodes: [
-                            { name: "S-1, Episode 1", url: "https://streamtape.com/v/4G4kvkOQ4zHJ6d/Bloodhounds.S01E01.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv" },
-                            { name: "S-1, Episode 2", url: "https://streamtape.com/v/J2XPlQjOZes9lo/Bloodhounds.S01E02.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv" },
-                            { name: "S-1, Episode 3", url: "https://streamtape.com/v/17ymQL1G7yuezmj/Bloodhounds.S01E03.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv" },
-                            { name: "S-1, Episode 4", url: "https://streamtape.com/v/j6w99Qv2jkHzp8b/Bloodhounds.S01E04.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv" },
-                            { name: "S-1, Episode 5", url: "https://streamtape.com/v/4pJgDkMpqMfKK4D/Bloodhounds.S01E05.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv" },
-                            { name: "S-1, Episode 6", url: "https://streamtape.com/v/a247qy2GMKIz8y/Bloodhounds.S01E06.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv" },
-                            { name: "S-1, Episode 7", url: "https://streamtape.com/v/GGYwrdge7pT1M8B/Bloodhounds.S01E07.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv" },
-                            { name: "S-1, Episode 8", url: "https://streamtape.com/v/jjrVOYOv43HzybB/Bloodhounds.S01E08.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv" },
+                            { name: 'Episode 1', 
+                              url480p: 'https://streamtape.com/v/mO04OJ9Y6JUbaKz/The.WONDERfools.S01E01.480p', 
+                              url720p: 'https://streamtape.com/v/8Kl38ApBBGFoo9l/The.WONDERfools.S01E01.720p', 
+                              url1080p: 'https://streamtape.com/v/MxOyXZwomjHDRq/The.WONDERfools.S01E01.1080p' 
+                            },
+                            { name: 'Episode 2', 
+                              url480p: 'https://streamtape.com/v/Yyg6W9LXzGIe0M/The.WONDERfools.S01E02.480p', 
+                              url720p: 'https://streamtape.com/v/p2JW89Xl4yFr3W8/The.WONDERfools.S01E02.720p', 
+                              url1080p: 'https://streamtape.com/v/dADlalKZ3ZhkkQ4/The.WONDERfools.S01E02.1080p' 
+                            },
+                            { name: 'Episode 3', 
+                              url480p: 'https://streamtape.com/v/Wre19Z2m0rTQxx/The.WONDERfools.S01E03.480p', 
+                              url720p: 'https://streamtape.com/v/7mzypxzLjBCAOby/The.WONDERfools.S01E03.720p', 
+                              url1080p: 'https://streamtape.com/v/KLpgBVVG76C03gz/The.WONDERfools.S01E03.1080p' 
+                            },
+                            { name: 'Episode 4', 
+                              url480p: 'https://streamtape.com/v/1L4aGykwrdc1j1/The.WONDERfools.S01E04.480p', 
+                              url720p: 'https://streamtape.com/v/Oo2mDQO4DJSZ217/The.WONDERfools.S01E04.720p', 
+                              url1080p: 'https://streamtape.com/v/Qa2gGMkpZjs0O72/The.WONDERfools.S01E04.1080p' 
+                            },
+                            { name: 'Episode 5', 
+                              url480p: 'https://streamtape.com/v/K4glL1QZ6mc0dk6/The.WONDERfools.S01E05.480p', 
+                              url720p: 'https://streamtape.com/v/1zev48xJYBSeOmk/The.WONDERfools.S01E05.720p', 
+                              url1080p: 'https://streamtape.com/v/jPeGKVvMblf2od/The.WONDERfools.S01E05.1080p' 
+                            },
+                            { name: 'Episode 6', 
+                              url480p: 'https://streamtape.com/v/o6PGP2b1GqiJrjj/The.WONDERfools.S01E06.480p', 
+                              url720p: 'https://streamtape.com/v/QXx7PjRd4OF06Go/The.WONDERfools.S01E06.720p', 
+                              url1080p: 'https://streamtape.com/v/XBvYWBY6WruDqoy/The.WONDERfools.S01E06.1080p' 
+                            },
+                            { name: 'Episode 7', 
+                              url480p: 'https://streamtape.com/v/qOoBoJA1Y8camj/The.WONDERfools.S01E07.480p', 
+                              url720p: 'https://streamtape.com/v/ZzR67y32B4sq8d7/The.WONDERfools.S01E07.720p', 
+                              url1080p: 'https://streamtape.com/v/ZDLDDpkLzYsq6qL/The.WONDERfools.S01E07.1080p' 
+                            },
+                            { name: 'Episode 8', 
+                              url480p: 'https://streamtape.com/v/adle0dV9m2CW02/The.WONDERfools.S01E08.480p', 
+                              url720p: 'https://streamtape.com/v/L3WqqWz88xURw44/The.WONDERfools.S01E08.720p', 
+                              url1080p: 'https://streamtape.com/v/Qbq726Ll06U03Kk/The.WONDERfools.S01E08.1080p' 
+                            },
+                        ]
+                    }
+                ]
+            },
+            {
+                section: 'tv',
+                type: 'series',
+                title: 'Bloodhounds',
+                date: '2026',
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqf1o8ED8R1auqaij6d1s6F56XLC_tiLv3AAngcH9ve4HiGjKhoTAKm4Fp&s=10',
+                desc: 'Faced with ruthless foes with a violent thirst, two young boxers band together - risking life and limb to bring justice and protect their loved ones.',
+                trailerUrl: 'https://www.youtube.com/embed/sVHfdlOGPv0?si=cxsW3t_zmjx1RI0-',
+                seasons: [
+                    {
+                        seasonName: 'Season 1',
+                        episodes: [
+                            { name: 'Season 1, Episode 1', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/4G4kvkOQ4zHJ6d/Bloodhounds.S01E01.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Season 1, Episode 2', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/J2XPlQjOZes9lo/Bloodhounds.S01E02.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Season 1, Episode 3', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/17ymQL1G7yuezmj/Bloodhounds.S01E03.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Season 1, Episode 4', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/j6w99Qv2jkHzp8b/Bloodhounds.S01E04.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Season 1, Episode 5', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/4pJgDkMpqMfKK4D/Bloodhounds.S01E05.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Season 1, Episode 6', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/a247qy2GMKIz8y/Bloodhounds.S01E06.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv', 
+                              url1080p: ''
+                            },
+                            { name: 'Season 1, Episode 7', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/GGYwrdge7pT1M8B/Bloodhounds.S01E07.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Season 1, Episode 8', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/jjrVOYOv43HzybB/Bloodhounds.S01E08.720p.WEB-DL.Hindi.AAC.5.1-English.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
                         ]
                     },
                     {
-                        seasonName: "Season 2",
+                        seasonName: 'Season 2',
                         episodes: [
-                            { name: "S-2, Episode 1", url: "https://streamtape.com/v/br8QYrXl9JIJWv/Bloodhounds.S02E01.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-HDHub4u.Ms.mkv.mp4" },
-                            { name: "S-2, Episode 2", url: "https://streamtape.com/v/DzMlKZ8qj7uwz2/Bloodhounds.S02E02.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-HDHub4u.Ms.mkv.mp4" },
-                            { name: "S-2, Episode 3", url: "https://streamtape.com/v/jq7P9rXvMvTzVZk/Bloodhounds.S02E03.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-HDHub4u.Ms.mkv.mp4" },
-                            { name: "S-2, Episode 4", url: "https://streamtape.com/v/mwQ2ARJbv6HQDp/Bloodhounds.S02E04.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-HDHub4u.Ms.mkv.mp4" },
-                            { name: "S-2, Episode 5", url: "https://streamtape.com/v/1WG61jKwYMUeRp8/Bloodhounds.S02E05.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-HDHub4u.Ms.mkv.mp4" },
-                            { name: "S-2, Episode 6", url: "https://streamtape.com/v/QwYQyamqq0FJBB/Bloodhounds.S02E06.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-HDHub4u.Ms.mkv.mp4" },
-                            { name: "S-2, Episode 7", url: "https://streamtape.com/v/1zd8v71p8rSejXj/Bloodhounds.S02E07.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-HDHub4u.Ms.mkv.mp4" },
+                            { name: 'Season 2, Episode 1', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/br8QYrXl9JIJWv/Bloodhounds.S02E01.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Season 2, Episode 2', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/DzMlKZ8qj7uwz2/Bloodhounds.S02E02.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Season 2, Episode 3', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/jq7P9rXvMvTzVZk/Bloodhounds.S02E03.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Season 2, Episode 4', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/mwQ2ARJbv6HQDp/Bloodhounds.S02E04.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Season 2, Episode 5', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/1WG61jKwYMUeRp8/Bloodhounds.S02E05.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Season 2, Episode 6', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/QwYQyamqq0FJBB/Bloodhounds.S02E06.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Season 2, Episode 7', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/1zd8v71p8rSejXj/Bloodhounds.S02E07.720p.WEB-DL.Hindi.5.1-English.5.1.ESub.x264-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                        ]
+                    },
+                ]
+            },
+            {
+                section: 'tv',
+                type: 'series',
+                title: 'The Glory',
+                date: '2022',
+                img: 'https://artworks.thetvdb.com/banners/v4/series/411469/posters/64505943caf9b.jpg',
+                desc: 'The Story Revolves Around ,Moon Dong-Eun, An Ambitious High School Student Who Aimed To Become An Architect. However, She Falls Prey To The Relentless Violence Inflicted By Her Fellow Schoolmates And Eventually Drops Out Of School. After Years Of Plotting, Eun Begins Her Revenge Plan Against Her Former Bullies And The Students Who Stood By And Let It Happen !!',
+                trailerUrl: 'https://www.youtube.com/embed/HdnuRKkYhKk?si=ADTLeid_w4b0DZmb',
+                seasons: [
+                    {
+                        seasonName: 'Season 1',
+                        episodes: [
+                            { name: 'Episode 1', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/AMM7wLXGMbsXOqg/The.Glory.S01E01.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 2', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/ay88G44ODMcxqYl/The.Glory.S01E02.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-Detflix.Tv.mp4', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 3', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/qrm9mpaQRBCz9v1/The.Glory.S01E03.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 4', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/Rj4aLw6LgjfdyyZ/The.Glory.S01E04.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 5', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/DMa14KO7yRF3wP/The.Glory.S01E05.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-DETFLIX.TV', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 6', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/K7e0m8Yz86iaak/The.Glory.S01E06.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-Detflix.Tv', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 7', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/jVe08rjOD2tGYa/The.Glory.S01E07.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-DETFLIX-TV', 
+                              url1080p: '' 
+                            },
+                            { name: 'Episode 8', 
+                              url480p: '', 
+                              url720p: 'https://streamtape.com/v/AqoGzjgveAfXdDV/The.Glory.S01E08.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-Detflix.Tv', 
+                              url1080p: '' 
+                            },
                         ]
                     }
                 ]
             },
-            {
-                type: "tv",
-                title: "The Glory",
-                img: "https://artworks.thetvdb.com/banners/v4/series/411469/posters/64505943caf9b.jpg",
-                year: "2022",
-                rating: "",
-                desc: "The Story Revolves Around 'Moon Dong-Eun', An Ambitious High School Student Who Aimed To Become An Architect. However, She Falls Prey To The Relentless Violence Inflicted By Her Fellow Schoolmates And Eventually Drops Out Of School. After Years Of Plotting, Eun Begins Her Revenge Plan Against Her Former Bullies And The Students Who Stood By And Let It Happen !!",
-                trailerUrl: "https://www.youtube.com/embed/HdnuRKkYhKk?si=ADTLeid_w4b0DZmb",
-                seasons: [
-                    {
-                        seasonName: "Season 1",
-                        episodes: [
-                            { name: "Episode 1", url: "https://streamtape.com/v/AMM7wLXGMbsXOqg/The.Glory.S01E01.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-HDHub4u.Tv.mkv.mp4" },
-                            { name: "Episode 2", url: "https://streamtape.com/v/ay88G44ODMcxqYl/The.Glory.S01E02.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-HDHub4u.Tv.mkv" },
-                            { name: "Episode 3", url: "https://streamtape.com/v/qrm9mpaQRBCz9v1/The.Glory.S01E03.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-HDHub4u.Tv.mkv.mp4" },
-                            { name: "Episode 4", url: "https://streamtape.com/v/Rj4aLw6LgjfdyyZ/The.Glory.S01E04.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-HDHub4u.Tv.mkv.mp4" },
-                            { name: "Episode 5", url: "https://streamtape.com/v/DMa14KO7yRF3wP/The.Glory.S01E05.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-HDHub4u.Tv.mkv.mp4" },
-                            { name: "Episode 6", url: "https://streamtape.com/v/K7e0m8Yz86iaak/The.Glory.S01E06.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-HDHub4u.Tv.mkv.mp4" },
-                            { name: "Episode 7", url: "https://streamtape.com/v/jVe08rjOD2tGYa/The.Glory.S01E07.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-HDHub4u.Tv.mkv.mp4" },
-                            { name: "Episode 8", url: "https://streamtape.com/v/AqoGzjgveAfXdDV/The.Glory.S01E08.10bit.WEB-DL.Hindi.English.AAC.5.1.ESub.HEVC-HDHub4u.Tv.mkv.mp4" },
-                        ]
-                    }
-                ]
-            }
         ];
 
-        // --- RENDER FUNCTION ---
-        function renderGrid(items) {
-            const grid = document.getElementById('contentGrid');
-            grid.innerHTML = '';
-            if (items.length === 0) {
-                grid.innerHTML = `<p style="color: #b3b3b3; padding: 20px 0;">No results found.</p>`;
-                return;
-            }
-            items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'movie-card';
-                card.onclick = () => openModal(item);
-                card.innerHTML = `
-                    <div class="card-img-box">
-                        <img src="${item.img}" alt="${item.title}" loading="lazy">
-                        <div class="card-overlay"><i class="fas fa-info-circle"></i></div>
-                    </div>
-                    <div class="movie-info">
-                        <div class="movie-title">${item.title}</div>
-                        <div class="movie-meta">
-                            <span>${item.year}</span>
-                            <span class="rating-badge">
+        const searchInput = document.getElementById('searchInput');
+        const contentSections = document.getElementById('contentSections');
+        const topBar = document.getElementById('topBar');
+        let activeNav = 'home';
+        const modal = document.getElementById('mediaModal');
+        const modalPlayer = document.getElementById('modalPlayer');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
+        const qualitySection = document.getElementById('qualitySection');
+        const seasonSection = document.getElementById('seasonSection');
+        const episodeSection = document.getElementById('episodeSection');
+
+        function renderCards(containerId, movies) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = movies.map(movie => `
+                <div class="movie-card" onclick="openModal(${JSON.stringify(movie).replace(/"/g, '&quot;')})">
+                    <div class="poster-container">
+                        <img src="${movie.img}" alt="${movie.title}">
+                        <div class="">
+                            <i class=""></i> ${movie.rating}
+                        </div>
+                        <div class="play-overlay">
+                            <div class="">
+                                <i class=""></i>
+                            </div>
                         </div>
                     </div>
+                    <div class="movie-info">
+                        <h3>${movie.title}</h3>
+                        <p>${movie.date}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setActiveNav(nav) {
+            activeNav = nav;
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-nav') === nav);
+            });
+            if (nav === 'search') {
+                searchInput.focus();
+            }
+            renderContent();
+        }
+
+        function renderContent() {
+            const query = searchInput.value.trim().toLowerCase();
+            const filtered = contentItems.filter(item => item.title.toLowerCase().includes(query));
+            topBar.classList.toggle('active', activeNav === 'search');
+
+            if (activeNav === 'search') {
+                const movies = filtered.filter(item => item.type === 'movie');
+                const series = filtered.filter(item => item.type === 'series');
+
+                contentSections.innerHTML = `
+                    <div class="section-header">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <h2>${query ? 'Search Results' : 'Search All Content'}</h2>
+                    </div>
+
+                    <div class="movie-row" id="search-movies-row"></div>
+                    <div class="movie-row" id="search-tv-row"></div>
                 `;
-                grid.appendChild(card);
-            });
-        }
 
-        // --- CATEGORY CONTROLLER ---
-        function changeCategory(cat) {
-            currentCategory = cat;
-            document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(el => {
-                if (el.getAttribute('data-cat') === cat) el.classList.add('active');
-                else el.classList.remove('active');
-            });
-            const heading = document.getElementById('sectionHeading');
-            if (cat === 'home') heading.innerText = 'Home Updates';
-            else if (cat === 'movie') heading.innerText = 'Ultimate Movies';
-            else if (cat === 'tv') heading.innerText = 'Series & K-Dramas';
-            filterData();
-        }
-
-        function filterData() {
-            let filtered = myDatabase;
-            if (currentCategory !== 'home') filtered = myDatabase.filter(item => item.type === currentCategory);
-            renderGrid(filtered);
-        }
-
-        function searchContent() {
-            const query = document.getElementById('searchBar').value.toLowerCase().trim();
-            let baseList = myDatabase;
-            if (currentCategory !== 'home') baseList = myDatabase.filter(item => item.type === currentCategory);
-            const searchResults = baseList.filter(item => item.title.toLowerCase().includes(query));
-            renderGrid(searchResults);
-        }
-
-        // --- OPEN MODAL POPUP & QUALITIES / SEASONS LOGIC ---
-        function openModal(item) {
-            const modal = document.getElementById('playerModal');
-            document.getElementById('modalTitle').innerText = item.title;
-            document.getElementById('modalDesc').innerText = item.desc;
-
-            const trailerPlayer = document.getElementById('trailerPlayer');
-            const videoBox = document.getElementById('videoBox');
-
-            // Trailer setup
-            if(item.trailerUrl) {
-                videoBox.style.display = 'block';
-                trailerPlayer.src = item.trailerUrl;
-            } else {
-                videoBox.style.display = 'none';
-                trailerPlayer.src = '';
+                renderCards('search-movies-row', query ? movies : contentItems.filter(item => item.type === 'movie'));
+                renderCards('search-tv-row', query ? series : contentItems.filter(item => item.type === 'series'));
+                return;
             }
 
-            const movieSection = document.getElementById('movieSection');
-            const seasonsSection = document.getElementById('seasonsSection');
-            const episodesSection = document.getElementById('episodesSection');
-            const seasonsBox = document.getElementById('seasonsBox');
+            if (activeNav === 'movies') {
+                contentSections.innerHTML = `
+                    <div class="section-header">
+                        <i class="fa-solid fa-film"></i>
+                        <h2>Movies</h2>
+                    </div>
+                    <div class="movie-row" id="movies-row"></div>
+                `;
+                renderCards('movies-row', contentItems.filter(item => item.type === 'movie'));
+                return;
+            }
 
-            // Reset Displays
-            movieSection.style.display = 'none';
-            seasonsSection.style.display = 'none';
-            episodesSection.style.display = 'none';
+            if (activeNav === 'tv') {
+                contentSections.innerHTML = `
+                    <div class="section-header">
+                        <i class="fa-solid fa-tv"></i>
+                        <h2>TV Series</h2>
+                    </div>
+                    <div class="movie-row" id="tv-row"></div>
+                `;
+                renderCards('tv-row', contentItems.filter(item => item.type === 'series'));
+                return;
+            }
 
-            // IF MOVIE TYPE -> Show Multi-Quality Buttons
-            if (item.type === "movie") {
-                movieSection.style.display = 'block';
-                
-                setupQualityButton('btn480p', item.url480p);
-                setupQualityButton('btn720p', item.url720p);
-                setupQualityButton('btn1080p', item.url1080p);
-            } 
-            // IF TV SERIES TYPE -> Show Seasons & Episodes
-            else if (item.type === "tv" && item.seasons && item.seasons.length > 0) {
-                seasonsSection.style.display = 'block';
-                episodesSection.style.display = 'block';
-                seasonsBox.innerHTML = '';
+            contentSections.innerHTML = `
+                <div class="section-header"">
+                    <i class="fa-solid fa-fire"></i>
+                    <h2>new Movies</h2>
+                </div>
+                <div class="movie-row" id="movies"></div>
 
-                item.seasons.forEach((season, index) => {
-                    const btn = document.createElement('button');
-                    btn.className = `season-tab-btn ${index === 0 ? 'active' : ''}`;
-                    btn.innerText = season.seasonName;
-                    
-                    btn.onclick = () => {
-                        document.querySelectorAll('.season-tab-btn').forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        loadEpisodes(season.episodes);
-                    };
-                    seasonsBox.appendChild(btn);
-                });
+                <div class="section-header" style="margin-top: 1px;">
+                    <i class="fa-solid fa-fire"></i>
+                    <h2>new dramas</h2>
+                </div>
+                <div class="movie-row" id="tv"></div>
+            `;
 
-                // Load initial first season
-                loadEpisodes(item.seasons[0].episodes);
+            renderCards('movies', contentItems.filter(item => item.section === 'movies'));
+            renderCards('tv', contentItems.filter(item => item.section === 'tv'));
+            renderCards('trending', contentItems.filter(item => item.section === 'trending'));
+        }
+
+        function getTrailerSrc(url) {
+            if (!url) return '';
+            if (url.includes('youtube.com/embed') || url.includes('youtube-nocookie.com/embed')) {
+                const separator = url.includes('?') ? '&' : '?';
+                return `${url}${separator}autoplay=1&mute=0&rel=0&controls=1&playsinline=1&modestbranding=1&showinfo=0&vq=hd720`;
+            }
+            return url;
+        }
+
+        function buildQualityButtons(item) {
+            const qualities = [
+                { label: '480p', url: item.url480p },
+                { label: '720p', url: item.url720p },
+                { label: '1080p', url: item.url1080p }
+            ].filter(q => q.url);
+
+            if (!qualities.length) return '';
+
+            return `
+                <div class="section-subtitle"><i class="fa-solid fa-layer-group"></i> Select Quality</div>
+                <div class="quality-list">
+                    ${qualities.map(q => `
+                        <button class="quality-btn" type="button" onclick="window.open('${q.url}', '_blank')">
+                            <span><i class="fa-solid fa-play"></i> Watch</span>
+                            <span class="quality-badge">${q.label}</span>
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        let currentModalItem = null;
+
+        function openModal(item) {
+            currentModalItem = item;
+            modalTitle.innerText = item.title;
+            modalDesc.innerText = item.desc;
+            modalPlayer.src = getTrailerSrc(item.trailerUrl || '');
+            qualitySection.innerHTML = '';
+            seasonSection.innerHTML = '';
+            episodeSection.innerHTML = '';
+
+            if (item.type === 'movie') {
+                qualitySection.innerHTML = buildQualityButtons(item);
+            } else if (item.type === 'series' && item.seasons) {
+                seasonSection.innerHTML = `
+                    <div class="section-subtitle"><i class="fa-solid fa-film"></i> Select Season</div>
+                    <div class="season-list">
+                        ${item.seasons.map((season, index) => `
+                            <button class="season-btn ${index === 0 ? 'active' : ''}" type="button" onclick="loadEpisodes(${index})">${season.seasonName}</button>
+                        `).join('')}
+                    </div>
+                `;
+                episodeSection.innerHTML = '<div class="section-subtitle"><i class="fa-solid fa-list"></i> Episodes</div>';
+                loadEpisodes(0);
             }
 
             modal.classList.add('active');
         }
 
-        // Helper to configure Quality buttons or hide them if blank
-        function setupQualityButton(btnId, url) {
-            const btn = document.getElementById(btnId);
-            if(url && url.trim() !== "") {
-                btn.style.display = 'flex';
-                btn.onclick = () => window.open(url, '_blank');
-            } else {
-                btn.style.display = 'none';
+        function loadEpisodes(seasonIndex) {
+            if (!currentModalItem || !currentModalItem.seasons) return;
+            
+            const seasonButtons = document.querySelectorAll('.season-btn');
+            seasonButtons.forEach((btn, idx) => {
+                btn.classList.toggle('active', idx === seasonIndex);
+            });
+
+            const season = currentModalItem.seasons[seasonIndex];
+            const episodes = season ? season.episodes : [];
+            episodeSection.innerHTML = `
+                <div class="section-subtitle"><i class="fa-solid fa-list"></i> Episodes</div>
+                <div class="episode-list">
+                    ${episodes.map((ep) => {
+                        const qualities = [
+                            { label: '480p', url: ep.url480p },
+                            { label: '720p', url: ep.url720p },
+                            { label: '1080p', url: ep.url1080p }
+                        ].filter(q => q.url);
+
+                        return `
+                            <div class="episode-item">
+                                <button class="episode-btn episode-head" type="button" onclick="toggleEpisode(this.parentElement)">
+                                    <span>${ep.name}</span>
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                                ${qualities.length ? `
+                                    <div class="episode-body">
+                                        ${qualities.map(q => `
+                                            <button class="quality-btn episode-quality-btn" type="button" onclick="playEpisode('${q.url}')">
+                                                <span><i class="fa-solid fa-play"></i> Watch</span>
+                                                <span class="quality-badge">${q.label}</span>
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        function toggleEpisode(item) {
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('.episode-item').forEach(el => el.classList.remove('open'));
+            if (!isOpen) {
+                item.classList.add('open');
             }
         }
 
-        // Load series episodes list
-        function loadEpisodes(episodes) {
-            const epBox = document.getElementById('episodeBox');
-            epBox.innerHTML = '';
-            
-            episodes.forEach(ep => {
-                const btn = document.createElement('div');
-                btn.className = 'episode-btn';
-                btn.innerHTML = `<span>${ep.name}</span><i class="fas fa-external-link-alt"></i>`;
-                btn.onclick = () => window.open(ep.url, '_blank');
-                epBox.appendChild(btn);
-            });
+        function playEpisode(url) {
+            if (!url) return;
+            if (url.includes('streamtape.com')) {
+                const embedUrl = url.replace('v/', 'e/') + '?autoplay=1&noads=1';
+                modalPlayer.src = embedUrl;
+            } else {
+                modalPlayer.src = url;
+            }
         }
 
         function closeModal() {
-            document.getElementById('playerModal').classList.remove('active');
-            document.getElementById('trailerPlayer').src = '';
+            modal.classList.remove('active');
+            modalPlayer.src = '';
         }
 
-        window.onload = () => {
-            filterData();
-        };
+        renderContent();
     </script>
 </body>
 </html>
