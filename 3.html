@@ -227,35 +227,44 @@
 <body>
     <div id="loginModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:9999; display:flex; flex-direction:column; justify-content:center; align-items:center;">
     <h2 style="color:#f5c518; margin-bottom:20px;">DETFLIX ACCESS</h2>
-    <input type="text" id="passInput" placeholder="Enter Passcode" style="padding:12px; border-radius:10px; border:none; width:250px; text-align:center;">
-    <button onclick="checkPasscode()" style="padding:12px 30px; margin-top:15px; background:#f5c518; border:none; border-radius:10px; cursor:pointer; font-weight:bold;">LOGIN</button>
+    <input type="text" id="inputId" placeholder="Enter ID" style="padding:12px; border-radius:100px; border:none; width:250px; text-align:center;"><br>
+    <input type="password" id="passInput" placeholder="Enter Password" style="padding:12px; border-radius:100px; border:none; width:250px; text-align:center;">
+    <button id="idShopBtn" type="button" onclick="window.open('https://t.me/DETFLIX_Tv', '_blank')" style="padding:12px 30px; margin-top:15px; background:#f5c518; border:none; border-radius:10px; cursor:pointer; font-weight:bold;">id shop</button>
+    <button id="loginBtn" onclick="checkLogin()" style="padding:12px 30px; margin-top:15px; background:#f5c518; border:none; border-radius:10px; cursor:pointer; font-weight:bold;">LOGIN</button>
 </div>
 
 <script>
-// Yahan apna wo Google App URL dalein jo aapko mila hai
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzl5Hu9N_FlMyMvSCIgor0jpgaQbzNAzaJhIGuQxanMUKB_Q1KR-MBqcVrw4bTPFFM4ww/exec";
+  // Yahan apna naya URL daalein (bina ?id=... ke)
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-KkfBItgUKoc7cTRRlgx5HK3wj6YmCSJnKOlHhLbYJpYRQU9M5hvj4bqQcZ0tBIBI/exec";
 
-async function checkPasscode() {
-    const input = document.getElementById('passInput').value;
-    const btn = document.querySelector('button');
-    btn.innerText = "Checking...";
+    async function checkLogin() {
+        const id = document.getElementById('inputId').value;
+        const pass = document.getElementById('passInput').value;
+        const btn = document.getElementById('loginBtn');
+        
+        btn.innerText = "Checking...";
 
-    try {
-        const response = await fetch(`${SCRIPT_URL}?code=${input}`);
-        const data = await response.text();
+        try {
+            // URL banaya: URL?id=...&pass=...
+            const res = await fetch(`${SCRIPT_URL}?id=${id}&pass=${pass}`);
+            const data = await res.text();
 
-        if (data.trim() === "SUCCESS") {
-            document.getElementById('loginModal').style.display = 'none';
-            alert("Access Granted!");
-        } else {
+            if (data.trim() === "SUCCESS") {
+                const expiry = new Date().getTime() + (28 * 24 * 60 * 60 * 1000);
+                localStorage.setItem('login', 'true');
+                localStorage.setItem('expiry', expiry);
+                document.getElementById('loginModal').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                btn.innerText = "LOGIN";
+            } else {
+                alert("id kharid na padega bhai");
+                btn.innerText = "LOGIN";
+            }
+        } catch (e) {
+            alert("welcome to my Detflix");
             btn.innerText = "LOGIN";
-            alert("Invalid or Used Code!");
         }
-    } catch (e) {
-        btn.innerText = "LOGIN";
-        alert("Server error, please try again.");
     }
-}
 </script>
 
     <!-- SIDEBAR NAVIGATION (Desktop) -->
