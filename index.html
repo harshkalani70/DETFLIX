@@ -169,26 +169,32 @@
             flex-wrap: wrap;
             margin-bottom: 10px;
         }
-        .episode-list {
+        .quality-list {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
+            flex-wrap: wrap;
+            gap: 10px;
             margin-top: 10px;
         }
-        .episode-btn {
+        .quality-btn {
             border: 1px solid rgba(245,197,24,0.16);
             background: #1a1a1a;
             color: #fff;
             padding: 10px 12px;
             border-radius: 12px;
             cursor: pointer;
-            text-align: left;
+            text-align: center;
+            font-weight: 700;
+            min-width: 100px;
             transition: all 0.2s ease;
         }
-        .episode-btn:hover {
+        .quality-btn:hover {
             background: rgba(245,197,24,0.16);
             color: #f5c518;
             transform: translateY(-1px);
+        }
+        .quality-btn.disabled {
+            opacity: 0.5;
+            pointer-events: none;
         }
         .btn {
             padding: 8px 12px;
@@ -226,50 +232,9 @@
     </style>
 </head>
 <body>
-    <div id="loginModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:9999; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-    <h2 style="color:#f5c518; margin-bottom:20px;">DETFLIX ACCESS</h2>
-    <input type="text" id="inputId" placeholder="Enter ID" style="padding:12px; border-radius:100px; border:none; width:250px; text-align:center;"><br>
-    <input type="password" id="passInput" placeholder="Enter Password" style="padding:12px; border-radius:100px; border:none; width:250px; text-align:center;">
-    <button id="idShopBtn" type="button" onclick="window.open('https://t.me/DETFLIX_Tv', '_blank')" style="padding:12px 30px; margin-top:15px; background:#f5c518; border:none; border-radius:10px; cursor:pointer; font-weight:bold;">id shop</button>
-    <button id="loginBtn" onclick="checkLogin()" style="padding:12px 30px; margin-top:15px; background:#f5c518; border:none; border-radius:10px; cursor:pointer; font-weight:bold;">LOGIN</button>
-</div>
-
-<script>
-  // Yahan apna naya URL daalein (bina ?id=... ke)
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-KkfBItgUKoc7cTRRlgx5HK3wj6YmCSJnKOlHhLbYJpYRQU9M5hvj4bqQcZ0tBIBI/exec";
-
-    async function checkLogin() {
-        const id = document.getElementById('inputId').value;
-        const pass = document.getElementById('passInput').value;
-        const btn = document.getElementById('loginBtn');
-        
-        btn.innerText = "Checking...";
-
-        try {
-            // URL banaya: URL?id=...&pass=...
-            const res = await fetch(`${SCRIPT_URL}?id=${id}&pass=${pass}`);
-            const data = await res.text();
-
-            if (data.trim() === "SUCCESS") {
-                const expiry = new Date().getTime() + (28 * 24 * 60 * 60 * 1000);
-                localStorage.setItem('login', 'true');
-                localStorage.setItem('expiry', expiry);
-                document.getElementById('loginModal').style.display = 'none';
-                document.getElementById('mainContent').style.display = 'block';
-                btn.innerText = "LOGIN";
-            } else {
-                alert("id kharid na padega bhai");
-                btn.innerText = "LOGIN";
-            }
-        } catch (e) {
-            alert("welcome to my Detflix");
-            btn.innerText = "LOGIN";
-        }
-    }
-</script>
     <div class="page-shell">
         <div class="top-bar">
-            <h1>DETFLIX Admin</h1>
+            <h1>DETFLIX-Telegram</h1>
             <input type="text" id="searchBar" placeholder="Search movies..." class="search-box" onkeyup="searchMovies()">
         </div>
 
@@ -293,7 +258,7 @@
                     <button class="btn btn-trailer active" id="playTrailerBtn">Trailer</button>
                     <button class="btn btn-movie" id="playMovieBtn">Movie</button>
                 </div>
-                <div class="episode-list" id="episodeList"></div>
+                <div class="quality-list" id="qualityList"></div>
             </div>
         </div>
     </div>
@@ -321,7 +286,7 @@
     const movieBtn = document.getElementById('playMovieBtn');
     const modalTitle = document.getElementById('modalTitle');
     const modalDesc = document.getElementById('modalDesc');
-    const episodeList = document.getElementById('episodeList');
+    const qualityList = document.getElementById('qualityList');
     let currentMovie = null;
     let activeMode = 'trailer';
     let currentFilter = 'all';
@@ -427,29 +392,46 @@
 
         trailerBtn.classList.add('active');
         movieBtn.classList.remove('active');
-        episodeList.innerHTML = '';
+        qualityList.innerHTML = '';
 
-        if (movie.type === 'tv' && Array.isArray(movie.episodes)) {
-            movieBtn.textContent = 'Episodes';
-            movieBtn.style.display = 'inline-block';
-            movie.episodes.forEach((ep, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'episode-btn';
-                btn.textContent = ep.name || `Episode ${index + 1}`;
-                btn.onclick = () => {
-                    openExternalLink(ep.url || '');
-                };
-                episodeList.appendChild(btn);
-            });
-        } else {
-            movieBtn.textContent = 'Movie';
-            movieBtn.style.display = 'inline-block';
-            episodeList.innerHTML = '';
-        }
+        const qualityLinks = movie.qualityLinks || movie.links || {
+            p480: movie.url || movie.video || movie.link || '',
+            p720: movie.url || movie.video || movie.link || '',
+            p1080: movie.url || movie.video || movie.link || ''
+        };
+
+        renderQualityButtons(qualityLinks);
+        movieBtn.textContent = movie.type === 'tv' ? 'Play Episode' : 'Movie';
+        movieBtn.style.display = 'inline-block';
 
         const trailerUrl = getTrailerUrl(movie);
         setPlayer(trailerUrl, 'trailer');
         modal.classList.add('show');
+    }
+
+    function renderQualityButtons(links) {
+        qualityList.innerHTML = '';
+        const qualities = [
+            { label: '480p', key: 'p480' },
+            { label: '720p', key: 'p720' },
+            { label: '1080p', key: 'p1080' }
+        ];
+
+        qualities.forEach(({ label, key }) => {
+            const href = links[key] || links[key.replace('p', 'P')] || '';
+            const btn = document.createElement('a');
+            btn.className = 'quality-btn';
+            btn.textContent = label;
+            btn.href = href || 'javascript:void(0)';
+            btn.target = '_blank';
+            btn.rel = 'noopener noreferrer';
+            if (!href) {
+                btn.classList.add('disabled');
+                btn.style.opacity = '0.5';
+                btn.style.pointerEvents = 'none';
+            }
+            qualityList.appendChild(btn);
+        });
     }
 
     function closeModal() {
