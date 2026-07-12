@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DETFLIX Admin</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #050505, #121212 60%, #1a1a1a);
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .page-shell {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(245,197,24,0.16), transparent 30%);
+            pointer-events: none;
+            animation: glow 6s ease-in-out infinite alternate;
+        }
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            background: rgba(17,17,17,0.9);
+            border: 1px solid rgba(245,197,24,0.18);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        }
+        .top-bar h1 { margin: 0; font-size: 1.4rem; color: #f5c518; text-shadow: 0 0 10px rgba(245,197,24,0.25); }
+        .search-box {
+            flex: 1;
+            max-width: 320px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(245,197,24,0.16);
+            background: #111;
+            color: #fff;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            border: 1px solid rgba(245,197,24,0.16);
+            background: rgba(255,255,255,0.04);
+            color: #f8f8f8;
+            padding: 10px 14px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.25s ease;
+        }
+        .tab-btn.active {
+            background: linear-gradient(135deg, #f5c518, #ffd54f);
+            color: #111;
+            box-shadow: 0 10px 24px rgba(245,197,24,0.25);
+        }
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 18px;
+        }
+        .movie-card {
+            background: linear-gradient(145deg, #151515, #1f1f1f);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(245,197,24,0.16);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            animation: riseIn 0.4s ease both;
+            position: relative;
+        }
+        .movie-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 18px 35px rgba(0,0,0,0.35);
+            border-color: rgba(245,197,24,0.38);
+        }
+        .movie-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+        .movie-card h3 {
+            padding: 10px 12px 12px;
+            margin: 0;
+            font-size: 0.95rem;
+            color: #f8f8f8;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .movie-card .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(245,197,24,0.95);
+            color: #111;
+            font-size: 0.72rem;
+            padding: 4px 8px;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.88);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+        .modal.show { display: flex; }
+        .modal-content {
+            width: 100%;
+            max-width: 720px;
+            background: #121212;
+            border: 1px solid rgba(245,197,24,0.18);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            animation: popIn 0.25s ease;
+        }
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #f5c518;
+            color: #111;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            z-index: 2;
+        }
+        iframe {
+            width: 100%;
+            height: 320px;
+            display: block;
+            border: 0;
+            background: #000;
+        }
+        .modal-body { padding: 16px 16px 20px; }
+        .modal-body h2 { margin: 0 0 8px; font-size: 1.2rem; }
+        .modal-body p { color: #d0d0d0; font-size: 0.92rem; line-height: 1.5; margin: 0 0 12px; }
+        .buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .episode-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .episode-btn {
+            border: 1px solid rgba(245,197,24,0.16);
+            background: #1a1a1a;
+            color: #fff;
+            padding: 10px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+        .episode-btn:hover {
+            background: rgba(245,197,24,0.16);
+            color: #f5c518;
+            transform: translateY(-1px);
+        }
+        .btn {
+            padding: 8px 12px;
+            border: 0;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .btn:hover { transform: translateY(-1px); }
+        .btn.active { background: #f5c518; color: #111; }
+        .btn-trailer { background: #ff3b30; color: #fff; }
+        .btn-movie { background: #1f7a1f; color: #fff; }
+        @media (max-width: 600px) {
+            body { padding: 12px; }
+            .top-bar { flex-direction: column; align-items: stretch; }
+            .search-box { max-width: none; }
+            .movies-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            .movie-card img { height: 200px; }
+            .movie-card h3 { font-size: 0.8rem; padding: 8px 8px 10px; }
+            iframe { height: 220px; }
+        }
+        @keyframes glow {
+            from { transform: scale(1); opacity: 0.8; }
+            to { transform: scale(1.04); opacity: 1; }
+        }
+        @keyframes riseIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+        <div class="top-bar">
+            <h1>DETFLIX Admin</h1>
+            <input type="text" id="searchBar" placeholder="Search movies..." class="search-box" onkeyup="searchMovies()">
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-type="all">All</button>
+            <button class="tab-btn" data-type="movie">Movie</button>
+            <button class="tab-btn" data-type="tv">TV</button>
+        </div>
+
+        <div class="movies-grid" id="moviesContainer"></div>
+    </div>
+
+    <div class="modal" id="movieModal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeBtn" aria-label="Close">×</button>
+            <iframe id="videoPlayer" allowfullscreen></iframe>
+            <div class="modal-body">
+                <h2 id="modalTitle">Movie Title</h2>
+                <p id="modalDesc">Movie description will appear here.</p>
+                <div class="buttons">
+                    <button class="btn btn-trailer active" id="playTrailerBtn">Trailer</button>
+                    <button class="btn btn-movie" id="playMovieBtn">Movie</button>
+                </div>
+                <div class="episode-list" id="episodeList"></div>
+            </div>
+        </div>
+    </div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyD36m07vWOwCZrRnmlhSz5sRyPniUtIgaU",
+        authDomain: "mymovieweb-22dd8.firebaseapp.com",
+        projectId: "mymovieweb-22dd8",
+        storageBucket: "mymovieweb-22dd8.firebasestorage.app",
+        messagingSenderId: "200401532824",
+        appId: "1:200401532824:web:6f5748d41c4c258ecedded",
+        measurementId: "G-SYNL5B8KR1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const moviesContainer = document.getElementById('moviesContainer');
+    const modal = document.getElementById('movieModal');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const trailerBtn = document.getElementById('playTrailerBtn');
+    const movieBtn = document.getElementById('playMovieBtn');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const episodeList = document.getElementById('episodeList');
+    let currentMovie = null;
+    let activeMode = 'trailer';
+    let currentFilter = 'all';
+
+    const fallbackTrailer = 'https://www.youtube.com/embed/ScMzIvxBSi4';
+
+    function getTrailerUrl(movie) {
+        return movie?.trailer || movie?.trailerUrl || fallbackTrailer;
+    }
+
+    function getMovieUrl(movie) {
+        return movie?.video || movie?.videoUrl || movie?.url || movie?.link || '';
+    }
+
+    function setPlayer(url) {
+        if (!url) {
+            videoPlayer.src = '';
+            return;
+        }
+        videoPlayer.src = url;
+    }
+
+    function openModal(movie) {
+        currentMovie = movie;
+        activeMode = 'trailer';
+        modalTitle.textContent = movie.name || 'Movie';
+        modalDesc.textContent = movie.description || 'Enjoy the trailer and full movie in one place.';
+
+        trailerBtn.classList.add('active');
+        movieBtn.classList.remove('active');
+        episodeList.innerHTML = '';
+
+        if (movie.type === 'tv' && Array.isArray(movie.episodes)) {
+            movieBtn.textContent = 'Episodes';
+            movieBtn.style.display = 'inline-block';
+            movie.episodes.forEach((ep, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'episode-btn';
+                btn.textContent = ep.name || `Episode ${index + 1}`;
+                btn.onclick = () => {
+                    setPlayer(ep.url || '');
+                };
+                episodeList.appendChild(btn);
+            });
+        } else {
+            movieBtn.textContent = 'Movie';
+            movieBtn.style.display = 'inline-block';
+            episodeList.innerHTML = '';
+        }
+
+        const trailerUrl = getTrailerUrl(movie);
+        setPlayer(trailerUrl);
+        modal.classList.add('show');
+    }
+
+    function closeModal() {
+        modal.classList.remove('show');
+        videoPlayer.src = '';
+        episodeList.innerHTML = '';
+    }
+
+    trailerBtn.onclick = () => {
+        if (!currentMovie) return;
+        activeMode = 'trailer';
+        trailerBtn.classList.add('active');
+        movieBtn.classList.remove('active');
+        const trailerUrl = getTrailerUrl(currentMovie);
+        setPlayer(trailerUrl);
+    };
+
+    movieBtn.onclick = () => {
+        if (!currentMovie) return;
+        if (currentMovie.type === 'tv' && Array.isArray(currentMovie.episodes)) {
+            trailerBtn.classList.remove('active');
+            movieBtn.classList.add('active');
+            const firstEp = currentMovie.episodes[0];
+            if (firstEp) setPlayer(firstEp.url || '');
+            return;
+        }
+        activeMode = 'movie';
+        trailerBtn.classList.remove('active');
+        movieBtn.classList.add('active');
+        const movieUrl = getMovieUrl(currentMovie);
+        setPlayer(movieUrl);
+    };
+
+    document.getElementById('closeBtn').onclick = closeModal;
+    modal.onclick = (event) => {
+        if (event.target === modal) closeModal();
+    };
+
+    let allMovies = [];
+
+    function renderMovies() {
+        moviesContainer.innerHTML = '';
+        const filtered = allMovies.filter((movie) => {
+            const matchesType = currentFilter === 'all' || movie.type === currentFilter;
+            const title = (movie.name || '').toLowerCase();
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            const matchesSearch = title.includes(query);
+            return matchesType && matchesSearch;
+        });
+
+        filtered.forEach((movie, index) => {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            card.style.animationDelay = `${index * 0.03}s`;
+            card.innerHTML = `
+                <span class="badge">${(movie.type || 'Movie').toUpperCase()}</span>
+                <img src="${movie.photo || ''}" alt="${movie.name || 'Movie'}">
+                <h3>${movie.name || 'Untitled'}</h3>
+            `;
+            card.onclick = () => openModal(movie);
+            moviesContainer.appendChild(card);
+        });
+    }
+
+    onSnapshot(collection(db, 'movies'), (snapshot) => {
+        allMovies = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderMovies();
+    });
+
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+        btn.onclick = () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.getAttribute('data-type');
+            renderMovies();
+        };
+    });
+
+    window.searchMovies = function () {
+        renderMovies();
+    };
+</script>
+
+</body>
+</html>
