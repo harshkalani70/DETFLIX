@@ -285,7 +285,7 @@
     <div class="modal" id="movieModal">
         <div class="modal-content">
             <button class="close-btn" id="closeBtn" aria-label="Close">×</button>
-            <iframe id="videoPlayer" allowfullscreen></iframe>
+            <iframe id="videoPlayer" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             <div class="modal-body">
                 <h2 id="modalTitle">Movie Title</h2>
                 <p id="modalDesc">Movie description will appear here.</p>
@@ -336,12 +336,87 @@
         return movie?.video || movie?.videoUrl || movie?.url || movie?.link || '';
     }
 
-    function setPlayer(url) {
+    function normalizeVideoUrl(url, mode = 'video') {
+        if (!url) return '';
+
+        const trimmed = url.trim();
+        if (!trimmed) return '';
+
+        if (mode === 'trailer') {
+            try {
+                const parsed = new URL(trimmed, window.location.href);
+                const host = parsed.hostname.toLowerCase();
+
+                if (host.includes('youtube.com') || host.includes('youtu.be')) {
+                    if (parsed.hostname.includes('youtube.com') && parsed.pathname === '/watch') {
+                        const videoId = parsed.searchParams.get('v');
+                        if (videoId) {
+                            return `https://www.youtube.com/embed/${videoId}`;
+                        }
+                    }
+
+                    if (host.includes('youtu.be')) {
+                        const videoId = parsed.pathname.replace('/', '');
+                        if (videoId) {
+                            return `https://www.youtube.com/embed/${videoId}`;
+                        }
+                    }
+                }
+            } catch (error) {
+                return trimmed;
+            }
+        }
+
+        return trimmed;
+    }
+
+    function addPlaybackParams(url, mode = 'video') {
+        if (!url) return '';
+
+        const trimmed = url.trim();
+
+        try {
+            const parsed = new URL(trimmed, window.location.href);
+            const host = parsed.hostname.toLowerCase();
+
+            if (host.includes('youtube.com') || host.includes('youtu.be')) {
+                parsed.searchParams.set('autoplay', '1');
+                parsed.searchParams.set('mute', '0');
+                parsed.searchParams.set('rel', '0');
+                parsed.searchParams.set('controls', '1');
+                parsed.searchParams.set('playsinline', '1');
+                parsed.searchParams.set('modestbranding', '1');
+
+                if (mode === 'trailer') {
+                    return parsed.toString();
+                }
+
+                return trimmed;
+            }
+
+            return trimmed;
+        } catch (error) {
+            if (mode === 'trailer' && (trimmed.includes('youtube.com') || trimmed.includes('youtu.be'))) {
+                const separator = trimmed.includes('?') ? '&' : '?';
+                return `${trimmed}${separator}autoplay=1&mute=0&rel=0&controls=1&playsinline=1&modestbranding=1`;
+            }
+            return trimmed;
+        }
+    }
+
+    function setPlayer(url, mode = 'video') {
         if (!url) {
             videoPlayer.src = '';
             return;
         }
-        videoPlayer.src = url;
+
+        const normalizedUrl = addPlaybackParams(normalizeVideoUrl(url, mode), mode);
+        videoPlayer.src = normalizedUrl;
+    }
+
+    function openExternalLink(url) {
+        if (!url) return;
+        window.open(url, '_blank', 'noopener,noreferrer');
     }
 
     function openModal(movie) {
@@ -362,7 +437,7 @@
                 btn.className = 'episode-btn';
                 btn.textContent = ep.name || `Episode ${index + 1}`;
                 btn.onclick = () => {
-                    setPlayer(ep.url || '');
+                    openExternalLink(ep.url || '');
                 };
                 episodeList.appendChild(btn);
             });
@@ -373,7 +448,7 @@
         }
 
         const trailerUrl = getTrailerUrl(movie);
-        setPlayer(trailerUrl);
+        setPlayer(trailerUrl, 'trailer');
         modal.classList.add('show');
     }
 
@@ -389,7 +464,7 @@
         trailerBtn.classList.add('active');
         movieBtn.classList.remove('active');
         const trailerUrl = getTrailerUrl(currentMovie);
-        setPlayer(trailerUrl);
+        setPlayer(trailerUrl, 'trailer');
     };
 
     movieBtn.onclick = () => {
@@ -398,14 +473,14 @@
             trailerBtn.classList.remove('active');
             movieBtn.classList.add('active');
             const firstEp = currentMovie.episodes[0];
-            if (firstEp) setPlayer(firstEp.url || '');
+            if (firstEp) openExternalLink(firstEp.url || '');
             return;
         }
         activeMode = 'movie';
         trailerBtn.classList.remove('active');
         movieBtn.classList.add('active');
         const movieUrl = getMovieUrl(currentMovie);
-        setPlayer(movieUrl);
+        openExternalLink(movieUrl);
     };
 
     document.getElementById('closeBtn').onclick = closeModal;
