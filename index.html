@@ -254,10 +254,6 @@
             <div class="modal-body">
                 <h2 id="modalTitle">Movie Title</h2>
                 <p id="modalDesc">Movie description will appear here.</p>
-                <div class="buttons">
-                    <button class="btn btn-trailer active" id="playTrailerBtn">Trailer</button>
-                    <button class="btn btn-movie" id="playMovieBtn">Movie</button>
-                </div>
                 <div class="quality-list" id="qualityList"></div>
             </div>
         </div>
@@ -282,13 +278,10 @@
     const moviesContainer = document.getElementById('moviesContainer');
     const modal = document.getElementById('movieModal');
     const videoPlayer = document.getElementById('videoPlayer');
-    const trailerBtn = document.getElementById('playTrailerBtn');
-    const movieBtn = document.getElementById('playMovieBtn');
     const modalTitle = document.getElementById('modalTitle');
     const modalDesc = document.getElementById('modalDesc');
     const qualityList = document.getElementById('qualityList');
     let currentMovie = null;
-    let activeMode = 'trailer';
     let currentFilter = 'all';
 
     const fallbackTrailer = 'https://www.youtube.com/embed/ScMzIvxBSi4';
@@ -386,50 +379,56 @@
 
     function openModal(movie) {
         currentMovie = movie;
-        activeMode = 'trailer';
         modalTitle.textContent = movie.name || 'Movie';
         modalDesc.textContent = movie.description || 'Enjoy the trailer and full movie in one place.';
 
-        trailerBtn.classList.add('active');
-        movieBtn.classList.remove('active');
-        qualityList.innerHTML = '';
-
-        const qualityLinks = movie.qualityLinks || movie.links || {
-            p480: movie.url || movie.video || movie.link || '',
-            p720: movie.url || movie.video || movie.link || '',
-            p1080: movie.url || movie.video || movie.link || ''
-        };
-
-        renderQualityButtons(qualityLinks);
-        movieBtn.textContent = movie.type === 'tv' ? 'Play Episode' : 'Movie';
-        movieBtn.style.display = 'inline-block';
+        renderQualityButtons(movie);
 
         const trailerUrl = getTrailerUrl(movie);
         setPlayer(trailerUrl, 'trailer');
         modal.classList.add('show');
     }
 
-    function renderQualityButtons(links) {
+    function resolveMovieQualityLinks(movie) {
+        const links = movie?.qualityLinks || movie?.links || {};
+        const fallbackUrl = movie?.video || movie?.videoUrl || movie?.url || movie?.link || '';
+        return {
+            p480: links.p480 || links.P480 || fallbackUrl,
+            p720: links.p720 || links.P720 || fallbackUrl,
+            p1080: links.p1080 || links.P1080 || fallbackUrl
+        };
+    }
+
+    function renderQualityButtons(movie) {
         qualityList.innerHTML = '';
+        const type = String(movie?.type || '').trim().toLowerCase();
+        const isMovie = type === 'movie' || type === 'movies' || type.includes('movie');
+
+        if (!isMovie) {
+            return;
+        }
+
         const qualities = [
             { label: '480p', key: 'p480' },
             { label: '720p', key: 'p720' },
             { label: '1080p', key: 'p1080' }
         ];
+        const links = resolveMovieQualityLinks(movie);
 
         qualities.forEach(({ label, key }) => {
-            const href = links[key] || links[key.replace('p', 'P')] || '';
+            const href = links[key] || '';
             const btn = document.createElement('a');
             btn.className = 'quality-btn';
             btn.textContent = label;
             btn.href = href || 'javascript:void(0)';
             btn.target = '_blank';
             btn.rel = 'noopener noreferrer';
+
             if (!href) {
                 btn.classList.add('disabled');
-                btn.style.opacity = '0.5';
                 btn.style.pointerEvents = 'none';
             }
+
             qualityList.appendChild(btn);
         });
     }
@@ -437,33 +436,7 @@
     function closeModal() {
         modal.classList.remove('show');
         videoPlayer.src = '';
-        episodeList.innerHTML = '';
     }
-
-    trailerBtn.onclick = () => {
-        if (!currentMovie) return;
-        activeMode = 'trailer';
-        trailerBtn.classList.add('active');
-        movieBtn.classList.remove('active');
-        const trailerUrl = getTrailerUrl(currentMovie);
-        setPlayer(trailerUrl, 'trailer');
-    };
-
-    movieBtn.onclick = () => {
-        if (!currentMovie) return;
-        if (currentMovie.type === 'tv' && Array.isArray(currentMovie.episodes)) {
-            trailerBtn.classList.remove('active');
-            movieBtn.classList.add('active');
-            const firstEp = currentMovie.episodes[0];
-            if (firstEp) openExternalLink(firstEp.url || '');
-            return;
-        }
-        activeMode = 'movie';
-        trailerBtn.classList.remove('active');
-        movieBtn.classList.add('active');
-        const movieUrl = getMovieUrl(currentMovie);
-        openExternalLink(movieUrl);
-    };
 
     document.getElementById('closeBtn').onclick = closeModal;
     modal.onclick = (event) => {
