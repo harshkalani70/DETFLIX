@@ -1,3 +1,3 @@
 DETFLIX 
 
-https://harshkalani70.github.io/DETFLIX/moviedownload.html
+https://harshkalani70.github.io/DETFLIX/index.html
